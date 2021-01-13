@@ -1,18 +1,18 @@
 package com.innopolis.eventgo.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "users")
 @NamedQuery(name = "User.findAll", query = "select u from User u")
 public class User {
+
+    public User() {}
+    public User(Role role) {this.role = role;}
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,10 +32,22 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "id_role", referencedColumnName = "id")
+    @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
     private Role role;
 
     @Column(name = "VERSION")
     @Version
     private int version;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role.toString() +
+                '}';
+    }
 }

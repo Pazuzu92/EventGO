@@ -12,11 +12,11 @@ public class SaveData {
     @Autowired
     private DataRepository dataRepository;
 
-    public void saveRole(Role role) {
-        dataRepository.saveRole(role);
+    public Role saveRole(Role role) {
+        return dataRepository.saveRole(role);
     }
 
-    public void saveUser(User user) {
-        dataRepository.saveUser(user);
+    public User saveUser(User user) {
+        return dataRepository.saveUser(user);
     }
 }

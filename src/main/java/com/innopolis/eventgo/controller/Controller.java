@@ -24,23 +24,23 @@ public class Controller {
         role.setRoleCode(1);
         role.setRoleName("user");
 
-        User user1 = new User();
+        Role rolePersist = saveData.saveRole(role);
+
+        User user1 = new User(rolePersist);
         user1.setName("user1");
         user1.setEmail("u1@test.ru");
         user1.setLogin("login");
         user1.setPassword("pass");
-        user1.setRole(role);
 
-        User user2 = new User();
+        User user2 = new User(rolePersist);
         user2.setName("user2");
         user2.setEmail("u1@test.ru");
         user2.setLogin("login");
         user2.setPassword("pass");
-        user2.setRole(role);
 
-        saveData.saveRole(role);
         saveData.saveUser(user1);
         saveData.saveUser(user2);
+
         return "saved";
     }
 
