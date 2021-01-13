@@ -40,7 +40,7 @@ public class DBConfig {
         properties.put("hibernate.max_fetch_depth", 3);
         properties.put("hibernate.jdbc_batch_size", 10);
         properties.put("hibernate.jdbc_fetch_size", 50);
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 
