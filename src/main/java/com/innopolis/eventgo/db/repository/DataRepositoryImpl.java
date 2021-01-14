@@ -2,7 +2,6 @@ package com.innopolis.eventgo.db.repository;
 
 import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.db.entity.User;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
