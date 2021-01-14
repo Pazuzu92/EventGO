@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.service;
 
+import com.innopolis.eventgo.db.entity.Comment;
 import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.db.repository.DataRepository;
@@ -18,5 +19,9 @@ public class SaveData {
 
     public User saveUser(User user) {
         return dataRepository.saveUser(user);
+    }
+
+    public Comment saveComment(Comment comment) {
+        return dataRepository.saveComment(comment);
     }
 }
