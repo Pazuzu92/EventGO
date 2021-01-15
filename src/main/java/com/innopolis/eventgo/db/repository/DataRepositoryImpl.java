@@ -1,6 +1,5 @@
 package com.innopolis.eventgo.db.repository;
 
-import com.innopolis.eventgo.db.entity.Comment;
 import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,6 @@ public class DataRepositoryImpl implements DataRepository {
         return entityManager.merge(user);
     }
 
-    @Transactional
-    @Override
-    public Comment saveComment(Comment comment) {
-        return entityManager.merge(comment);
-    }
-
     @Override
     public Role getRole(int code) {
         return (Role) entityManager.createNamedQuery("Role.findByCode", Role.class).setParameter("code", code).getSingleResult();
@@ -42,10 +35,5 @@ public class DataRepositoryImpl implements DataRepository {
     @Override
     public List<User> getUser() {
         return (List<User>) entityManager.createNamedQuery("User.findAll", User.class).getResultList();
-    }
-
-    @Override
-    public List<Comment> getCommentsByUserId(Long idUser) {
-        return entityManager.createNamedQuery("Comment.findByUserId", Comment.class).setParameter("idUser", idUser).getResultList();
     }
 }

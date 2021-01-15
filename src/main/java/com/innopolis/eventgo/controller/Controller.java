@@ -1,6 +1,5 @@
 package com.innopolis.eventgo.controller;
 
-import com.innopolis.eventgo.db.entity.Comment;
 import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.service.GetData;
@@ -39,13 +38,8 @@ public class Controller {
         user2.setLogin("login");
         user2.setPassword("pass");
 
-        User userPersist = saveData.saveUser(user1);
+        saveData.saveUser(user1);
         saveData.saveUser(user2);
-
-        Comment comment = new Comment(userPersist);
-        comment.setText("sfsdfsd");
-        saveData.saveComment(comment);
-
         return "saved";
     }
 
@@ -59,14 +53,6 @@ public class Controller {
         StringBuilder stringBuilder = new StringBuilder();
         List<User> users = getData.getUser();
         users.forEach(stringBuilder::append);
-        return stringBuilder.toString();
-    }
-
-    @GetMapping(value = "/getComments")
-    public String getComment(){
-        StringBuilder stringBuilder = new StringBuilder();
-        List<Comment> comments = getData.getCommentsByUser();
-        comments.forEach(stringBuilder::append);
         return stringBuilder.toString();
     }
 }

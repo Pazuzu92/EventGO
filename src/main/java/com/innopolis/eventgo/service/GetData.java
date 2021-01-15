@@ -1,6 +1,5 @@
 package com.innopolis.eventgo.service;
 
-import com.innopolis.eventgo.db.entity.Comment;
 import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.db.repository.DataRepository;
@@ -21,9 +20,5 @@ public class GetData {
 
     public List<User> getUser() {
         return dataRepository.getUser();
-    }
-
-    public List<Comment> getCommentsByUser() {
-        return dataRepository.getCommentsByUserId(1L);
     }
 }
