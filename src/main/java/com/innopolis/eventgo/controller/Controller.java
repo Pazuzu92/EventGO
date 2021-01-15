@@ -40,7 +40,6 @@ public class Controller {
 
         saveData.saveUser(user1);
         saveData.saveUser(user2);
-
         return "saved";
     }
 
