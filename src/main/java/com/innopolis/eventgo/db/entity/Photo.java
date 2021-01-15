@@ -3,14 +3,13 @@ package com.innopolis.eventgo.db.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "photo")
 public class Photo {
@@ -24,6 +23,14 @@ public class Photo {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    private byte[] filename;
 
-    private String filename;
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", post=" + post +
+                ", filename=" + Arrays.toString(filename) +
+                '}';
+    }
 }

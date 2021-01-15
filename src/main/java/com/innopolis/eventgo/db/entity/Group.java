@@ -3,7 +3,6 @@ package com.innopolis.eventgo.db.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "group")
 public class Group {
@@ -28,4 +26,13 @@ public class Group {
     @Version
     @Column(name = "version")
     private Long version;
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", user=" + user +
+                ", version=" + version +
+                '}';
+    }
 }
