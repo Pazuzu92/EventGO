@@ -29,7 +29,7 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "id=" + id +
-                ", post=" + post +
+                ", post=" + post.toString() +
                 ", filename=" + Arrays.toString(filename) +
                 '}';
     }

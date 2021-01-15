@@ -31,7 +31,7 @@ public class Group {
     public String toString() {
         return "Group{" +
                 "id=" + id +
-                ", user=" + user +
+                ", user=" + user.toString() +
                 ", version=" + version +
                 '}';
     }
