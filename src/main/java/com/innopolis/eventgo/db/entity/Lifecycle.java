@@ -25,7 +25,7 @@ public class Lifecycle {
     }
 
     @Id
-    @Column(name = "lifecycle_id")
+    @Column(name = "id")
     private Long id;
 
     @Override
