@@ -1,7 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,9 +9,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "group")
 public class Group {
+
+    public Group() {
+    }
+
+    public Group(User user) {
+        this.user = user;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +25,11 @@ public class Group {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    private Post post;
 
     @Version
     @Column(name = "version")

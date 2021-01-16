@@ -1,7 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,9 +9,16 @@ import java.util.Arrays;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "photo")
 public class Photo {
+
+    public Photo() {
+    }
+
+    public Photo(Post post, byte[] photo) {
+        this.post = post;
+        this.photo = photo;
+    }
 
     @Id
     @Column(name = "id")
@@ -20,10 +26,14 @@ public class Photo {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "id_post", referencedColumnName = "id", nullable = false)
     private Post post;
 
-    private byte[] filename;
+    private byte[] photo;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     @Override
     public String toString() {
@@ -33,4 +43,6 @@ public class Photo {
                 ", filename=" + Arrays.toString(filename) +
                 '}';
     }
+
+
 }
