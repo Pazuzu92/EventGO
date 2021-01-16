@@ -3,15 +3,17 @@ package com.innopolis.eventgo.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@Getter
+@Setter
 @NamedQuery(name = "User.findAll", query = "select u from User u")
 public class User {
 
-    public User() {}
     public User(Role role) {this.role = role;}
 
     @Id
@@ -35,6 +37,15 @@ public class User {
     @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
     private Role role;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Post> posts = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Post> post = new HashSet<>();
+
     @Column(name = "VERSION")
     @Version
     private int version;
@@ -47,7 +58,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role.toString() +
+                ", roleId=" + role.getId() +
                 '}';
     }
 }

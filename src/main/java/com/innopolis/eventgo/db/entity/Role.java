@@ -8,13 +8,17 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "role")
+@NoArgsConstructor
+@Getter
+@Setter
 @NamedQuery(name = "Role.findByCode", query = "select r from Role r where role_code = :code")
 public class Role {
+
+    private final int USER = 1;
+    private final int MODERATOR = 2;
+    private final int ADMIN = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,9 +27,6 @@ public class Role {
 
     @Column(name = "role_code")
     private int roleCode;
-
-    @Column(name = "role_name")
-    private String roleName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private Set<User> users = new HashSet<>();
@@ -39,7 +40,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", roleCode=" + roleCode +
-                ", roleName='" + roleName + '\'' +
                 '}';
     }
 }
