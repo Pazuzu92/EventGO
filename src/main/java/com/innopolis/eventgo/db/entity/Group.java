@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Entity
 @Getter
 @Setter
@@ -40,7 +39,7 @@ public class Group {
         return "Group{" +
                 "id=" + id +
                 ", user=" + user.toString() +
-                ", version=" + version +
+                ", post=" + post.toString() +
                 '}';
     }
 }

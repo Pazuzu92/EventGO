@@ -40,9 +40,7 @@ public class Photo {
         return "Photo{" +
                 "id=" + id +
                 ", post=" + post.toString() +
-                ", filename=" + Arrays.toString(filename) +
+                ", photo=" + Arrays.toString(photo) +
                 '}';
     }
-
-
 }
