@@ -1,6 +1,6 @@
 -- Group table
 
-CREATE TABLE group
+CREATE TABLE groups
 (
     id BIGINT NOT NULL PRIMARY KEY,
     version INTEGER DEFAULT 0,

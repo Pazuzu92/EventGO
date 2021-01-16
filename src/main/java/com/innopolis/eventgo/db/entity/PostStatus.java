@@ -29,7 +29,7 @@ public class PostStatus {
     @Column(name = "status")
     private int status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post_status")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatuses")
     private Set<PostStatus> postStatuses = new HashSet<>();
 
     @Version

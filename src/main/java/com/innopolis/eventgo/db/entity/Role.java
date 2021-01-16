@@ -16,9 +16,9 @@ import java.util.Set;
 @NamedQuery(name = "Role.findByCode", query = "select r from Role r where role_code = :code")
 public class Role {
 
-    private final int USER = 1;
-    private final int MODERATOR = 2;
-    private final int ADMIN = 3;
+    final static int USER = 1;
+    final static int MODERATOR = 2;
+    final static int ADMIN = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

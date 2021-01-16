@@ -22,7 +22,6 @@ public class Controller {
     public String save() {
         Role role = new Role();
         role.setRoleCode(1);
-        role.setRoleName("user");
 
         Role rolePersist = saveData.saveRole(role);
 

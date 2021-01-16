@@ -52,7 +52,7 @@ public class Post {
     private PostStatus postStatus;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "group", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_user")})
+    @JoinTable(name = "groups", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_user")})
     private Set<User> users = new HashSet<>();
 
     @ManyToOne
