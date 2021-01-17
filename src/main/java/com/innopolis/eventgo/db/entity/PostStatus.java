@@ -3,7 +3,6 @@ package com.innopolis.eventgo.db.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,6 +19,7 @@ public class PostStatus {
     final static int REJECTED = 2;
     final static int ACTIVE = 3;
     final static int ARCHIVED = 4;
+    final static int DELETED = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,7 +29,7 @@ public class PostStatus {
     @Column(name = "status")
     private int status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatuses")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatus")
     private Set<PostStatus> postStatuses = new HashSet<>();
 
     @Version
