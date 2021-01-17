@@ -1,17 +1,22 @@
 package com.innopolis.eventgo.db.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "comments")
-@NamedQuery(name = "Comment.findByUserId", query = "select c from Comment c where user.id = :idUser")
-//@NamedQuery(name = "Comments.findByPost", query = "select c from Comments c where post.id = :idPost")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Comment {
+
+    public Comment(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,28 +30,21 @@ public class Comment {
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
     private User user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_post", referencedColumnName = "id", nullable = false)
-//    private Post post;
+    @ManyToOne
+    @JoinColumn(name = "id_post", referencedColumnName = "id", nullable = false)
+    private Post post;
 
     @Column(name = "VERSION")
     @Version
     private int version;
-
-    public Comment() {
-    }
-    public Comment(User user/*, Post post*/) {
-        this.user = user;
-//        this.post = post;
-    }
 
     @Override
     public String toString() {
         return "Comments{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", user=" + user.toString() +
-//                ", post=" + post.toString() +
+                ", userId=" + user.getId() +
+                ", postId=" + post.getId() +
                 '}';
     }
 }

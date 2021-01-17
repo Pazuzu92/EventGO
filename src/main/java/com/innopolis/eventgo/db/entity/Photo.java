@@ -1,23 +1,22 @@
 package com.innopolis.eventgo.db.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Arrays;
 
 @Entity
+@Table(name = "photo")
+@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "photo")
 public class Photo {
 
-    public Photo() {
-    }
-
-    public Photo(Post post, byte[] photo) {
+    public Photo(Post post, byte[] image) {
         this.post = post;
-        this.photo = photo;
+        this.image = image;
     }
 
     @Id
@@ -25,11 +24,12 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_post", referencedColumnName = "id", nullable = false)
-    private Post post;
+    @Column(name = "image")
+    private byte[] image;
 
-    private byte[] photo;
+    @ManyToOne
+    @JoinColumn(name = "id_post", referencedColumnName = "id")
+    private Post post;
 
     @Version
     @Column(name = "version")
@@ -39,8 +39,7 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "id=" + id +
-                ", post=" + post.toString() +
-                ", photo=" + Arrays.toString(photo) +
+                ", image=" + image.hashCode() +
                 '}';
     }
 }

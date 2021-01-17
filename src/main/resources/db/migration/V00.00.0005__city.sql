@@ -1,8 +1,8 @@
--- Role table.
+-- City table
 
-CREATE TABLE role
+CREATE TABLE city
 (
     id BIGINT NOT NULL PRIMARY KEY,
-    role_code INTEGER,
+    city_name TEXT,
     version INTEGER DEFAULT 0
 );
