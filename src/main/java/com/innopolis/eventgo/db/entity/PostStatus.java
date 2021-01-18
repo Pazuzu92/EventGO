@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,11 +16,11 @@ import java.util.Set;
 @Setter
 public class PostStatus {
 
-    final static int MODERATED = 1;
-    final static int REJECTED = 2;
-    final static int ACTIVE = 3;
-    final static int ARCHIVED = 4;
-    final static int DELETED = 5;
+    public final static int MODERATED = 1;
+    public final static int REJECTED = 2;
+    public final static int ACTIVE = 3;
+    public final static int ARCHIVED = 4;
+    public final static int DELETED = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,8 +30,9 @@ public class PostStatus {
     @Column(name = "status")
     private int status;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatus")
-    private Set<PostStatus> postStatuses = new HashSet<>();
+    private Set<Post> posts = new HashSet<>();
 
     @Version
     @Column(name = "version")

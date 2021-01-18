@@ -1,13 +1,14 @@
 package com.innopolis.eventgo.controller;
 
-import com.innopolis.eventgo.db.entity.Role;
-import com.innopolis.eventgo.db.entity.User;
+import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.service.GetData;
 import com.innopolis.eventgo.service.SaveData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,14 @@ public class Controller {
     @Autowired
     private GetData getData;
 
+    @GetMapping(value = "/init-data")
+    public String init() {
+
+        return saveData.init();
+    }
+
     @GetMapping(value = "/save")
-    public String save() {
+    public User save() {
         Role role = new Role();
         role.setRoleCode(1);
 
@@ -39,7 +46,7 @@ public class Controller {
 
         saveData.saveUser(user1);
         saveData.saveUser(user2);
-        return "saved";
+        return user1;
     }
 
     @GetMapping(value = "/getRole")

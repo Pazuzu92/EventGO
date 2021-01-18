@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,12 +38,15 @@ public class User {
     @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
     private Role role;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Post> posts = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     private Set<Post> post = new HashSet<>();
 
