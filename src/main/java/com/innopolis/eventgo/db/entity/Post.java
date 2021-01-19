@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,6 +52,7 @@ public class Post {
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
     private PostStatus postStatus;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "groups", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_user")})
     private Set<User> users = new HashSet<>();

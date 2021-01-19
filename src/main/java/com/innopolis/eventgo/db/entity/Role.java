@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +17,9 @@ import java.util.Set;
 @NamedQuery(name = "Role.findByCode", query = "select r from Role r where role_code = :code")
 public class Role {
 
-    final static int USER = 1;
-    final static int MODERATOR = 2;
-    final static int ADMIN = 3;
+    public final static int USER = 1;
+    public final static int MODERATOR = 2;
+    public final static int ADMIN = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,6 +29,7 @@ public class Role {
     @Column(name = "role_code")
     private int roleCode;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private Set<User> users = new HashSet<>();
 

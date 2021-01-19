@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class Place {
     @JoinColumn(name = "id_city", referencedColumnName = "id", nullable = false)
     private City city;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
     private Set<Post> posts = new HashSet<>();
 

@@ -19,4 +19,8 @@ public class SaveData {
     public User saveUser(User user) {
         return dataRepository.saveUser(user);
     }
+
+    public String init() {
+        return dataRepository.init();
+    }
 }
