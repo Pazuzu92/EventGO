@@ -2,7 +2,7 @@ package com.innopolis.eventgo.service;
 
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.repository.PostRepository;
-import com.innopolis.eventgo.exceptions.PostNotFoundException;
+import com.innopolis.eventgo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +12,26 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public Post getPost(long id) throws PostNotFoundException {
+    public Post getPost(long id) throws NotFoundException {
         Post post = postRepository.getPost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
         return post;
     }
 
-    public Post createPost(Post post) throws PostNotFoundException {
-        if (!isValidPost(post)) throw new PostNotFoundException("Bad post");
+    public Post createPost(Post post) throws NotFoundException {
+        if (!isValidPost(post)) throw new NotFoundException("Bad post");
         return postRepository.savePost(post);
     }
 
-    public Post updatePost(long id, Post postUpdate) throws PostNotFoundException {
+    public Post updatePost(long id, Post postUpdate) throws NotFoundException {
         Post post = postRepository.updatePost(id, postUpdate);
-        if (isValidPost(post)) throw new PostNotFoundException("Post not found");
+        if (isValidPost(post)) throw new NotFoundException("Post not found");
         return post;
     }
 
-    public Post deletePost(long id) throws PostNotFoundException {
+    public Post deletePost(long id) throws NotFoundException {
         Post post = postRepository.deletePost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
         return post;
     }
 
