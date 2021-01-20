@@ -4,6 +4,7 @@ import com.innopolis.eventgo.db.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -15,14 +16,17 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Post getPost(long id) {
-        Post post = em.find(Post.class, id);
-        return post;
+        return em.find(Post.class, id);
     }
 
     @Transactional
     @Override
     public Post savePost(Post post) {
-        em.persist(post);
+        try {
+            em.persist(post);
+        } catch (EntityExistsException e) {
+            return null;
+        }
         return post;
     }
 
@@ -37,7 +41,7 @@ public class PostRepositoryImpl implements PostRepository {
         postOld.setDateTo(post.getDateTo());
         postOld.setPlace(post.getPlace());
         postOld.setCategory(post.getCategory());
-        em.merge(post);
+        em.merge(postOld);
         return postOld;
     }
 
