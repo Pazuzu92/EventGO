@@ -7,7 +7,6 @@ import com.innopolis.eventgo.dto.CityDto;
 import com.innopolis.eventgo.dto.PlaceDto;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.exceptions.PostNotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class PostService {
+
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH.mm");
 
     @Autowired
     private PostRepository postRepository;
@@ -67,8 +68,6 @@ public class PostService {
         Category category = new Category();
         category.setId(post.getCategory().getId());
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH.mm");
-
         Post postEntity = new Post();
         postEntity.setUser(user);
         postEntity.setHeader(post.getHeader());
@@ -83,8 +82,20 @@ public class PostService {
     }
 
     public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
-        if (isValidPost(postUpdate)) throw new PostNotFoundException("Post not found");
+        Post post = postRepository.getPost(id);
+        if (isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
 
+        Place place = postRepository.getPlaceById(postUpdate.getPlace().getId());
+        Category category = postRepository.getCategoryById(postUpdate.getCategory().getId());
+
+        post.setHeader(postUpdate.getHeader());
+        post.setDescription(postUpdate.getDescription());
+        post.setDateTo(LocalDateTime.parse(postUpdate.getDate_to(), dateTimeFormatter));
+        post.setDateFrom(LocalDateTime.parse(postUpdate.getDate_from(), dateTimeFormatter));
+        post.setCategory(category);
+        post.setPlace(place);
+
+        postRepository.updatePost(id, post);
 
         return getResponseMessage();
     }

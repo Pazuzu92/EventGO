@@ -4,7 +4,6 @@ import com.innopolis.eventgo.db.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -16,7 +15,7 @@ public class PostRepositoryImpl implements PostRepository {
     private EntityManager em;
 
     @Override
-    public Post getPost(long id) {
+    public Post getPost(Long id) {
         return em.find(Post.class, id);
     }
 
@@ -47,7 +46,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post updatePost(long id, Post post) {
+    public Post updatePost(Long id, Post post) {
         Post postOld = em.find(Post.class, id);
         if (postOld == null) return null;
         postOld.setHeader(post.getHeader());
@@ -61,7 +60,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post deletePost(long id) {
+    public Post deletePost(Long id) {
         Post post = em.find(Post.class, id);
         if (post != null) em.remove(post);
         return post;
@@ -71,10 +70,12 @@ public class PostRepositoryImpl implements PostRepository {
         return em.find(City.class, id);
     }
 
+    @Override
     public Place getPlaceById(Long id) {
         return em.find(Place.class, id);
     }
 
+    @Override
     public Category getCategoryById(Long id) {
         return em.find(Category.class, id);
     }
