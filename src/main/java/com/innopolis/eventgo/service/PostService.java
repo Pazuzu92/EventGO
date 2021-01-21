@@ -83,7 +83,7 @@ public class PostService {
 
     public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
         Post post = postRepository.getPost(id);
-        if (isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
+        if (!isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
 
         Place place = postRepository.getPlaceById(postUpdate.getPlace().getId());
         Category category = postRepository.getCategoryById(postUpdate.getCategory().getId());
