@@ -1,6 +1,5 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,5 +31,4 @@ public class City {
     @Column(name = "VERSION")
     @Version
     private int version;
-
 }
