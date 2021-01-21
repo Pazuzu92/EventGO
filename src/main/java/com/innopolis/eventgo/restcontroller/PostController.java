@@ -20,7 +20,7 @@ public class PostController {
     private PostService postService;
 
     @GetMapping(value = "/post/{postId}")
-    public Post getPost(@PathVariable("postId") long id) throws PostNotFoundException {
+    public PostDto getPost(@PathVariable("postId") long id) throws PostNotFoundException {
         return postService.getPost(id);
     }
 
@@ -29,10 +29,10 @@ public class PostController {
         return postService.createPost(post);
     }
 
-//    @PutMapping(value = "/post/{postId}")
-//    public ResponseMessageEntity updatePost(@PathVariable("postId") Long id, @RequestBody PostDto postUpdate) throws PostNotFoundException {
-//        return postService.updatePost(id, postUpdate);
-//    }
+    @PutMapping(value = "/post/{postId}")
+    public ResponseMessageEntity updatePost(@PathVariable("postId") Long id, @RequestBody PostDto postUpdate) throws PostNotFoundException {
+        return postService.updatePost(id, postUpdate);
+    }
 
     @DeleteMapping(value = "/post/{postId}")
     public Post deletePost(@PathVariable("postId") long id) throws PostNotFoundException {

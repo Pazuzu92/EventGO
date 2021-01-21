@@ -2,6 +2,9 @@ package com.innopolis.eventgo.service;
 
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.db.repository.PostRepository;
+import com.innopolis.eventgo.dto.CategoryDto;
+import com.innopolis.eventgo.dto.CityDto;
+import com.innopolis.eventgo.dto.PlaceDto;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.exceptions.PostNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -14,15 +17,36 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class PostService {
 
-    private final ModelMapper modelMapper = new ModelMapper();
-
     @Autowired
     private PostRepository postRepository;
 
-    public Post getPost(long id) throws PostNotFoundException {
+    public PostDto getPost(long id) throws PostNotFoundException {
         Post post = postRepository.getPost(id);
         if (post == null) throw new PostNotFoundException("Post not found");
-        return post;
+
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(post.getCategory().getId());
+        categoryDto.setCategoryName(post.getCategory().getNameCategory());
+
+        CityDto cityDto = new CityDto();
+        cityDto.setId(post.getPlace().getCity().getId());
+
+        PlaceDto placeDto = new PlaceDto();
+        placeDto.setId(post.getPlace().getId());
+        placeDto.setHouse(post.getPlace().getHouse());
+        placeDto.setStreet(post.getPlace().getStreet());
+        placeDto.setNumber(post.getPlace().getNumber());
+        placeDto.setCity(cityDto);
+
+        PostDto postDto = new PostDto();
+        postDto.setId_user(post.getUser().getId());
+        postDto.setHeader(post.getHeader());
+        postDto.setDescription(post.getDescription());
+        postDto.setCategory(categoryDto);
+        postDto.setPlace(placeDto);
+        postDto.setDate_from(post.getDateFrom().toString());
+        postDto.setDate_to(post.getDateTo().toString());
+        return postDto;
     }
 
     public ResponseMessageEntity createPost(PostDto post) throws PostNotFoundException {
@@ -31,17 +55,17 @@ public class PostService {
         User user = new User();
         user.setId(post.getId_user());
         City city = new City();
-        city.setId(post.getId_city());
+        city.setId(post.getPlace().getCity().getId());
 
         Place place = new Place();
-        place.setId(post.getId_city());
-        place.setStreet(post.getPlaceDto().getStreet());
-        place.setHouse(post.getPlaceDto().getHouse());
-        place.setNumber(post.getPlaceDto().getNumber());
+        place.setId(post.getPlace().getCity().getId());
+        place.setStreet(post.getPlace().getStreet());
+        place.setHouse(post.getPlace().getHouse());
+        place.setNumber(post.getPlace().getNumber());
         place.setCity(city);
 
         Category category = new Category();
-        category.setId(post.getId_category());
+        category.setId(post.getCategory().getId());
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH.mm");
 
@@ -58,11 +82,11 @@ public class PostService {
         return getResponseMessage();
     }
 
-    public Post updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
+    public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
         if (isValidPost(postUpdate)) throw new PostNotFoundException("Post not found");
-        Post postEntity = modelMapper.map(postUpdate, Post.class);
 
-        return null;
+
+        return getResponseMessage();
     }
 
     public Post deletePost(long id) throws PostNotFoundException {
@@ -72,17 +96,7 @@ public class PostService {
     }
 
     private boolean isValidPost(PostDto post) {
-        if (post == null ||
-        post.getId_user() == null ||
-        post.getHeader() == null ||
-        post.getDate_from() == null ||
-        post.getDate_to() == null ||
-        post.getId_category() == null ||
-        post.getId_city() == null ||
-        post.getPlaceDto() == null ||
-        post.getPlaceDto().getStreet() == null ||
-        post.getPlaceDto().getHouse() == null ||
-        post.getPlaceDto().getNumber() == null) return false;
+
         return true;
     }
 
