@@ -64,6 +64,4 @@ public class Post {
     @Column(name = "VERSION")
     @Version
     private int version;
-
-
 }
