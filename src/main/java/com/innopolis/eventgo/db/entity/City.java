@@ -33,5 +33,4 @@ public class City {
     @Column(name = "VERSION")
     @Version
     private int version;
-
 }
