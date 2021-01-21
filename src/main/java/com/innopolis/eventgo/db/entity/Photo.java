@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "photo")
@@ -13,11 +15,6 @@ import java.util.Arrays;
 @Getter
 @Setter
 public class Photo {
-
-    public Photo(Post post, byte[] image) {
-        this.post = post;
-        this.image = image;
-    }
 
     @Id
     @Column(name = "id")
@@ -27,9 +24,8 @@ public class Photo {
     @Column(name = "image")
     private byte[] image;
 
-    @ManyToOne
-    @JoinColumn(name = "id_post", referencedColumnName = "id")
-    private Post post;
+    @ManyToMany(mappedBy = "photos")
+    private List<Post> posts = new ArrayList<>();
 
     @Version
     @Column(name = "version")

@@ -26,7 +26,6 @@ public class City {
     @Column(name = "city_name")
     private String cityName;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
     private Set<Place> places = new HashSet<>();
 

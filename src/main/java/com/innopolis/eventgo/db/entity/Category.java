@@ -20,12 +20,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name_category")
     private String nameCategory;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Post> posts = new HashSet<>();
 

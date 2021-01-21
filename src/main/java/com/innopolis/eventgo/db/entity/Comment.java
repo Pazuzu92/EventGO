@@ -13,11 +13,6 @@ import javax.persistence.*;
 @Setter
 public class Comment {
 
-    public Comment(User user, Post post) {
-        this.user = user;
-        this.post = post;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")

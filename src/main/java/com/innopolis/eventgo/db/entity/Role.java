@@ -14,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@NamedQuery(name = "Role.findByCode", query = "select r from Role r where role_code = :code")
 public class Role {
 
     public final static int USER = 1;
