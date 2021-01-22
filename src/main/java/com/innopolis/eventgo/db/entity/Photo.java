@@ -18,14 +18,14 @@ public class Photo {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "image")
     private byte[] image;
 
-    @ManyToMany(mappedBy = "photos")
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    private List<PostPhoto> postPhotos = new ArrayList<>();
 
     @Version
     @Column(name = "version")

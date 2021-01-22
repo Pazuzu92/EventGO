@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@NamedQuery(name = Comment.findCommentByPostId, query = "select c from Comment c where id_post = :id_post")
+@NamedQuery(name = Comment.findCommentByPostId, query = "select c from Comment c where c.post.id = :id_post")
 public class Comment {
 
     public final static String findCommentByPostId = "Comment.findCommentByPostId";

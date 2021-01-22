@@ -5,33 +5,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "place")
+@Table(name = "groups")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Place {
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "street")
-    private String street;
-
-    @Column(name = "house")
-    private String house;
-
-    @Column(name = "number")
-    private String number;
+    @ManyToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id_city", referencedColumnName = "id", nullable = false)
-    private City city;
+    @JoinColumn(name = "id_post", referencedColumnName = "id", nullable = false)
+    private Post post;
 
     @Column(name = "VERSION")
     @Version

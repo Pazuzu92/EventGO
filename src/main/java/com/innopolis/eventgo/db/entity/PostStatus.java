@@ -33,10 +33,6 @@ public class PostStatus {
     @Column(name = "status")
     private int status;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatus")
-    private Set<Post> posts = new HashSet<>();
-
     @Version
     @Column(name = "version")
     private int version;

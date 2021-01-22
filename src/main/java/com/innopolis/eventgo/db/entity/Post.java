@@ -42,9 +42,8 @@ public class Post {
     @Column(name = "date_to")
     private LocalDateTime dateTo;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "post_photo", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_photo")})
-    private List<Photo> photos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostPhoto> postPhotos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
@@ -55,15 +54,14 @@ public class Post {
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
     private PostStatus postStatus;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "groups", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_user")})
-    private List<User> users = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Group> groups = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_place", referencedColumnName = "id")

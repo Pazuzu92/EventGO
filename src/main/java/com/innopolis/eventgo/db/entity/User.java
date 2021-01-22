@@ -39,13 +39,10 @@ public class User {
     private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "users")
-    private List<Post> post = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Group> groups = new ArrayList<>();
 
     @Column(name = "VERSION")
     @Version
