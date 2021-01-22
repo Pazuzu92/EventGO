@@ -20,29 +20,26 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post savePost(Post post) {
-        try {
-            User user = em.find(User.class, post.getUser().getId());
-            post.setUser(user);
+    public void savePost(Post post) {
+        User user = em.find(User.class, post.getUser().getId());
 
-            City city = em.find(City.class, post.getPlace().getCity().getId());
-            Category category = em.find(Category.class, post.getCategory().getId());
+        Likes likes = new Likes();
+        Dislikes dislikes = new Dislikes();
+        City city = em.find(City.class, post.getPlace().getCity().getId());
+        Category category = em.find(Category.class, post.getCategory().getId());
+        PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
 
-            Place place = post.getPlace();
-            place.setCity(city);
-            place = em.merge(place);
+        Place place = post.getPlace();
 
-            post.setPlace(place);
-            post.setCategory(category);
+        post.setUser(user);
+        place.setCity(city);
+        post.setPlace(place);
+        post.setCategory(category);
+        post.setPostStatus(postStatus);
+        post.setLikes(likes);
+        post.setDislikes(dislikes);
 
-            PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
-            post.setPostStatus(postStatus);
-
-            em.persist(post);
-        } catch (Exception e) {
-            return null;
-        }
-        return post;
+        em.persist(post);
     }
 
     @Override
@@ -66,16 +63,24 @@ public class PostRepositoryImpl implements PostRepository {
         return post;
     }
 
+    public City saveCity(City city) {
+        em.persist(city);
+        return em.find(City.class, city.getId());
+    }
     public City getCityById(Long id) {
         return em.find(City.class, id);
     }
 
-    @Override
+    public void savePlace(Place place) {
+        em.persist(place);
+    }
     public Place getPlaceById(Long id) {
         return em.find(Place.class, id);
     }
 
-    @Override
+    public void saveCategory(Category category) {
+        em.persist(category);
+    }
     public Category getCategoryById(Long id) {
         return em.find(Category.class, id);
     }
