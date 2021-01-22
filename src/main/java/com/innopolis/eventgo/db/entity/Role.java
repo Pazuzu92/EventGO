@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -27,10 +25,6 @@ public class Role {
 
     @Column(name = "role_code")
     private int roleCode;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Set<User> users = new HashSet<>();
 
     @Column(name = "VERSION")
     @Version

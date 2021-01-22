@@ -1,10 +1,8 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,9 +22,6 @@ public class Category {
 
     @Column(name = "name_category")
     private String nameCategory;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Set<Post> posts = new HashSet<>();
 
     @Override
     public String toString() {
