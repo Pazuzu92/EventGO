@@ -11,12 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = Comment.findCommentByPostId, query = "select c from Comment c where id_post = :id_post")
 public class Comment {
 
-    public Comment(User user, Post post) {
-        this.user = user;
-        this.post = post;
-    }
+    public final static String findCommentByPostId = "Comment.findCommentByPostId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

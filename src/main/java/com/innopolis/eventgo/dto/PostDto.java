@@ -2,32 +2,16 @@ package com.innopolis.eventgo.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class PostDto {
-
+    private Long idUser;
     private String header;
-
     private String description;
-
-    private int like;
-
-    private int dislike;
-
-    private LocalDate dateFrom;
-
-    private LocalDate dateTo;
-
-    private UserDto user;
-
+    private String dateFrom;
+    private String dateTo;
+    private List<CommentDto> comment;
     private CategoryDto category;
-
-    private PostStatusDto postStatus;
-
     private PlaceDto place;
-
-    private Set<CommentDto> comments = new HashSet<>();
 }

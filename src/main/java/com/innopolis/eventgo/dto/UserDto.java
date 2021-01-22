@@ -16,5 +16,5 @@ public class UserDto {
 
     private RoleDto role;
 
-    private Set<CommentDto> comments = new HashSet<>();
+//    private Set<CommentDto> comments = new HashSet<>();
 }

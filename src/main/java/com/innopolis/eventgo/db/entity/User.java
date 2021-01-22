@@ -1,18 +1,18 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @Getter
 @Setter
-@NamedQuery(name = "User.findAll", query = "select u from User u")
 public class User {
 
     public User(Role role) {this.role = role;}
@@ -38,17 +38,14 @@ public class User {
     @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
     private Role role;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Comment> comments = new HashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Post> posts = new HashSet<>();
+    private List<Post> posts = new ArrayList<>();
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "users")
-    private Set<Post> post = new HashSet<>();
+    private List<Post> post = new ArrayList<>();
 
     @Column(name = "VERSION")
     @Version

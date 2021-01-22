@@ -14,7 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = PostStatus.getStatusById, query = "select s from PostStatus s where s.status = :id")
 public class PostStatus {
+
+    public final static String getStatusById = "PostStatus.getStatusById";
 
     public final static int MODERATED = 1;
     public final static int REJECTED = 2;
