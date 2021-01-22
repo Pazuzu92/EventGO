@@ -153,6 +153,16 @@ public class TestDataInit {
         post3.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post3.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
+        Comment comment1 = new Comment();
+        comment1.setText("this is comment");
+        comment1.setPost(post1);
+        comment1.setUser(user1);
+
+        Comment comment2 = new Comment();
+        comment2.setText("this is comment 2");
+        comment2.setPost(post1);
+        comment2.setUser(user2);
+
         entityManager.persist(roleUser);
         entityManager.persist(roleModerator);
         entityManager.persist(roleAdmin);
@@ -187,5 +197,8 @@ public class TestDataInit {
         entityManager.persist(post1);
         entityManager.persist(post2);
         entityManager.persist(post3);
+
+        entityManager.persist(comment1);
+        entityManager.persist(comment2);
     }
 }

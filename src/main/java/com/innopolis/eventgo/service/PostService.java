@@ -2,16 +2,15 @@ package com.innopolis.eventgo.service;
 
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.db.repository.PostRepository;
-import com.innopolis.eventgo.dto.CategoryDto;
-import com.innopolis.eventgo.dto.CityDto;
-import com.innopolis.eventgo.dto.PlaceDto;
-import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.*;
 import com.innopolis.eventgo.exceptions.PostNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -32,6 +31,27 @@ public class PostService {
         CityDto cityDto = new CityDto();
         cityDto.setId(post.getPlace().getCity().getId());
 
+        List<Comment> comments = post.getComments();
+        List<CommentDto> commentDtos = new ArrayList<>();
+
+        comments.forEach(c -> {
+            CommentDto commentDto = new CommentDto();
+            UserDto userDto = new UserDto();
+            RoleDto roleDto = new RoleDto();
+
+            roleDto.setRoleCode(c.getUser().getRole().getRoleCode());
+
+            userDto.setName(c.getUser().getName());
+            userDto.setEmail(c.getUser().getEmail());
+            userDto.setLogin(c.getUser().getLogin());
+            userDto.setRole(roleDto);
+
+            commentDto.setText(c.getText());
+            commentDto.setUserDto(userDto);
+
+            commentDtos.add(commentDto);
+        });
+
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(post.getPlace().getId());
         placeDto.setHouse(post.getPlace().getHouse());
@@ -40,13 +60,14 @@ public class PostService {
         placeDto.setCity(cityDto);
 
         PostDto postDto = new PostDto();
-        postDto.setId_user(post.getUser().getId());
+        postDto.setIdUser(post.getUser().getId());
         postDto.setHeader(post.getHeader());
         postDto.setDescription(post.getDescription());
         postDto.setCategory(categoryDto);
         postDto.setPlace(placeDto);
-        postDto.setDate_from(post.getDateFrom().toString());
-        postDto.setDate_to(post.getDateTo().toString());
+        postDto.setComment(commentDtos);
+        postDto.setDateFrom(post.getDateFrom().toString());
+        postDto.setDateTo(post.getDateTo().toString());
         return postDto;
     }
 
@@ -54,7 +75,7 @@ public class PostService {
         if (!isValidPost(post)) throw new PostNotFoundException("Bad post");
 
         User user = new User();
-        user.setId(post.getId_user());
+        user.setId(post.getIdUser());
         City city = new City();
         city.setId(post.getPlace().getCity().getId());
 
@@ -72,8 +93,8 @@ public class PostService {
         postEntity.setUser(user);
         postEntity.setHeader(post.getHeader());
         postEntity.setDescription(post.getDescription());
-        postEntity.setDateFrom(LocalDateTime.parse(post.getDate_from(), dateTimeFormatter));
-        postEntity.setDateTo(LocalDateTime.parse(post.getDate_to(), dateTimeFormatter));
+        postEntity.setDateFrom(LocalDateTime.parse(post.getDateFrom(), dateTimeFormatter));
+        postEntity.setDateTo(LocalDateTime.parse(post.getDateTo(), dateTimeFormatter));
         postEntity.setCategory(category);
         postEntity.setPlace(place);
         postEntity.setDate_create(LocalDateTime.now());
@@ -90,8 +111,8 @@ public class PostService {
 
         post.setHeader(postUpdate.getHeader());
         post.setDescription(postUpdate.getDescription());
-        post.setDateTo(LocalDateTime.parse(postUpdate.getDate_to(), dateTimeFormatter));
-        post.setDateFrom(LocalDateTime.parse(postUpdate.getDate_from(), dateTimeFormatter));
+        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
+        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
         post.setCategory(category);
         post.setPlace(place);
 

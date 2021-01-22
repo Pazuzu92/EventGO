@@ -2,13 +2,16 @@ package com.innopolis.eventgo.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PostDto {
-    private Long id_user;
+    private Long idUser;
     private String header;
     private String description;
-    private String date_from;
-    private String date_to;
+    private String dateFrom;
+    private String dateTo;
+    private List<CommentDto> comment;
     private CategoryDto category;
     private PlaceDto place;
 }

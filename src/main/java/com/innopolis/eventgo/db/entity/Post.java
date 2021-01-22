@@ -54,6 +54,9 @@ public class Post {
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false)
     private Category category;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    List<Comment> comments = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
     private PostStatus postStatus;
