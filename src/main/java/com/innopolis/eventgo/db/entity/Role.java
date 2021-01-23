@@ -1,20 +1,16 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "role")
 @NoArgsConstructor
 @Getter
 @Setter
-@NamedQuery(name = "Role.findByCode", query = "select r from Role r where role_code = :code")
 public class Role {
 
     public final static int USER = 1;
@@ -28,10 +24,6 @@ public class Role {
 
     @Column(name = "role_code")
     private int roleCode;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Set<User> users = new HashSet<>();
 
     @Column(name = "VERSION")
     @Version
