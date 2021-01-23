@@ -3,7 +3,7 @@ package com.innopolis.eventgo.service;
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.db.repository.PostRepository;
 import com.innopolis.eventgo.dto.*;
-import com.innopolis.eventgo.exceptions.PostNotFoundException;
+import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.mappers.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +22,15 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public PostDto getPost(long id) throws PostNotFoundException {
+    public PostDto getPost(long id) throws NotFoundException {
         Post post = postRepository.getPost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
 
         return postMapper.mapToDto(post);
     }
 
-    public ResponseMessageEntity createPost(PostDto postDto) throws PostNotFoundException {
-        if (!isValidPost(postDto)) throw new PostNotFoundException("Bad post");
+    public ResponseMessageEntity createPost(PostDto postDto) throws NotFoundException {
+        if (!isValidPost(postDto)) throw new NotFoundException("Bad post");
 
         Post postEntity = postMapper.mapToPost(postDto);
         postEntity.setDate_create(LocalDateTime.now());
@@ -38,9 +38,9 @@ public class PostService {
         return getResponseMessage();
     }
 
-    public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
+    public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws NotFoundException {
         Post post = postRepository.getPost(id);
-        if (!isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
+        if (!isValidPost(postUpdate) || post == null) throw new NotFoundException("Post not found");
 
         Place place = postRepository.getPlaceById(postUpdate.getPlace().getId());
         Category category = postRepository.getCategoryById(postUpdate.getCategory().getId());
@@ -57,9 +57,9 @@ public class PostService {
         return getResponseMessage();
     }
 
-    public Post deletePost(long id) throws PostNotFoundException {
+    public Post deletePost(long id) throws NotFoundException {
         Post post = postRepository.deletePost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
         return post;
     }
 

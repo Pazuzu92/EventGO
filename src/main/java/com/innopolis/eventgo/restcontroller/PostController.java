@@ -4,7 +4,7 @@ import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
 import com.innopolis.eventgo.db.repository.TestDataInit;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.exceptions.PostNotFoundException;
+import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +20,22 @@ public class PostController {
     private PostService postService;
 
     @GetMapping(value = "/post/{postId}")
-    public PostDto getPost(@PathVariable("postId") long id) throws PostNotFoundException {
+    public PostDto getPost(@PathVariable("postId") long id) throws NotFoundException {
         return postService.getPost(id);
     }
 
     @PostMapping(value = "/post")
-    public ResponseMessageEntity createPost(@RequestBody PostDto post) throws PostNotFoundException {
+    public ResponseMessageEntity createPost(@RequestBody PostDto post) throws NotFoundException {
         return postService.createPost(post);
     }
 
     @PutMapping(value = "/post/{postId}")
-    public ResponseMessageEntity updatePost(@PathVariable("postId") Long id, @RequestBody PostDto postUpdate) throws PostNotFoundException {
+    public ResponseMessageEntity updatePost(@PathVariable("postId") Long id, @RequestBody PostDto postUpdate) throws NotFoundException {
         return postService.updatePost(id, postUpdate);
     }
 
     @DeleteMapping(value = "/post/{postId}")
-    public Post deletePost(@PathVariable("postId") long id) throws PostNotFoundException {
+    public Post deletePost(@PathVariable("postId") long id) throws NotFoundException {
         return postService.deletePost(id);
     }
 
