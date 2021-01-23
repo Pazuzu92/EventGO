@@ -114,12 +114,47 @@ public class TestDataInit {
         PostStatus postStatus5 = new PostStatus();
         postStatus5.setStatus(PostStatus.REJECTED);
 
+        Likes likes1 = new Likes();
+        likes1.setLikes(100);
+
+        Likes likes2 = new Likes();
+        likes2.setLikes(200);
+
+        Likes likes3 = new Likes();
+        likes3.setLikes(300);
+
+        Dislikes dislikes1 = new Dislikes();
+        dislikes1.setDislikes(20);
+
+        Dislikes dislikes2 = new Dislikes();
+        dislikes2.setDislikes(30);
+
+        Dislikes dislikes3 = new Dislikes();
+        dislikes3.setDislikes(40);
+
+        Group group1 = new Group();
+        Group group2 = new Group();
+        Group group3 = new Group();
+
         Post post1 = new Post();
+        Post post2 = new Post();
+        Post post3 = new Post();
+
+        group1.setUser(user1);
+        group1.setPost(post1);
+
+        group2.setUser(user2);
+        group2.setPost(post2);
+
+        group3.setUser(user3);
+        group3.setPost(post3);
+
         post1.setCategory(category1);
         post1.setHeader("Fun");
         post1.setDescription("Test post");
-        post1.setLike(24);
-        post1.setDislike(2);
+        post1.setLikes(likes1);
+        post1.setDislikes(dislikes1);
+        post1.getGroups().add(group1);
         post1.setPlace(place1);
         post1.setPostStatus(postStatus1);
         post1.setUser(user1);
@@ -127,12 +162,12 @@ public class TestDataInit {
         post1.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post1.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
-        Post post2 = new Post();
         post2.setCategory(category2);
         post2.setHeader("Drive");
         post2.setDescription("Test post");
-        post2.setLike(27);
-        post2.setDislike(7);
+        post2.setLikes(likes2);
+        post2.setDislikes(dislikes2);
+        post2.getGroups().add(group2);
         post2.setPlace(place2);
         post2.setPostStatus(postStatus1);
         post2.setUser(user1);
@@ -140,12 +175,12 @@ public class TestDataInit {
         post2.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post2.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
-        Post post3 = new Post();
         post3.setCategory(category3);
         post3.setHeader("Dance");
         post3.setDescription("Test post");
-        post3.setLike(274);
-        post3.setDislike(73);
+        post3.setLikes(likes3);
+        post3.setDislikes(dislikes3);
+        post3.getGroups().add(group3);
         post3.setPlace(place3);
         post3.setPostStatus(postStatus1);
         post3.setUser(user1);

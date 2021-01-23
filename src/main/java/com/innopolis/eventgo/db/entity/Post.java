@@ -27,11 +27,13 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "likes")
-    private int like;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_likes", referencedColumnName = "id")
+    private Likes likes;
 
-    @Column(name = "dislikes")
-    private int dislike;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_dislikes", referencedColumnName = "id")
+    private Dislikes dislikes;
 
     @Column(name = "date_create")
     private LocalDateTime date_create;
