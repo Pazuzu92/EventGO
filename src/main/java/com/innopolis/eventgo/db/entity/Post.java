@@ -60,7 +60,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
-    private PostStatus postStatus;
+    private PostStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<Group> groups = new ArrayList<>();

@@ -35,7 +35,7 @@ public class PostRepositoryImpl implements PostRepository {
         place.setCity(city);
         post.setPlace(place);
         post.setCategory(category);
-        post.setPostStatus(postStatus);
+        post.setStatus(postStatus);
         post.setLikes(likes);
         post.setDislikes(dislikes);
 

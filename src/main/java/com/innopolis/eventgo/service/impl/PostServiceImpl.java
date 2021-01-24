@@ -27,17 +27,20 @@ public class PostServiceImpl implements PostService {
     private final ModelMapper modelMapper = new ModelMapper();
     private final CityDAO cityDAO;
     private final CategoryDAO categoryDAO;
+    private final PostStatusDAO postStatusDAO;
 
     public PostServiceImpl(PostRepository postRepository,
                            PostDAO postDAO,
                            CityDAO cityDAO,
                            PostMapper postMapper,
-                           CategoryDAO categoryDAO) {
+                           CategoryDAO categoryDAO,
+                           PostStatusDAO postStatusDAO) {
         this.postRepository = postRepository;
         this.postDAO = postDAO;
         this.postMapper = postMapper;
         this.cityDAO = cityDAO;
         this.categoryDAO = categoryDAO;
+        this.postStatusDAO = postStatusDAO;
     }
 
     public PostDto getPost(long id) throws PostNotFoundException {
@@ -94,26 +97,35 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPostsByFilter(Optional<String> cityName, Optional<String> categoryName, Optional<Integer> page,
-                                          Optional<Integer> size, Optional<String> sort) throws PostNotFoundException {
+    public List<PostDto> getPostsByFilter(Optional<String> cityName,
+                                          Optional<String> categoryName,
+                                          Optional<Long> postStatusId,
+                                          Optional<Integer> page,
+                                          Optional<Integer> size,
+                                          Optional<String> sort) throws PostNotFoundException {
 
         Optional<Category> category = Optional.empty();
+        Optional<PostStatus> postStatus = Optional.empty();
 
         if (categoryName.isPresent()) {
-            category = Optional.ofNullable(categoryDAO.findByNameCategory(categoryName.get()));
+            category = categoryDAO.findByNameCategory(categoryName.get());
             if (!category.isPresent()) throw new PostNotFoundException("Posts not found");
         }
 
+        if (postStatusId.isPresent()) {
+            postStatus = postStatusDAO.findById(postStatusId.get());
+            if (!postStatus.isPresent()) throw new PostNotFoundException("Posts not found");
+        }
 
         List<PostDto> postDtoList = EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
                 .withPagination(page, size, sort)
                 .withFiltering()
                 .field("category", category)
+                .field("status", postStatus)
                 .getResult();
 
-
         if (cityName.isPresent()) {
-            Optional<City> finalCity = Optional.ofNullable(cityDAO.findByCityName(cityName.get()));
+            Optional<City> finalCity = cityDAO.findByCityName(cityName.get());
 
             if (finalCity.isPresent()) {
                 postDtoList = postDtoList.stream()

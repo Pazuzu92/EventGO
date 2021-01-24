@@ -51,9 +51,10 @@ public class PostController {
     @GetMapping("/post")
     public List<PostDto> getPostsByFilter(@RequestParam(required = false) Optional<String> city,
                                           @RequestParam(required = false) Optional<String> category,
+                                          @RequestParam(required = false) Optional<Long> statusId,
                                           @RequestParam(required = false) Optional<Integer> page,
                                           @RequestParam(required = false) Optional<Integer> size,
                                           @RequestParam(required = false) Optional<String> sort) throws PostNotFoundException {
-        return postService.getPostsByFilter(city, category, page, size, sort);
+        return postService.getPostsByFilter(city, category, statusId, page, size, sort);
     }
 }
