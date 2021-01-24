@@ -2,7 +2,6 @@ package com.innopolis.eventgo.db.repository;
 
 import com.innopolis.eventgo.db.entity.Category;
 import com.innopolis.eventgo.db.entity.City;
-import com.innopolis.eventgo.db.entity.Place;
 import com.innopolis.eventgo.db.entity.Post;
 
 public interface PostRepository {
@@ -14,9 +13,6 @@ public interface PostRepository {
 
     City saveCity(City city);
     City getCityById(Long id);
-
-    void savePlace(Place place);
-    Place getPlaceById(Long id);
 
     void saveCategory(Category category);
     Category getCategoryById(Long id);

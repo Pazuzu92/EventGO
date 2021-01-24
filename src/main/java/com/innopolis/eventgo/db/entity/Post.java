@@ -27,6 +27,9 @@ public class Post {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "address")
+    private String address;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_likes", referencedColumnName = "id")
     private Likes likes;
@@ -66,8 +69,8 @@ public class Post {
     private List<Group> groups = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "id_place", referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "id_city", referencedColumnName = "id")
+    private City city;
 
     @Column(name = "VERSION")
     @Version

@@ -81,30 +81,6 @@ public class TestDataInit {
         City city3 = new City();
         city3.setCityName("Казань");
 
-        Place place1 = new Place();
-        place1.setStreet("Wall Street");
-        place1.setHouse("10");
-        place1.setNumber("1");
-        place1.setCity(city1);
-
-        Place place2 = new Place();
-        place2.setStreet("Nevsky");
-        place2.setHouse("12");
-        place2.setNumber("3");
-        place2.setCity(city2);
-
-        Place place3 = new Place();
-        place3.setStreet("Yashlek");
-        place3.setHouse("15");
-        place3.setNumber("10");
-        place3.setCity(city3);
-
-        Place place4 = new Place();
-        place4.setStreet("Vosstania");
-        place4.setHouse("45");
-        place4.setNumber("2");
-        place4.setCity(city1);
-
         PostStatus postStatus1 = new PostStatus();
         postStatus1.setStatus(PostStatus.ACTIVE);
 
@@ -169,10 +145,11 @@ public class TestDataInit {
         post1.setCategory(category1);
         post1.setHeader("Fun");
         post1.setDescription("Test post");
+        post1.setAddress("Невский 54, 5");
         post1.setLikes(likes1);
         post1.setDislikes(dislikes1);
         post1.getGroups().add(group1);
-        post1.setPlace(place1);
+        post1.setCity(city1);
         post1.setStatus(postStatus1);
         post1.setUser(user1);
         post1.setDate_create(LocalDateTime.now());
@@ -182,10 +159,11 @@ public class TestDataInit {
         post2.setCategory(category2);
         post2.setHeader("Drive");
         post2.setDescription("Test post");
+        post2.setAddress("Яшлек 43, д. 6");
         post2.setLikes(likes2);
         post2.setDislikes(dislikes2);
         post2.getGroups().add(group2);
-        post2.setPlace(place2);
+        post2.setCity(city2);
         post2.setStatus(postStatus1);
         post2.setUser(user1);
         post2.setDate_create(LocalDateTime.now());
@@ -195,10 +173,11 @@ public class TestDataInit {
         post3.setCategory(category3);
         post3.setHeader("Dance");
         post3.setDescription("Test post");
+        post3.setAddress("Смоленская улица 89, дом 7");
         post3.setLikes(likes3);
         post3.setDislikes(dislikes3);
         post3.getGroups().add(group3);
-        post3.setPlace(place3);
+        post3.setCity(city3);
         post3.setStatus(postStatus1);
         post3.setUser(user1);
         post3.setDate_create(LocalDateTime.now());
@@ -208,10 +187,11 @@ public class TestDataInit {
         post4.setCategory(category1);
         post4.setHeader("Car");
         post4.setDescription("Test post");
+        post4.setAddress("Центральня 65");
         post4.setLikes(likes4);
         post4.setDislikes(dislikes4);
         post4.getGroups().add(group4);
-        post4.setPlace(place4);
+        post4.setCity(city1);
         post4.setStatus(postStatus1);
         post4.setUser(user1);
         post4.setDate_create(LocalDateTime.now());
@@ -248,11 +228,6 @@ public class TestDataInit {
         entityManager.persist(city1);
         entityManager.persist(city2);
         entityManager.persist(city3);
-
-        entityManager.persist(place1);
-        entityManager.persist(place2);
-        entityManager.persist(place3);
-        entityManager.persist(place4);
 
         entityManager.persist(postStatus1);
         entityManager.persist(postStatus2);

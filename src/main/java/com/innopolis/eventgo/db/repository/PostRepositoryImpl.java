@@ -25,15 +25,12 @@ public class PostRepositoryImpl implements PostRepository {
 
         Likes likes = new Likes();
         Dislikes dislikes = new Dislikes();
-        City city = em.find(City.class, post.getPlace().getCity().getId());
+        City city = em.find(City.class, post.getCity().getId());
         Category category = em.find(Category.class, post.getCategory().getId());
         PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
 
-        Place place = post.getPlace();
-
         post.setUser(user);
-        place.setCity(city);
-        post.setPlace(place);
+        post.setCity(city);
         post.setCategory(category);
         post.setStatus(postStatus);
         post.setLikes(likes);
@@ -50,7 +47,7 @@ public class PostRepositoryImpl implements PostRepository {
         postOld.setDescription(post.getDescription());
         postOld.setDateFrom(post.getDateFrom());
         postOld.setDateTo(post.getDateTo());
-        postOld.setPlace(post.getPlace());
+        postOld.setCity(post.getCity());
         postOld.setCategory(post.getCategory());
         em.merge(postOld);
         return postOld;
@@ -67,20 +64,15 @@ public class PostRepositoryImpl implements PostRepository {
         em.persist(city);
         return em.find(City.class, city.getId());
     }
+
     public City getCityById(Long id) {
         return em.find(City.class, id);
-    }
-
-    public void savePlace(Place place) {
-        em.persist(place);
-    }
-    public Place getPlaceById(Long id) {
-        return em.find(Place.class, id);
     }
 
     public void saveCategory(Category category) {
         em.persist(category);
     }
+
     public Category getCategoryById(Long id) {
         return em.find(Category.class, id);
     }

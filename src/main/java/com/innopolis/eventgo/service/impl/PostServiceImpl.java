@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -63,7 +61,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getPost(id);
         if (!isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
 
-        Place place = postRepository.getPlaceById(postUpdate.getPlace().getId());
+        Optional<City> city = cityDAO.findById(postUpdate.getCity().getId());
         Category category = postRepository.getCategoryById(postUpdate.getCategory().getId());
 
         post.setHeader(postUpdate.getHeader());
@@ -71,7 +69,7 @@ public class PostServiceImpl implements PostService {
         post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
         post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
         post.setCategory(category);
-        post.setPlace(place);
+        city.ifPresent(post::setCity);
 
         postRepository.updatePost(id, post);
 
@@ -106,6 +104,7 @@ public class PostServiceImpl implements PostService {
 
         Optional<Category> category = Optional.empty();
         Optional<PostStatus> postStatus = Optional.empty();
+        Optional<City> city = Optional.empty();
 
         if (categoryName.isPresent()) {
             category = categoryDAO.findByNameCategory(categoryName.get());
@@ -117,22 +116,18 @@ public class PostServiceImpl implements PostService {
             if (!postStatus.isPresent()) throw new PostNotFoundException("Posts not found");
         }
 
+        if (cityName.isPresent()) {
+            city = cityDAO.findByCityName(cityName.get());
+            if (!city.isPresent()) throw new PostNotFoundException("Posts not found");
+        }
+
         List<PostDto> postDtoList = EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
                 .withPagination(page, size, sort)
                 .withFiltering()
                 .field("category", category)
                 .field("status", postStatus)
+                .field("city", city)
                 .getResult();
-
-        if (cityName.isPresent()) {
-            Optional<City> finalCity = cityDAO.findByCityName(cityName.get());
-
-            if (finalCity.isPresent()) {
-                postDtoList = postDtoList.stream()
-                        .filter(postDto -> Objects.equals(postDto.getPlace().getCity().getId(), finalCity.get().getId()))
-                        .collect(Collectors.toList());
-            } else throw new PostNotFoundException("Posts not found");
-        }
 
         return postDtoList;
     }
