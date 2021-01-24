@@ -48,20 +48,14 @@ public class PostMapper {
                 .build();
         CityDto cityDto = CityDto.builder()
                 .id(post.getId())
-                .cityName(post.getPlace().getCity().getCityName())
-                .build();
-        PlaceDto placeDto = PlaceDto.builder()
-                .id(post.getPlace().getId())
-                .street(post.getPlace().getStreet())
-                .house(post.getPlace().getHouse())
-                .number(post.getPlace().getNumber())
-                .city(cityDto)
+                .cityName(post.getCity().getCityName())
                 .build();
 
         PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .header(post.getHeader())
                 .description(post.getDescription())
+                .address(post.getAddress())
                 .likes(likesDto)
                 .dislikes(dislikesDto)
                 .dateFrom(post.getDateFrom().toString())
@@ -70,7 +64,7 @@ public class PostMapper {
                 .groups(groupsDtos)
                 .comment(commentDtos)
                 .category(categoryDto)
-                .place(placeDto)
+                .city(cityDto)
                 .build();
 
         return postDto;
@@ -95,14 +89,8 @@ public class PostMapper {
         category.setNameCategory(post.getCategory().getNameCategory());
 
         City city = new City();
-        city.setId(post.getPlace().getCity().getId());
-        city.setCityName(post.getPlace().getCity().getCityName());
-
-        Place place = new Place();
-        place.setId(post.getPlace().getId());
-        place.setStreet(post.getPlace().getStreet());
-        place.setHouse(post.getPlace().getHouse());
-        place.setNumber(post.getPlace().getNumber());
+        city.setId(post.getCity().getId());
+        city.setCityName(post.getCity().getCityName());
 
         post.setId(post.getId());
         post.setHeader(postDto.getHeader());
@@ -111,7 +99,7 @@ public class PostMapper {
         post.setDateTo(LocalDateTime.parse(postDto.getDateTo(), dateTimeFormatter));
         post.setUser(user);
         post.setCategory(category);
-        post.setPlace(place);
+        post.setCity(city);
 
         return post;
     }
