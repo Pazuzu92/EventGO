@@ -152,7 +152,7 @@ public class TestDataInit {
         post1.setCity(city1);
         post1.setStatus(postStatus1);
         post1.setUser(user1);
-        post1.setDate_create(LocalDateTime.now());
+        post1.setDateCreate(LocalDateTime.now());
         post1.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post1.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
@@ -166,7 +166,7 @@ public class TestDataInit {
         post2.setCity(city2);
         post2.setStatus(postStatus1);
         post2.setUser(user1);
-        post2.setDate_create(LocalDateTime.now());
+        post2.setDateCreate(LocalDateTime.now());
         post2.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post2.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
@@ -180,7 +180,7 @@ public class TestDataInit {
         post3.setCity(city3);
         post3.setStatus(postStatus1);
         post3.setUser(user1);
-        post3.setDate_create(LocalDateTime.now());
+        post3.setDateCreate(LocalDateTime.now());
         post3.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post3.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
@@ -194,7 +194,7 @@ public class TestDataInit {
         post4.setCity(city1);
         post4.setStatus(postStatus1);
         post4.setUser(user1);
-        post4.setDate_create(LocalDateTime.now());
+        post4.setDateCreate(LocalDateTime.now());
         post4.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post4.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
