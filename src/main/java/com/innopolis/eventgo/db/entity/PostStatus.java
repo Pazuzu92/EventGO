@@ -1,20 +1,20 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "post_status")
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = PostStatus.getStatusById, query = "select s from PostStatus s where s.status = :id")
 public class PostStatus {
+
+    public final static String getStatusById = "PostStatus.getStatusById";
 
     public final static int MODERATED = 1;
     public final static int REJECTED = 2;
@@ -29,10 +29,6 @@ public class PostStatus {
 
     @Column(name = "status")
     private int status;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postStatus")
-    private Set<Post> posts = new HashSet<>();
 
     @Version
     @Column(name = "version")

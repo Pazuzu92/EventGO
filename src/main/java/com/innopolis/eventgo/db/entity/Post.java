@@ -1,14 +1,13 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -28,17 +27,28 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "likes")
-    private int like;
+    @Column(name = "address")
+    private String address;
 
-    @Column(name = "dislikes")
-    private int dislike;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_likes", referencedColumnName = "id")
+    private Likes likes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_dislikes", referencedColumnName = "id")
+    private Dislikes dislikes;
+
+    @Column(name = "date_create")
+    private LocalDateTime date_create;
 
     @Column(name = "date_from")
-    private LocalDate dateFrom;
+    private LocalDateTime dateFrom;
 
     @Column(name = "date_to")
-    private LocalDate dateTo;
+    private LocalDateTime dateTo;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostPhoto> postPhotos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
@@ -48,18 +58,19 @@ public class Post {
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false)
     private Category category;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
-    private PostStatus postStatus;
+    private PostStatus status;
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "groups", joinColumns = {@JoinColumn(name = "id_post")}, inverseJoinColumns = {@JoinColumn(name = "id_user")})
-    private Set<User> users = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Group> groups = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "id_place", referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "id_city", referencedColumnName = "id")
+    private City city;
 
     @Column(name = "VERSION")
     @Version

@@ -1,14 +1,11 @@
 package com.innopolis.eventgo.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "city")
@@ -23,12 +20,8 @@ public class City {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "city_name")
+    @Column(name = "city_name", unique = true)
     private String cityName;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
-    private Set<Place> places = new HashSet<>();
 
     @Column(name = "VERSION")
     @Version

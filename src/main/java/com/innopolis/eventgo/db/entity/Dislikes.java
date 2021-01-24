@@ -5,33 +5,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "category")
+@Table(name = "dislikes")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category {
+public class Dislikes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name_category", unique = true)
-    private String nameCategory;
+    @Column(name = "count_dislikes")
+    private Integer dislikes;
 
     @Column(name = "VERSION")
     @Version
     private int version;
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", nameCategory='" + nameCategory + '\'' +
-                '}';
-    }
 }
