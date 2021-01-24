@@ -20,7 +20,7 @@ public class City {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "city_name")
+    @Column(name = "city_name", unique = true)
     private String cityName;
 
     @Column(name = "VERSION")

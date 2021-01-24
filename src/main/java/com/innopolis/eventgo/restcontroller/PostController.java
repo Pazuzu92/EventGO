@@ -6,18 +6,22 @@ import com.innopolis.eventgo.db.repository.TestDataInit;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.exceptions.PostNotFoundException;
 import com.innopolis.eventgo.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping("/api")
 public class PostController {
 
-    @Autowired
-    private TestDataInit testDataInit;
+    private final PostService postService;
+    private final TestDataInit testDataInit;
 
-    @Autowired
-    private PostService postService;
+    public PostController(PostService postService, TestDataInit testDataInit) {
+        this.postService = postService;
+        this.testDataInit = testDataInit;
+    }
 
     @GetMapping(value = "/post/{postId}")
     public PostDto getPost(@PathVariable("postId") long id) throws PostNotFoundException {
@@ -42,5 +46,15 @@ public class PostController {
     @GetMapping(value = "/init")
     public void init() {
         testDataInit.init();
+    }
+
+    @GetMapping("/post")
+    public List<PostDto> getPostsByFilter(@RequestParam(required = false) Optional<String> city,
+                                          @RequestParam(required = false) Optional<String> category,
+                                          @RequestParam(required = false) Optional<Long> statusId,
+                                          @RequestParam(required = false) Optional<Integer> page,
+                                          @RequestParam(required = false) Optional<Integer> size,
+                                          @RequestParam(required = false) Optional<String> sort) throws PostNotFoundException {
+        return postService.getPostsByFilter(city, category, statusId, page, size, sort);
     }
 }

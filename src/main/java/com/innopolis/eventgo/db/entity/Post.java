@@ -27,6 +27,9 @@ public class Post {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "address")
+    private String address;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_likes", referencedColumnName = "id")
     private Likes likes;
@@ -60,14 +63,14 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "id_post_status", referencedColumnName = "id", nullable = false)
-    private PostStatus postStatus;
+    private PostStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<Group> groups = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "id_place", referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "id_city", referencedColumnName = "id")
+    private City city;
 
     @Column(name = "VERSION")
     @Version
