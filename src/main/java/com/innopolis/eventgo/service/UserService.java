@@ -29,7 +29,7 @@ public class UserService {
         return getResponseMessage();
     }
 
-    public UserDto getUser(long id) throws NotFoundException {
+    public UserDto getUser(Long id) throws NotFoundException {
         User user = userRepository.getUser(id);
         UserDto result = modelMapper.map(user, UserDto.class);
         if (user == null) throw new NotFoundException("User not found");
