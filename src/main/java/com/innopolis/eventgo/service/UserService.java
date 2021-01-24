@@ -30,13 +30,6 @@ public class UserService {
         return result;
     }
 
-    public UserDto create(UserCreateDto userCreateDto) {
-        User user = modelMapper.map(userCreateDto, User.class);
-        User saved = userRepository.save(user);
-        UserDto result = modelMapper.map(saved, UserDto.class);
-        return result;
-    }
-
     private boolean isValidUser(User user) {
         if (user == null ||
                 user.getName() == null ||
