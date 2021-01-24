@@ -1,9 +1,10 @@
 package com.innopolis.eventgo.db.repository;
 
 import com.innopolis.eventgo.db.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface UserRepository {
     User getUser(long id);
-    User updateName(long id, User user);
+    Optional<User> updateName(long id, User user);
 }

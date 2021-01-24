@@ -39,7 +39,7 @@ public class Post {
     private Dislikes dislikes;
 
     @Column(name = "date_create")
-    private LocalDateTime date_create;
+    private LocalDateTime dateCreate;
 
     @Column(name = "date_from")
     private LocalDateTime dateFrom;

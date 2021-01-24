@@ -2,11 +2,11 @@ package com.innopolis.eventgo.db.repository;
 
 import com.innopolis.eventgo.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -21,12 +21,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Transactional
     @Override
-    public User updateName(long id, User user) {
+    public Optional<User> updateName(long id, User user) {
         User userOld = em.find(User.class, id);
-        if (userOld == null) return null;
+        if (userOld == null) return Optional.empty();
         userOld.setName(user.getName());
         em.merge(userOld);
-        return userOld;
+        return Optional.of(userOld);
     }
 
 

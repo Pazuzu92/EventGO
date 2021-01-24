@@ -54,7 +54,7 @@ public class PostController {
                                           @RequestParam(required = false) Optional<Long> statusId,
                                           @RequestParam(required = false) Optional<Integer> page,
                                           @RequestParam(required = false) Optional<Integer> size,
-                                          @RequestParam(required = false) Optional<String> sort) throws PostNotFoundException {
+                                          @RequestParam(required = false) Optional<String> sort) throws NotFoundException {
         return postService.getPostsByFilter(city, category, statusId, page, size, sort);
     }
 }

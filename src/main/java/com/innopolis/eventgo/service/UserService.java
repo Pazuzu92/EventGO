@@ -1,13 +1,16 @@
 package com.innopolis.eventgo.service;
 
+import com.innopolis.eventgo.db.entity.*;
 import org.modelmapper.ModelMapper;
-import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.db.repository.UserRepository;
 import com.innopolis.eventgo.dto.UserCreateDto;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,10 +20,13 @@ public class UserService {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public User updateUser(long id, User userUpdate) throws NotFoundException {
-        User user = userRepository.updateName(id, userUpdate);
+    public ResponseMessageEntity updateUser(long id, User userUpdate) throws NotFoundException {
+        User user = userRepository.getUser(id);
         if (isValidUser(user)) throw new NotFoundException("User not found");
-        return user;
+        user.setName(userUpdate.getName());
+
+        userRepository.updateName(id, userUpdate);
+        return getResponseMessage();
     }
 
     public UserDto getUser(long id) throws NotFoundException {
@@ -28,6 +34,7 @@ public class UserService {
         UserDto result = modelMapper.map(user, UserDto.class);
         if (user == null) throw new NotFoundException("User not found");
         return result;
+
     }
 
     private boolean isValidUser(User user) {
@@ -39,5 +46,11 @@ public class UserService {
         return true;
     }
 
+    private ResponseMessageEntity getResponseMessage() {
+        ResponseMessageEntity rme = new ResponseMessageEntity();
+        rme.setCode(200);
+        rme.setMessage("Ok");
+        return rme;
+    }
 
 }
