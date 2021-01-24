@@ -20,7 +20,7 @@ public class Category {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name_category")
+    @Column(name = "name_category", unique = true)
     private String nameCategory;
 
     @Column(name = "VERSION")

@@ -49,11 +49,11 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public List<Post> getPostsByCityAndCategory(@RequestParam(required = false) Optional<String> city,
-                                                @RequestParam(required = false) Optional<String> category,
-                                                @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
-                                                @RequestParam(required = false, defaultValue = "10") Optional<Integer> size,
-                                                @RequestParam(required = false, defaultValue = "like") String sort) throws PostNotFoundException{
-        return postService.getPostByFilter(city, category, page, size, sort);
+    public List<PostDto> getPostsByFilter(@RequestParam(required = false) Optional<String> city,
+                                          @RequestParam(required = false) Optional<String> category,
+                                          @RequestParam(required = false) Optional<Integer> page,
+                                          @RequestParam(required = false) Optional<Integer> size,
+                                          @RequestParam(required = false) Optional<String> sort) throws PostNotFoundException {
+        return postService.getPostsByFilter(city, category, page, size, sort);
     }
 }

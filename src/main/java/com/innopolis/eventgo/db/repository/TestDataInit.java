@@ -99,6 +99,12 @@ public class TestDataInit {
         place3.setNumber("10");
         place3.setCity(city3);
 
+        Place place4 = new Place();
+        place4.setStreet("Vosstania");
+        place4.setHouse("45");
+        place4.setNumber("2");
+        place4.setCity(city1);
+
         PostStatus postStatus1 = new PostStatus();
         postStatus1.setStatus(PostStatus.ACTIVE);
 
@@ -123,6 +129,9 @@ public class TestDataInit {
         Likes likes3 = new Likes();
         likes3.setLikes(300);
 
+        Likes likes4 = new Likes();
+        likes4.setLikes(400);
+
         Dislikes dislikes1 = new Dislikes();
         dislikes1.setDislikes(20);
 
@@ -132,13 +141,18 @@ public class TestDataInit {
         Dislikes dislikes3 = new Dislikes();
         dislikes3.setDislikes(40);
 
+        Dislikes dislikes4 = new Dislikes();
+        dislikes4.setDislikes(50);
+
         Group group1 = new Group();
         Group group2 = new Group();
         Group group3 = new Group();
+        Group group4 = new Group();
 
         Post post1 = new Post();
         Post post2 = new Post();
         Post post3 = new Post();
+        Post post4 = new Post();
 
         group1.setUser(user1);
         group1.setPost(post1);
@@ -148,6 +162,9 @@ public class TestDataInit {
 
         group3.setUser(user3);
         group3.setPost(post3);
+
+        group4.setUser(user1);
+        group4.setPost(post4);
 
         post1.setCategory(category1);
         post1.setHeader("Fun");
@@ -188,6 +205,19 @@ public class TestDataInit {
         post3.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
         post3.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
 
+        post4.setCategory(category1);
+        post4.setHeader("Car");
+        post4.setDescription("Test post");
+        post4.setLikes(likes4);
+        post4.setDislikes(dislikes4);
+        post4.getGroups().add(group4);
+        post4.setPlace(place4);
+        post4.setPostStatus(postStatus1);
+        post4.setUser(user1);
+        post4.setDate_create(LocalDateTime.now());
+        post4.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
+        post4.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
+
         Comment comment1 = new Comment();
         comment1.setText("this is comment");
         comment1.setPost(post1);
@@ -222,6 +252,7 @@ public class TestDataInit {
         entityManager.persist(place1);
         entityManager.persist(place2);
         entityManager.persist(place3);
+        entityManager.persist(place4);
 
         entityManager.persist(postStatus1);
         entityManager.persist(postStatus2);
@@ -232,6 +263,7 @@ public class TestDataInit {
         entityManager.persist(post1);
         entityManager.persist(post2);
         entityManager.persist(post3);
+        entityManager.persist(post4);
 
         entityManager.persist(comment1);
         entityManager.persist(comment2);

@@ -1,24 +1,19 @@
 package com.innopolis.eventgo.service.impl;
 
-import com.innopolis.eventgo.db.entity.Category;
-import com.innopolis.eventgo.db.entity.Place;
-import com.innopolis.eventgo.db.entity.Post;
-import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
-import com.innopolis.eventgo.db.repository.CityDAO;
-import com.innopolis.eventgo.db.repository.PostDAO;
-import com.innopolis.eventgo.db.repository.PostRepository;
+import com.innopolis.eventgo.db.entity.*;
+import com.innopolis.eventgo.db.repository.*;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.exceptions.PostNotFoundException;
+import com.innopolis.eventgo.logic.EntityLogic;
 import com.innopolis.eventgo.mappers.PostMapper;
 import com.innopolis.eventgo.service.PostService;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,11 +24,20 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostDAO postDAO;
     private final PostMapper postMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
+    private final CityDAO cityDAO;
+    private final CategoryDAO categoryDAO;
 
-    public PostServiceImpl(PostRepository postRepository, PostDAO postDAO, CityDAO cityDAO, PostMapper postMapper) {
+    public PostServiceImpl(PostRepository postRepository,
+                           PostDAO postDAO,
+                           CityDAO cityDAO,
+                           PostMapper postMapper,
+                           CategoryDAO categoryDAO) {
         this.postRepository = postRepository;
         this.postDAO = postDAO;
         this.postMapper = postMapper;
+        this.cityDAO = cityDAO;
+        this.categoryDAO = categoryDAO;
     }
 
     public PostDto getPost(long id) throws PostNotFoundException {
@@ -90,25 +94,34 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getPostByFilter(Optional<String> city, Optional<String> category, Optional<Integer> page,
-                                      Optional<Integer> size, String sort) throws PostNotFoundException {
+    public List<PostDto> getPostsByFilter(Optional<String> cityName, Optional<String> categoryName, Optional<Integer> page,
+                                          Optional<Integer> size, Optional<String> sort) throws PostNotFoundException {
 
-        Pageable pageRequest = PageRequest.of(page.get(), size.get(), Sort.by(sort));
+        Optional<Category> category = Optional.empty();
 
-        List<Post> posts;
-
-        if (!city.isPresent() && !category.isPresent()) {
-            posts = postDAO.findAll(pageRequest).stream().collect(Collectors.toList());
-        } else if (city.isPresent() && category.isPresent()) {
-            posts = postDAO.findPostsByCityAndCategory(city.get(), category.get(), pageRequest);
-        } else if (!city.isPresent()) {
-            posts = postDAO.findPByCategory(category.get(), pageRequest);
-        } else {
-            posts = postDAO.findByCity(city.get(), pageRequest);
+        if (categoryName.isPresent()) {
+            category = Optional.ofNullable(categoryDAO.findByNameCategory(categoryName.get()));
+            if (!category.isPresent()) throw new PostNotFoundException("Posts not found");
         }
 
-        if (posts.isEmpty()) throw new PostNotFoundException("Posts not found");
 
-        return posts;
+        List<PostDto> postDtoList = EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
+                .withPagination(page, size, sort)
+                .withFiltering()
+                .field("category", category)
+                .getResult();
+
+
+        if (cityName.isPresent()) {
+            Optional<City> finalCity = Optional.ofNullable(cityDAO.findByCityName(cityName.get()));
+
+            if (finalCity.isPresent()) {
+                postDtoList = postDtoList.stream()
+                        .filter(postDto -> Objects.equals(postDto.getPlace().getCity().getId(), finalCity.get().getId()))
+                        .collect(Collectors.toList());
+            } else throw new PostNotFoundException("Posts not found");
+        }
+
+        return postDtoList;
     }
 }

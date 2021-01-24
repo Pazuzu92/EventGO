@@ -18,6 +18,6 @@ public interface PostService {
 
     Post deletePost(long id) throws PostNotFoundException;
 
-    List<Post> getPostByFilter(Optional<String> city, Optional<String> category, Optional<Integer> page,
-                               Optional<Integer> size, String sort) throws PostNotFoundException;
+    List<PostDto> getPostsByFilter(Optional<String> cityName, Optional<String> categoryName, Optional<Integer> page,
+                               Optional<Integer> size, Optional<String> sort) throws PostNotFoundException;
 }
