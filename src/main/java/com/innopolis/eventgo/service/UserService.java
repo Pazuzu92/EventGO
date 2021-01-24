@@ -21,7 +21,7 @@ public class UserService {
 
     public ResponseMessageEntity updateUser(long id, User userUpdate) throws NotFoundException {
         User user = userRepository.getUser(id);
-        if (isValidUser(user)) throw new NotFoundException("User not found");
+        if (!isValidUser(user)) throw new NotFoundException("User not found");
         user.setName(userUpdate.getName());
 
         userRepository.updateName(id, userUpdate);
