@@ -1,22 +1,21 @@
 package com.innopolis.eventgo.service;
 
-import com.innopolis.eventgo.db.entity.*;
-import org.modelmapper.ModelMapper;
+import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
+import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.db.repository.UserRepository;
-import com.innopolis.eventgo.dto.UserCreateDto;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     private final ModelMapper modelMapper = new ModelMapper();
 

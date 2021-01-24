@@ -5,15 +5,17 @@ import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/account/{userId}")
     public UserDto getUser(@PathVariable("userId") long id) throws NotFoundException {
