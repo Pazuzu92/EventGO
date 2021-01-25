@@ -3,7 +3,7 @@ package com.innopolis.eventgo.service.impl;
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.db.repository.*;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.exceptions.PostNotFoundException;
+import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.logic.EntityLogic;
 import com.innopolis.eventgo.mappers.PostMapper;
 import com.innopolis.eventgo.service.PostService;
@@ -41,25 +41,25 @@ public class PostServiceImpl implements PostService {
         this.postStatusDAO = postStatusDAO;
     }
 
-    public PostDto getPost(long id) throws PostNotFoundException {
+    public PostDto getPost(long id) throws NotFoundException {
         Post post = postRepository.getPost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
 
         return postMapper.mapToDto(post);
     }
 
-    public ResponseMessageEntity createPost(PostDto postDto) throws PostNotFoundException {
-        if (!isValidPost(postDto)) throw new PostNotFoundException("Bad post");
+    public ResponseMessageEntity createPost(PostDto postDto) throws NotFoundException {
+        if (!isValidPost(postDto)) throw new NotFoundException("Bad post");
 
         Post postEntity = postMapper.mapToPost(postDto);
-        postEntity.setDate_create(LocalDateTime.now());
+        postEntity.setDateCreate(LocalDateTime.now());
 
         return getResponseMessage();
     }
 
-    public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws PostNotFoundException {
+    public ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws NotFoundException {
         Post post = postRepository.getPost(id);
-        if (!isValidPost(postUpdate) || post == null) throw new PostNotFoundException("Post not found");
+        if (!isValidPost(postUpdate) || post == null) throw new NotFoundException("Post not found");
 
         Optional<City> city = cityDAO.findById(postUpdate.getCity().getId());
         Category category = postRepository.getCategoryById(postUpdate.getCategory().getId());
@@ -76,9 +76,9 @@ public class PostServiceImpl implements PostService {
         return getResponseMessage();
     }
 
-    public Post deletePost(long id) throws PostNotFoundException {
+    public Post deletePost(long id) throws NotFoundException {
         Post post = postRepository.deletePost(id);
-        if (post == null) throw new PostNotFoundException("Post not found");
+        if (post == null) throw new NotFoundException("Post not found");
         return post;
     }
 
@@ -100,7 +100,7 @@ public class PostServiceImpl implements PostService {
                                           Optional<Long> postStatusId,
                                           Optional<Integer> page,
                                           Optional<Integer> size,
-                                          Optional<String> sort) throws PostNotFoundException {
+                                          Optional<String> sort) throws NotFoundException {
 
         Optional<Category> category = Optional.empty();
         Optional<PostStatus> postStatus = Optional.empty();
@@ -108,17 +108,17 @@ public class PostServiceImpl implements PostService {
 
         if (categoryName.isPresent()) {
             category = categoryDAO.findByNameCategory(categoryName.get());
-            if (!category.isPresent()) throw new PostNotFoundException("Posts not found");
+            if (!category.isPresent()) throw new NotFoundException("Posts not found");
         }
 
         if (postStatusId.isPresent()) {
             postStatus = postStatusDAO.findById(postStatusId.get());
-            if (!postStatus.isPresent()) throw new PostNotFoundException("Posts not found");
+            if (!postStatus.isPresent()) throw new NotFoundException("Posts not found");
         }
 
         if (cityName.isPresent()) {
             city = cityDAO.findByCityName(cityName.get());
-            if (!city.isPresent()) throw new PostNotFoundException("Posts not found");
+            if (!city.isPresent()) throw new NotFoundException("Posts not found");
         }
 
         List<PostDto> postDtoList = EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
