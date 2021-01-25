@@ -97,7 +97,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> getPostsByFilter(Optional<String> cityName,
                                           Optional<String> categoryName,
-                                          Optional<Long> postStatusId,
+                                          Optional<Integer> postStatusId,
                                           Optional<Integer> page,
                                           Optional<Integer> size,
                                           Optional<String> sort) throws NotFoundException {
@@ -112,7 +112,7 @@ public class PostServiceImpl implements PostService {
         }
 
         if (postStatusId.isPresent()) {
-            postStatus = postStatusDAO.findById(postStatusId.get());
+            postStatus = postStatusDAO.findByStatus(postStatusId.get());
             if (!postStatus.isPresent()) throw new NotFoundException("Posts not found");
         }
 
@@ -121,14 +121,12 @@ public class PostServiceImpl implements PostService {
             if (!city.isPresent()) throw new NotFoundException("Posts not found");
         }
 
-        List<PostDto> postDtoList = EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
+        return EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
                 .withPagination(page, size, sort)
                 .withFiltering()
                 .field("category", category)
                 .field("status", postStatus)
                 .field("city", city)
                 .getResult();
-
-        return postDtoList;
     }
 }
