@@ -97,7 +97,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> getPostsByFilter(Optional<String> cityName,
                                           Optional<String> categoryName,
-                                          Optional<Long> postStatusId,
+                                          Optional<Integer> postStatusId,
                                           Optional<Integer> page,
                                           Optional<Integer> size,
                                           Optional<String> sort) throws NotFoundException {
@@ -112,7 +112,7 @@ public class PostServiceImpl implements PostService {
         }
 
         if (postStatusId.isPresent()) {
-            postStatus = postStatusDAO.findById(postStatusId.get());
+            postStatus = postStatusDAO.findByStatus(postStatusId.get());
             if (!postStatus.isPresent()) throw new NotFoundException("Posts not found");
         }
 
