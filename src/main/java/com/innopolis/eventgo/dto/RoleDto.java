@@ -8,11 +8,11 @@ import lombok.Data;
 public class RoleDto {
     public RoleDto() {}
 
-    public RoleDto(Long id, int roleCode) {
+    public RoleDto(Long id, String roleCode) {
         this.id = id;
         this.roleCode = roleCode;
     }
 
     private Long id;
-    private int roleCode;
+    private String roleCode;
 }

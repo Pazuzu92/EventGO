@@ -18,4 +18,9 @@ public class UserRepositoryImpl implements UserRepository {
     public User getUser(Long id) {
         return em.find(User.class, id);
     }
+
+    @Override
+    public User getUser(String name) {
+        return (User) em.createNamedQuery(User.findUserByName).setParameter("login", name).getSingleResult();
+    }
 }

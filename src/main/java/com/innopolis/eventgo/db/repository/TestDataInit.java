@@ -3,6 +3,8 @@ package com.innopolis.eventgo.db.repository;
 import com.innopolis.eventgo.db.entity.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,6 +18,8 @@ public class TestDataInit {
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void init() {
         Role roleUser = new Role();
@@ -27,26 +31,30 @@ public class TestDataInit {
         Role roleAdmin = new Role();
         roleAdmin.setRoleCode(Role.ADMIN);
 
+        String p1 = passwordEncoder.encode("12345");
+        String p2 = passwordEncoder.encode("12345");
+        String p3 = passwordEncoder.encode("12345");
+
         User user1 = new User();
         user1.setRole(roleUser);
         user1.setName(RandomStringUtils.randomAlphabetic(20));
         user1.setLogin(RandomStringUtils.randomAlphabetic(20));
         user1.setEmail(RandomStringUtils.randomAlphabetic(20));
-        user1.setPassword(RandomStringUtils.randomAlphabetic(20));
+        user1.setPassword(p1);
 
         User user2 = new User();
         user2.setRole(roleModerator);
         user2.setName(RandomStringUtils.randomAlphabetic(20));
         user2.setLogin(RandomStringUtils.randomAlphabetic(20));
         user2.setEmail(RandomStringUtils.randomAlphabetic(20));
-        user2.setPassword(RandomStringUtils.randomAlphabetic(20));
+        user2.setPassword(p2);
 
         User user3 = new User();
         user3.setRole(roleAdmin);
         user3.setName(RandomStringUtils.randomAlphabetic(20));
         user3.setLogin(RandomStringUtils.randomAlphabetic(20));
         user3.setEmail(RandomStringUtils.randomAlphabetic(20));
-        user3.setPassword(RandomStringUtils.randomAlphabetic(20));
+        user3.setPassword(p3);
 
         Category category1 = new Category();
         category1.setNameCategory("Спорт");
