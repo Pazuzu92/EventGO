@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <title>EventGo</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
             <img th:src="@{/images/logo.svg}" alt="logo">
         </a>
         <div class="dropdown flex-grow-1">
-
+            <img th:src="@{/images/geo_icon.svg}" alt="geo dropdown icon">
             <button
                     th:text="${cityName}"
                     class="btn btn-secondary dropdown-toggle geo-dropdown"
@@ -28,8 +28,6 @@
                     id="dropdownMenuButton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                <img th:src="@{/images/geo_icon.svg}"
-                     alt="geo dropdown icon">
             </button>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -37,36 +35,45 @@
                     <li><a class="dropdown-item" th:text="${city.getCityName()}" th:href="${city.getCityName()}"></a>
                     </li>
                 </div>
-                <!--		    <li><a class="dropdown-item" href="#">Санкт-Петербург</a></li>-->
-                <!--		    <li><a class="dropdown-item" href="#">Москва</a></li>-->
-                <!--		    <li><a class="dropdown-item" href="#">Казань</a></li>-->
             </ul>
         </div>
-        <a href="/login" class="login-button">Войти</a>
+        <a th:href="@{/login}" class="login-button">Войти</a>
     </div>
 </header>
+
 <main class="container d-flex flex-column justify-content-center align-items-center">
     <h1 class="main-heading mb-4">Найди мероприятие в своем городе</h1>
-    <input type="text" class="search-input mb-4" placeholder="Найти мероприятие...">
-    <div class="owl-carousel owl-theme mb-4">
+    <div>
+        <input type="text" class="search-input mb-4" placeholder="Найти мероприятие...">
+        <a th:href="@{/serach}">
+            <img th:src="@{/images/search_icon.svg}" alt="search" class="ms-1 mb-1">
+        </a>
+    </div>
+
+    <div class="owl-carousel owl-theme mb-4 js-category-carousel">
         <div th:each="category : ${categories}">
+            <div class="item category text-center category-active"
+                 th:text="${category.getCategoryName()}"
+                 th:id="${category.getCategoryName()}"
+                 th:attr="city-name=${cityName}"
+                 th:if="${category.getCategoryName()} == Спорт">
+            </div>
+
             <div class="item category text-center"
-                 th:text="${category.getNameCategory()}" th:href="${category.getId()}">
+                 th:text="${category.getCategoryName()}"
+                 th:id="${category.getCategoryName()}"
+                 th:attr="city-name=${cityName}"
+                 th:unless="${category.getCategoryName()} == Спорт">
             </div>
         </div>
-        <!--		    <div class="item category text-center js-category-btn" id="12">Спорт</div>-->
-        <!--		    <div class="item category text-center">Театр</div>-->
-        <!--		    <div class="item category text-center">Музыка</div>-->
-        <!--		    <div class="item category text-center">Кино</div>-->
-        <!--		    <div class="item category text-center">Детям</div>-->
-        <!--		    <div class="item category text-center">Кафе</div>-->
-        <!--		    <div class="item category text-center">Обучение</div>-->
-        <!--		    <div class="item category text-center">Выствки</div>-->
     </div>
-    <ul class="d-flex justify-content-between align-items-center post-list">
-        <!--        <div th:each="post : ${posts}">-->
-        <!--            <li><a class="dropdown-item" th:text="${city.getCityName()}" th:href="${city.getCityName()}"></a></li>-->
-        <!--        </div>-->
+
+    <ul class="d-flex justify-content-between align-items-center post-list js-posts">
+        <div class="text-center hidden spinner">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
 
         <div th:each="post : ${posts}">
             <li class="post-card">
@@ -81,49 +88,15 @@
                     </div>
                     <div class="align-self-end">
                         <div class="d-flex align-items-end">
-                            <div th:text="${post.getLike()}"></div>
+                            <div th:text="${post.getLikes().getLikes()}"></div>
                             <img th:src="@{/images/like_icon.svg}" alt="like-icon" class="ms-1 mb-1">
                         </div>
                     </div>
                 </div>
             </li>
         </div>
-
-        <li class="post-card">
-            <img th:src="@{/images/hockey.svg}" class="post-image w-100" alt="post image">
-            <div class="post-info d-flex flex-column justify-content-between p-1">
-                <div class="d-flex justify-content-between align-items-satrt">
-                    <span>Волейбол. Женщины</span>
-                    <span>21 февраля, 17:00</span>
-                </div>
-                <div class="d-flex align-items-center text-center">«Динамо-Ак Барс» (Казань) - «Енисей» (Красноярск)
-                </div>
-                <div class="align-self-end">
-                    <div class="d-flex align-items-end">
-                        200
-                        <img th:src="@{/images/like_icon.svg}" alt="like-icon" class="ms-1 mb-1">
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="post-card">
-            <img th:src="@{/images/hockey.svg}" class="post-image w-100" alt="post image">
-            <div class="post-info d-flex flex-column justify-content-between p-1">
-                <div class="d-flex justify-content-between align-items-satrt">
-                    <span>Волейбол. Женщины</span>
-                    <span>21 февраля, 17:00</span>
-                </div>
-                <div class="d-flex align-items-center text-center">«Динамо-Ак Барс» (Казань) - «Енисей» (Красноярск)
-                </div>
-                <div class="align-self-end">
-                    <div class="d-flex align-items-end">
-                        200
-                        <img th:src="@{/images/like_icon.svg}" alt="like-icon" class="ms-1 mb-1">
-                    </div>
-                </div>
-            </div>
-        </li>
     </ul>
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"

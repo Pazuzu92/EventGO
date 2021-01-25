@@ -1,21 +1,13 @@
 package com.innopolis.eventgo.service;
 
-import com.innopolis.eventgo.db.entity.Category;
-import com.innopolis.eventgo.db.repository.CategoryDAO;
-import org.springframework.stereotype.Service;
+import com.innopolis.eventgo.dto.CategoryDto;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class CategoryService {
+public interface CategoryService {
 
-    private final CategoryDAO categoryDAO;
+    List<CategoryDto> findAll ();
 
-    public CategoryService(CategoryDAO categoryDAO) {
-        this.categoryDAO = categoryDAO;
-    }
-
-    public List<Category> findAll (){
-        return categoryDAO.findAll();
-    }
+    Optional<CategoryDto> findById(Optional<Long> categoryId);
 }

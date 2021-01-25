@@ -20,7 +20,7 @@ public interface PostService {
 
     List<PostDto> getPostsByFilter(Optional<String> cityName,
                                    Optional<String> categoryName,
-                                   Optional<Long> postStatusName,
+                                   Optional<Integer> postStatusName,
                                    Optional<Integer> page,
                                    Optional<Integer> size,
                                    Optional<String> sort) throws PostNotFoundException;
