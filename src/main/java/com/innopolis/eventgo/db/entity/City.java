@@ -23,6 +23,9 @@ public class City {
     @Column(name = "city_name", unique = true)
     private String cityName;
 
+    @Column(name = "short_name", unique = true)
+    private String shortName;
+
     @Column(name = "VERSION")
     @Version
     private int version;

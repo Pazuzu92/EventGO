@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CityDAO extends JpaRepository<City, Long> {
 
     Optional<City> findByCityName(String cityName);
+    Optional<City> findByShortName(String cityName);
 }

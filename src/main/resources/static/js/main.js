@@ -27,8 +27,8 @@ $(document).ready(function () {
     });
 
     $('.js-category-carousel').on('click', (e) => {
-        if(e.target.className != 'owl-stage') {
-        $('.spinner').toggleClass('hidden');
+        if (e.target.className != 'owl-stage') {
+            $('.spinner').toggleClass('hidden');
             $('.category').each((i, item) => $(item).removeClass('category-active'));
             $(e.target).addClass('category-active');
             fetch('api/post?category=' + e.target.id + '&city=' + e.target.getAttribute('city-name'))
@@ -37,6 +37,7 @@ $(document).ready(function () {
                     const list = $('.js-posts').html('');
                     data.forEach(item => {
                         list.append(`
+                    <a href="${item.city.shortName}/post/${item.id}">
 					<li class="post-card">
 						<img src="/images/hockey.svg" class="post-image w-100" alt="post image">
 						<div class="post-info w-100 d-flex flex-column justify-content-between p-1">
@@ -44,7 +45,9 @@ $(document).ready(function () {
 								<span>${item.header}</span>
 								<span>${item.dateFrom}</span>
 							</div>
-							<div class="d-flex align-items-center text-center">${item.description}</div>
+							<div class="text-center">
+                                 ${item.description}
+                            </div>
 							<div class="align-self-end">
 								<div class="d-flex align-items-end">
 									${item.likes.likes}
@@ -53,6 +56,7 @@ $(document).ready(function () {
 							</div>
 						</div>
 					</li>
+					</a>
 				`)
                     });
                 })

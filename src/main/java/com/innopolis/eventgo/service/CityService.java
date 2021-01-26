@@ -7,4 +7,8 @@ import java.util.List;
 public interface CityService {
 
     List<CityDto> findAll();
+
+    List<CityDto> findAllExceptBy(String name);
+
+    CityDto findByShortName(String shortName);
 }

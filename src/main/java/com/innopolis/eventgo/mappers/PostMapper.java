@@ -49,6 +49,7 @@ public class PostMapper {
         CityDto cityDto = CityDto.builder()
                 .id(post.getId())
                 .cityName(post.getCity().getCityName())
+                .shortName(post.getCity().getShortName())
                 .build();
 
         PostDto postDto = PostDto.builder()
@@ -91,6 +92,7 @@ public class PostMapper {
         City city = new City();
         city.setId(post.getCity().getId());
         city.setCityName(post.getCity().getCityName());
+        city.setShortName(post.getCity().getShortName());
 
         post.setId(post.getId());
         post.setHeader(postDto.getHeader());
