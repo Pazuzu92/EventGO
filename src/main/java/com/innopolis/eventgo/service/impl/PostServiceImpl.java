@@ -155,8 +155,7 @@ public class PostServiceImpl implements PostService {
         if(authorId.isPresent())
             user = userDAO.findById(authorId.get());
             if(!user.isPresent()) throw new NotFoundException("User nor Found");
-        List<Post> postList = postDAO.findByGroups(authorId.get());
-        return postList;
+        return postDAO.findByGroups(authorId.get());
     }
 
 }

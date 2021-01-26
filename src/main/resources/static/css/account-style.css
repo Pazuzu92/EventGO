@@ -150,9 +150,21 @@ main {
 }
 
 .accepted {
-    color: #135d12;
+    color: #35b034;
 }
 
 .rejected {
     color: #FC0505;
+}
+
+.deleted {
+    color: dimgrey;
+}
+
+.archived {
+    color: dodgerblue;
+}
+
+.moderated {
+    color: black;
 }

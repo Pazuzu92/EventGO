@@ -29,21 +29,6 @@
                 <li><a class="dropdown-item" href="#">Москва</a></li>
                 <li><a class="dropdown-item" href="#">Казань</a></li>
             </ul>
-<!--            <button-->
-<!--                    th:text="${currentCity.getCityName()}"-->
-<!--                    class="btn btn-secondary dropdown-toggle geo-dropdown"-->
-<!--                    type="button"-->
-<!--                    id="dropdownMenuButton"-->
-<!--                    data-bs-toggle="dropdown"-->
-<!--                    aria-expanded="false">-->
-<!--            </button>-->
-
-<!--            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                <div th:each="city : ${cities}">-->
-<!--                    <li><a class="dropdown-item" th:text="${city.getCityName()}" th:href="${city.getShortName()}"></a>-->
-<!--                    </li>-->
-<!--                </div>-->
-<!--            </ul>-->
         </div>
         <a  class="login-button" th:text="${userName.getLogin()}"></a>
     </div>
@@ -89,30 +74,16 @@
                         <p class="event-description" th:text="${post.getHeader()}"></p>
                         <div class="d-flex flex-column justify-content-between">
                             <div th:text="${post.getDateTo()}"></div>
-                            <div class="align-self-end accepted">Принято</div>
+                            <div class="align-self-end accepted" th:switch="${post.getStatus().getStatus()}">
+                                <div class="moderated" th:case="1"  >На модерации</div>
+                                <div class="rejected" th:case="2" >Отменен</div>
+                                <div class="accepted" th:case="3" >Принят</div>
+                                <div class="archived" th:case="4" >В архиве</div>
+                                <div class="deleted" th:case="5" >Удален</div>
+                            </div>
                         </div>
                     </div>
                 </li>
-<!--                <li class="d-flex event">-->
-<!--                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
-<!--                    <div class="event-info d-flex justify-content-between">-->
-<!--                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>-->
-<!--                        <div class="d-flex flex-column justify-content-between">-->
-<!--                            <div>24 февраля 16:00</div>-->
-<!--                            <div class="align-self-end">Принято</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--                <li class="d-flex event">-->
-<!--                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
-<!--                    <div class="event-info d-flex justify-content-between">-->
-<!--                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>-->
-<!--                        <div class="d-flex flex-column justify-content-between">-->
-<!--                            <div>24 февраля 16:00</div>-->
-<!--                            <div class="align-self-end accepted">Принято</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </li>-->
                 
             </div>
         </section>

@@ -11,7 +11,7 @@ public class PostDto {
     public PostDto() {
     }
 
-    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, String dateFrom, String dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, CategoryDto category, CityDto city) {
+    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, String dateFrom, String dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, CategoryDto category, CityDto city, PostStatusDto postStatusDto) {
         this.id = id;
         this.header = header;
         this.description = description;
@@ -25,6 +25,7 @@ public class PostDto {
         this.comment = comment;
         this.category = category;
         this.city = city;
+        this.status = postStatusDto;
     }
 
     private Long id;
@@ -40,4 +41,5 @@ public class PostDto {
     private List<CommentDto> comment;
     private CategoryDto category;
     private CityDto city;
+    private PostStatusDto status;
 }

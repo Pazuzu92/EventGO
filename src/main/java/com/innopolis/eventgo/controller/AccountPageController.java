@@ -34,11 +34,11 @@ public class AccountPageController {
 
     @GetMapping("")
     public String redirectLoad() {
-        return "redirect:/account/{userId}";
+        return "redirect:/account/{4}";
     }
 
     @SneakyThrows
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
                        Model model) {
         UserDto userDto = userService.findUser(userId);
@@ -53,6 +53,7 @@ public class AccountPageController {
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
         model.addAttribute("groups", groups);
+        model.addAttribute("userId", userDto.getId());
 
         return "account";
     }
