@@ -14,7 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = Photo.findPhotoWherePostIdEqualsPhotoId,
+        query = "select p from Photo p inner join PostPhoto ph on p.id = ph.photo.id inner join Post po on ph.post.id = po.id where po.id = :id")
 public class Photo {
+
+    public final static String findPhotoWherePostIdEqualsPhotoId = "Photo.findPhotoWherePostIdEqualsPhotoId";
 
     @Id
     @Column(name = "id")

@@ -48,6 +48,14 @@ public class PostServiceImpl implements PostService {
         return postMapper.mapToDto(post);
     }
 
+    @Override
+    public Post getPostEntity(long id) throws NotFoundException {
+        Post post = postRepository.getPost(id);
+        if (post == null) throw new NotFoundException("Post not found");
+
+        return post;
+    }
+
     public ResponseMessageEntity createPost(PostDto postDto) throws NotFoundException {
         if (!isValidPost(postDto)) throw new NotFoundException("Bad post");
 
@@ -80,6 +88,10 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.deletePost(id);
         if (post == null) throw new NotFoundException("Post not found");
         return post;
+    }
+
+    public byte[] getPhoto(Long id) {
+        return postRepository.getPhoto(id);
     }
 
     private boolean isValidPost(PostDto post) {

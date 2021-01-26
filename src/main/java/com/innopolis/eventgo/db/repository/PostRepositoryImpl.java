@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 @Repository
@@ -58,6 +59,12 @@ public class PostRepositoryImpl implements PostRepository {
         Post post = em.find(Post.class, id);
         if (post != null) em.remove(post);
         return post;
+    }
+
+    @Override
+    public byte[] getPhoto(Long id) {
+        Photo photo = em.find(Photo.class, id);
+        return photo.getImage();
     }
 
     public City saveCity(City city) {
