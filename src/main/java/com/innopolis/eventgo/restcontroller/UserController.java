@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping(value = "/account/{userId}")
     public UserDto getUser(@PathVariable("userId") long id) throws NotFoundException {
-        return userService.getUser(id);
+        return userService.findUser(id);
     }
 
     @PutMapping(value = "/account/{userId}")

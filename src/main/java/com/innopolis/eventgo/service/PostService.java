@@ -3,6 +3,7 @@ package com.innopolis.eventgo.service;
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
 import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 
 
@@ -22,6 +23,11 @@ public interface PostService {
     List<PostDto> getPostsByFilter(Optional<String> cityName,
                                    Optional<String> categoryName,
                                    Optional<Integer> postStatusName,
+                                   Optional<Integer> page,
+                                   Optional<Integer> size,
+                                   Optional<String> sort) throws NotFoundException;
+
+    List<PostDto> getPostsByAuthor(Optional<Long> authorId,
                                    Optional<Integer> page,
                                    Optional<Integer> size,
                                    Optional<String> sort) throws NotFoundException;
