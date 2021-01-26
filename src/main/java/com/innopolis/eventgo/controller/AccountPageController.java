@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.controller;
 
+import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.service.CityService;
@@ -47,8 +48,11 @@ public class AccountPageController {
                 Optional.of(10),
                 Optional.of("dateFrom"));
 
+        List<Post> groups = postService.getGroupsPosts(Optional.of(userId));
+
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
+        model.addAttribute("groups", groups);
 
         return "account";
     }
