@@ -149,4 +149,28 @@ public class PostServiceImpl implements PostService {
                 .field("user", user)
                 .getResult();
     }
+
+    @Override
+    public List<PostDto> getPostsByGroups(Optional<Long> userId,
+                                          Optional<Long> groupId,
+                                          Optional<Integer> page,
+                                          Optional<Integer> size,
+                                          Optional<String> sort) throws NotFoundException {
+        Optional<User> user = Optional.empty();
+        Optional<Post> group = Optional.empty();
+        if(userId.isPresent()) {
+            user = userDAO.findById(userId.get());
+            if (!user.isPresent()) throw new NotFoundException("User nor Found");
+        }
+        if(groupId.isPresent()) {
+            group = postDAO.findById(groupId.get());
+            if(!group.isPresent()) throw new NotFoundException("Post not found");
+        }
+        return EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
+                .withPagination(page, size, sort)
+                .withFiltering()
+                .field("user", user)
+                .field("group", group)
+                .getResult();
+    }
 }

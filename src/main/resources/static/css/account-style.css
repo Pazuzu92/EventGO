@@ -45,13 +45,13 @@ main {
 }
 
 .profile-container {
-    padding: 50px;
+    padding: 30px;
 }
 
 .user-info {
     margin-right: 100px;
-    flex: 1 0 auto;
- }
+    flex: auto;
+}
 
 .user-name {
     font-size: 24px;
@@ -72,11 +72,27 @@ main {
     flex: auto;
 }
 
+.user-groups {
+    flex: auto;
+}
+
 .events-header {
     margin-bottom: 15px;
 }
 
+.groups-header {
+    margin-bottom: 15px;
+}
+
 .events-header h3 {
+    font-size: 24px;
+    background-color: #EDE5E5;
+    margin: 0;
+    padding: 0 10px;
+    line-height: 35px;
+}
+
+.groups-header h3 {
     font-size: 24px;
     background-color: #EDE5E5;
     margin: 0;
@@ -99,6 +115,11 @@ main {
     margin-bottom: 20px;
 }
 
+.group {
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 .event-image {
     border-radius: 20px;
 
@@ -112,7 +133,19 @@ main {
     padding: 10px;
 }
 
+.groups-info {
+    background-color: #E8DAE4;
+    border-radius: 20px;
+    flex: auto;
+    font-size: 14px;
+    padding: 10px;
+}
+
 .event-description {
+    flex: 1 0 65%;
+}
+
+.groups-description {
     flex: 1 0 65%;
 }
 

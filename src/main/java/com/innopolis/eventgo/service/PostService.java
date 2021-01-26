@@ -31,4 +31,10 @@ public interface PostService {
                                    Optional<Integer> page,
                                    Optional<Integer> size,
                                    Optional<String> sort) throws NotFoundException;
+
+    List<PostDto> getPostsByGroups(Optional<Long> userId,
+                                   Optional<Long> groupId,
+                                   Optional<Integer> page,
+                                   Optional<Integer> size,
+                                   Optional<String> sort) throws NotFoundException;
 }

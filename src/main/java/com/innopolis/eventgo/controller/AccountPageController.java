@@ -41,27 +41,15 @@ public class AccountPageController {
     public String load(@PathVariable() long userId,
                        Model model) {
         UserDto userDto = userService.findUser(userId);
+
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),
                 Optional.of(0),
-                Optional.of(3),
+                Optional.of(10),
                 Optional.of("dateFrom"));
 
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
-        /*CityDto city = cityService.findByShortName(cityShortName);
 
-        List<PostDto> posts = postService.getPostsByFilter(
-                Optional.of(cityShortName),
-                category,
-                Optional.of(PostStatus.ACTIVE),
-                Optional.of(0),
-                Optional.of(3),
-                Optional.of("id"));
-
-        model.addAttribute("categories", categories);
-        model.addAttribute("cities", cities);
-        model.addAttribute("currentCity", city);
-        model.addAttribute("posts", posts);*/
         return "account";
     }
 }

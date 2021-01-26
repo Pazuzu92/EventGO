@@ -50,56 +50,71 @@
 </header>
 <main class="container d-flex flex-column justify-content-center align-items-center">
     <div class="w-100 h-100 d-flex align-items-start profile-container">
-        <section class="user-info d-flex justify-content-start align-items-center">
-            <div class="user-name d-flex justify-content-center align-items-center"
-                 th:text="${userName.getName()}">
+        <section class="w-50 user-info ">
+            <div class=" d-flex justify-content-start align-items-center">
+                <div class="user-name d-flex justify-content-center align-items-center"
+                    th:text="${userName.getName()}"></div>
+                <div class="user-rating d-flex flex-column justify-content-center align-items-center">
+                    Рейтинг
+                    <span>
+                        531
+                        <img th:src="@{/images/like_icon.svg}" alt="like icon">
+                    </span>
+                </div>
             </div>
-            <div class="user-rating d-flex flex-column justify-content-center align-items-center">
-                Рейтинг
-                <span>
-                    531
-                    <img th:src="@{/images/like_icon.svg}" alt="like icon">
-                </span>
+            <div class="groups-header d-flex">
+                <h3>Подписки</h3>
             </div>
+            <ul class="groups-list d-flex flex-column">
+                <li class="d-flex group p-2">
+                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
+                    <div class="groups-info d-flex justify-content-between">
+                        <p class="groups-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>
+                        <div class="d-flex flex-column justify-content-between">
+                            <div>24 февраля 16:00</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </section>
         <section class="user-events">
             <div class="events-header d-flex justify-content-between align-items-center">
                 <h3>Созданные события</h3>
                 <button>+Создать событие</button>
             </div>
-            <ul class="events-list d-flex flex-column">
+            <div th:each="post : ${posts}" class="events-list d-flex flex-column">
                 <li class="d-flex event">
                     <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
                     <div class="event-info d-flex justify-content-between">
-                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>
+                        <p class="event-description" th:text="${post.getHeader()}"></p>
                         <div class="d-flex flex-column justify-content-between">
-                            <div>24 февраля 16:00</div>
+                            <div th:text="${post.getDateTo()}"></div>
                             <div class="align-self-end accepted">Принято</div>
                         </div>
                     </div>
                 </li>
-                <li class="d-flex event">
-                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
-                    <div class="event-info d-flex justify-content-between">
-                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>
-                        <div class="d-flex flex-column justify-content-between">
-                            <div>24 февраля 16:00</div>
-                            <div class="align-self-end">Принято</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="d-flex event">
-                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
-                    <div class="event-info d-flex justify-content-between">
-                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>
-                        <div class="d-flex flex-column justify-content-between">
-                            <div>24 февраля 16:00</div>
-                            <div class="align-self-end accepted">Принято</div>
-                        </div>
-                    </div>
-                </li>
+<!--                <li class="d-flex event">-->
+<!--                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
+<!--                    <div class="event-info d-flex justify-content-between">-->
+<!--                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>-->
+<!--                        <div class="d-flex flex-column justify-content-between">-->
+<!--                            <div>24 февраля 16:00</div>-->
+<!--                            <div class="align-self-end">Принято</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li class="d-flex event">-->
+<!--                    <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
+<!--                    <div class="event-info d-flex justify-content-between">-->
+<!--                        <p class="event-description">Вебинар «Как устроены лучшие голливудские фильмы»</p>-->
+<!--                        <div class="d-flex flex-column justify-content-between">-->
+<!--                            <div>24 февраля 16:00</div>-->
+<!--                            <div class="align-self-end accepted">Принято</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
                 
-            </ul>
+            </div>
         </section>
     </div>
 </main>
