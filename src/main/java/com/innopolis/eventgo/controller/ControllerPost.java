@@ -2,10 +2,13 @@ package com.innopolis.eventgo.controller;
 
 import com.innopolis.eventgo.db.entity.Photo;
 import com.innopolis.eventgo.db.entity.Post;
+import com.innopolis.eventgo.db.repository.CategoryDAO;
 import com.innopolis.eventgo.db.repository.CityDAO;
-import com.innopolis.eventgo.dto.PhotoDto;
-import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.db.repository.UserRepository;
+import com.innopolis.eventgo.dto.*;
 import com.innopolis.eventgo.exceptions.NotFoundException;
+import com.innopolis.eventgo.service.CategoryService;
+import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -26,7 +29,11 @@ public class ControllerPost {
     @Autowired
     private PostService postService;
     @Autowired
-    private CityDAO cityDAO;
+    private CityService cityService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/post/{id}")
     public String getPost(@PathVariable Long id, Model model, Authentication authentication) throws NotFoundException {
@@ -37,20 +44,10 @@ public class ControllerPost {
             isAuthorized = true;
         }
 
-        List<PhotoDto> photos = new ArrayList<>();
-        Post post = postService.getPostEntity(id);
-        post.getPostPhotos().forEach(p -> {
-            PhotoDto photoDto = new PhotoDto();
-            photoDto.setId(p.getPhoto().getId());
-            photoDto.setImage(p.getPhoto().getImage());
-            photos.add(photoDto);
-        });
-
-        model.addAttribute("photos", photos);
         model.addAttribute("user", principal);
         model.addAttribute("isAuthorized", isAuthorized);
         model.addAttribute("post", postService.getPost(id));
-        model.addAttribute("city", cityDAO.findAll());
+        model.addAttribute("city", cityService.findAll());
         return "pages/post";
     }
 
@@ -61,22 +58,35 @@ public class ControllerPost {
 
     @RequestMapping(method = RequestMethod.GET, value = "/post/create")
     public String createPost(Authentication authentication, Model model) {
-        User principal = null;
-        boolean isAuthorized = false;
-        if (authentication != null && authentication.isAuthenticated()) {
-            principal = (User) authentication.getPrincipal();
-            isAuthorized = true;
-        }
+        User principal = (User) authentication.getPrincipal();
+        com.innopolis.eventgo.db.entity.User user = userRepository.getUser(principal.getUsername());
+
+        PostDto postDto = new PostDto();
+        CategoryDto categoryDto = new CategoryDto();
+        CityDto cityDto = new CityDto();
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setLogin(user.getLogin());
+        postDto.setCategory(categoryDto);
+        postDto.setCity(cityDto);
+        postDto.setAuthor(userDto);
+
+        model.addAttribute("postDto", postDto);
         model.addAttribute("user", principal);
-        model.addAttribute("isAuthorized", isAuthorized);
-        model.addAttribute("city", cityDAO.findAll());
+        model.addAttribute("cityList", cityService.findAll());
+        model.addAttribute("categoryList", categoryService.findAll());
+
         return "pages/create_post";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/post/create")
-    public String createPost(@RequestBody PostDto postDto, @RequestParam("img") MultipartFile[] multipartFile) {
-        //TODO
-        return "redirect:templates/main";
+    public String createPost(@RequestParam("img") MultipartFile file,
+                             @ModelAttribute PostDto postDto) throws IOException, NotFoundException {
+
+        postDto.setPhoto(file.getBytes());
+        System.out.println(postDto.toString());
+        postService.createPost(postDto);
+        return "redirect:pages/create_post";
     }
 
 }

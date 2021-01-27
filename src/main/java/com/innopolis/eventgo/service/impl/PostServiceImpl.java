@@ -61,7 +61,7 @@ public class PostServiceImpl implements PostService {
 
         Post postEntity = postMapper.mapToPost(postDto);
         postEntity.setDateCreate(LocalDateTime.now());
-
+        postRepository.savePost(postEntity);
         return getResponseMessage();
     }
 
@@ -74,8 +74,10 @@ public class PostServiceImpl implements PostService {
 
         post.setHeader(postUpdate.getHeader());
         post.setDescription(postUpdate.getDescription());
-        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
-        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
+//        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
+        post.setDateTo(postUpdate.getDateTo());
+//        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
+        post.setDateFrom(postUpdate.getDateFrom());
         post.setCategory(category);
         city.ifPresent(post::setCity);
 

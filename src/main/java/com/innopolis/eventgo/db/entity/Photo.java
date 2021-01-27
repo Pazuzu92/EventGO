@@ -28,8 +28,12 @@ public class Photo {
     @Column(name = "image")
     private byte[] image;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
-    private List<PostPhoto> postPhotos = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+//    private List<PostPhoto> postPhotos = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_post", referencedColumnName = "id")
+    private Post post;
 
     @Version
     @Column(name = "version")
