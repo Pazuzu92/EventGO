@@ -55,7 +55,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users/{id}")
     public String editUser(@PathVariable("id") Long id, Model model) throws NotFoundException {
-        model.addAttribute("edit_user", userService.getUser(id));
+        model.addAttribute("edit_user", userService.findUser(id));
         model.addAttribute("all_roles", roleService.findAll());
         return "admin/edit_user";
     }
@@ -63,7 +63,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/users")
     public String saveUser(@ModelAttribute("edit_user") User editUser) throws NotFoundException {
-        UserDto currentUser = userService.getUser(editUser.getId());
+        UserDto currentUser = userService.findUser(editUser.getId());
         userService.update(currentUser, editUser);
         return "redirect:/admin/users";
     }

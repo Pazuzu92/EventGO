@@ -113,4 +113,13 @@ public class UserService {
 
         userDAO.save(currentUser);
     }
+
+    public Optional<UserDto> findByLogin(String login) {
+        Optional<User> user = userDAO.findByLogin(login);
+        Optional<UserDto> userDto = Optional.empty();
+        if (user.isPresent()){
+            userDto = Optional.of(modelMapper.map(user, UserDto.class));
+        }
+        return userDto;
+    }
 }

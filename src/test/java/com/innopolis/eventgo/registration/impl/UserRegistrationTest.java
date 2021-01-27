@@ -1,4 +1,4 @@
-package com.innopolis.eventgo;
+package com.innopolis.eventgo.registration.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

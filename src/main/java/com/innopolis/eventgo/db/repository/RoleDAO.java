@@ -4,5 +4,5 @@ import com.innopolis.eventgo.db.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleDAO extends JpaRepository<Role, Long> {
-    Role getRoleByRoleCode(int roleCode);
+    Role getRoleByRoleCode(String roleCode);
 }

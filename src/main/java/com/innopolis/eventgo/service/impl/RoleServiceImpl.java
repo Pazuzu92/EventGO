@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void save(Role role) {
-        int roleCode = role.getRoleCode();
+        String roleCode = role.getRoleCode();
         Role rl = roleDAO.getRoleByRoleCode(roleCode);
         if (rl == null) {
             role.setRoleCode(roleCode);
