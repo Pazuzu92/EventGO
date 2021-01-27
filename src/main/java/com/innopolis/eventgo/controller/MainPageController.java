@@ -32,7 +32,7 @@ public class MainPageController {
     }
 
     @GetMapping("")
-    public String redirectLoad(){
+    public String redirectLoad() {
         return "redirect:/kzn";
     }
 
