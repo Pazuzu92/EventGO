@@ -50,6 +50,7 @@ public class PostMapper {
         CityDto cityDto = CityDto.builder()
                 .id(post.getId())
                 .cityName(post.getCity().getCityName())
+                .shortName(post.getCity().getShortName())
                 .build();
 
 //        PhotoDto photoDto = new PhotoDto();
@@ -86,26 +87,22 @@ public class PostMapper {
     public Post mapToPost(PostDto postDto) {
         Post post = new Post();
 
-//        Role role = new Role();
-//        role.setId(post.getUser().getRole().getId() == null ? null : post.getUser().getRole().getId());
-//        role.setRoleCode(post.getUser().getRole().getRoleCode());
-
         User user = new User();
         user.setId(postDto.getAuthor().getId());
-//        user.setEmail(post.getUser().getEmail());
-//        user.setLogin(post.getUser().getLogin());
-//        user.setName(post.getUser().getName());
-//        user.setRole(role);
+        user.setEmail(postDto.getAuthor().getEmail());
+        user.setLogin(postDto.getAuthor().getLogin());
+        user.setName(postDto.getAuthor().getName());
 
         Category category = new Category();
         category.setId(postDto.getCategory().getId());
-//        category.setNameCategory(post.getCategory().getNameCategory());
+        category.setNameCategory(postDto.getCategory().getCategoryName());
 
         City city = new City();
         city.setId(postDto.getCity().getId());
-//        city.setCityName(post.getCity().getCityName());
+        city.setCityName(postDto.getCity().getCityName());
+        city.setShortName(postDto.getCity().getShortName());
 
-//        post.setId(post.getId());
+        post.setId(postDto.getId());
         post.setHeader(postDto.getHeader());
         post.setAddress(postDto.getAddress());
         post.setImage(postDto.getPhoto());

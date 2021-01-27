@@ -131,7 +131,7 @@ public class PostServiceImpl implements PostService {
         }
 
         if (cityName.isPresent()) {
-            city = cityDAO.findByCityName(cityName.get());
+            city = cityDAO.findByShortName(cityName.get());
             if (!city.isPresent()) throw new NotFoundException("Posts not found");
         }
 

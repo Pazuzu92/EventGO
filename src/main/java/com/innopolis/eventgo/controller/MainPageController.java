@@ -10,10 +10,7 @@ import com.innopolis.eventgo.service.PostService;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,16 +31,22 @@ public class MainPageController {
         this.postService = postService;
     }
 
+    @GetMapping("")
+    public String redirectLoad(){
+        return "redirect:/kzn";
+    }
+
     @SneakyThrows
-    @GetMapping(value = {"{cityName}", ""})
-    public String load(@PathVariable(required = false) Optional<String> cityName,
+    @GetMapping("{cityShortName}")
+    public String load(@PathVariable() String cityShortName,
                        @RequestParam(required = false, defaultValue = "Спорт") Optional<String> category,
                        Model model) {
         List<CategoryDto> categories = categoryService.findAll();
-        List<CityDto> cities = cityService.findAll();
+        List<CityDto> cities = cityService.findAllExceptBy(cityShortName);
+        CityDto city = cityService.findByShortName(cityShortName);
 
         List<PostDto> posts = postService.getPostsByFilter(
-                cityName,
+                Optional.of(cityShortName),
                 category,
                 Optional.of(PostStatus.ACTIVE),
                 Optional.of(0),
@@ -52,7 +55,7 @@ public class MainPageController {
 
         model.addAttribute("categories", categories);
         model.addAttribute("cities", cities);
-        model.addAttribute("cityName", cityName.orElse("Выберите город"));
+        model.addAttribute("currentCity", city);
         model.addAttribute("posts", posts);
         return "main";
     }

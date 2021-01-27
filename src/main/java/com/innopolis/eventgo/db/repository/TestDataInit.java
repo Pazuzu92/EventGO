@@ -82,12 +82,15 @@ public class TestDataInit {
 
         City city1 = new City();
         city1.setCityName("Москва");
+        city1.setShortName("msk");
 
         City city2 = new City();
         city2.setCityName("Санкт-Петербург");
+        city2.setShortName("spb");
 
         City city3 = new City();
         city3.setCityName("Казань");
+        city3.setShortName("kzn");
 
         PostStatus postStatus1 = new PostStatus();
         postStatus1.setStatus(PostStatus.ACTIVE);

@@ -84,7 +84,6 @@ public class ControllerPost {
                              @ModelAttribute PostDto postDto) throws IOException, NotFoundException {
 
         postDto.setPhoto(file.getBytes());
-        System.out.println(postDto.toString());
         postService.createPost(postDto);
         return "redirect:pages/create_post";
     }
