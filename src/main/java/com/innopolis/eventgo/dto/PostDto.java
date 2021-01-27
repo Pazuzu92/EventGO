@@ -14,7 +14,7 @@ public class PostDto {
     public PostDto() {
     }
 
-    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, LocalDateTime dateFrom, LocalDateTime dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, byte[] photo, CategoryDto category, CityDto city) {
+    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, LocalDateTime dateFrom, LocalDateTime dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, byte[] photo, CategoryDto category, CityDto city, PostStatusDto postStatusDto) {
         this.id = id;
         this.header = header;
         this.description = description;
@@ -29,6 +29,7 @@ public class PostDto {
         this.photo = photo;
         this.category = category;
         this.city = city;
+        this.status = postStatusDto;
     }
 
     private Long id;
@@ -47,4 +48,5 @@ public class PostDto {
     private byte[] photo;
     private CategoryDto category;
     private CityDto city;
+    private PostStatusDto status;
 }

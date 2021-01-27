@@ -4,6 +4,7 @@ import com.innopolis.eventgo.db.entity.Category;
 import com.innopolis.eventgo.db.entity.City;
 import com.innopolis.eventgo.db.entity.Photo;
 import com.innopolis.eventgo.db.entity.Post;
+import com.innopolis.eventgo.db.entity.User;
 
 import java.util.List;
 
