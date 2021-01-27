@@ -47,8 +47,10 @@ public class Post {
     @Column(name = "date_to")
     private LocalDateTime dateTo;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<PostPhoto> postPhotos = new ArrayList<>();
+    @Column(name = "photo")
+    private byte[] image;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+//    private List<Photo> photos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)

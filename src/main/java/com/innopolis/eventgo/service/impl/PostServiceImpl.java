@@ -48,12 +48,20 @@ public class PostServiceImpl implements PostService {
         return postMapper.mapToDto(post);
     }
 
+    @Override
+    public Post getPostEntity(long id) throws NotFoundException {
+        Post post = postRepository.getPost(id);
+        if (post == null) throw new NotFoundException("Post not found");
+
+        return post;
+    }
+
     public ResponseMessageEntity createPost(PostDto postDto) throws NotFoundException {
         if (!isValidPost(postDto)) throw new NotFoundException("Bad post");
 
         Post postEntity = postMapper.mapToPost(postDto);
         postEntity.setDateCreate(LocalDateTime.now());
-
+        postRepository.savePost(postEntity);
         return getResponseMessage();
     }
 
@@ -66,8 +74,10 @@ public class PostServiceImpl implements PostService {
 
         post.setHeader(postUpdate.getHeader());
         post.setDescription(postUpdate.getDescription());
-        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
-        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
+//        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
+        post.setDateTo(postUpdate.getDateTo());
+//        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
+        post.setDateFrom(postUpdate.getDateFrom());
         post.setCategory(category);
         city.ifPresent(post::setCity);
 
@@ -80,6 +90,10 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.deletePost(id);
         if (post == null) throw new NotFoundException("Post not found");
         return post;
+    }
+
+    public byte[] getPhoto(Long id) {
+        return postRepository.getPhoto(id);
     }
 
     private boolean isValidPost(PostDto post) {

@@ -13,7 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQueries({@NamedQuery(name = User.findUserByName, query = "select u from User u where u.login = :login")})
 public class User {
+
+    public static final String findUserByName = "User.findUserByName";
 
     public User(Role role) {this.role = role;}
 

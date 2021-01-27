@@ -5,6 +5,7 @@ import com.innopolis.eventgo.db.entity.User;
 import java.util.Optional;
 
 public interface UserRepository {
-    User getUser(long id);
+    User getUser(Long id);
     Optional<User> updateName(long id, User user);
+    User getUser(String name);
 }
