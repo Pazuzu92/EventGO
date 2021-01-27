@@ -24,7 +24,8 @@ class PostServiceImplTest {
         postService = new PostServiceImpl(postRepository,
                 mock(PostDAO.class), mock(CityDAO.class), new PostMapper(),
                 mock(CategoryDAO.class),
-                mock(PostStatusDAO.class));
+                mock(PostStatusDAO.class),
+                mock(UserDAO.class));
     }
 
     @Test
