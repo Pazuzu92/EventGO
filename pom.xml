@@ -21,7 +21,7 @@
         <commons-lang3.version>3.11</commons-lang3.version>
     </properties>
 
-    <dependencies>
+	<dependencies>
 
         <!--Spring Boot-->
         <dependency>
@@ -35,14 +35,11 @@
             <version>68.2</version>
         </dependency>
 
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-security</artifactId>-->
-        <!--		</dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,11 +75,10 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.thymeleaf.extras</groupId>-->
-<!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
-<!--        </dependency>-->
-
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
 
         <!--Thymeleaf-->
         <dependency>
@@ -98,83 +94,65 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>junit</groupId>-->
-<!--            <artifactId>junit</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.security</groupId>-->
-        <!--			<artifactId>spring-security-test</artifactId>-->
-        <!--			<scope>test</scope>-->
-        <!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.security</groupId>-->
+<!--			<artifactId>spring-security-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 
-        <dependency>
-            <groupId>org.passay</groupId>
-            <artifactId>passay</artifactId>
-            <version>1.0</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
+		</dependency>
+	</dependencies>
 
-        <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <finalName>eventgo</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>7.0.2</version>
-                <configuration>
-                    <configFiles>${pom.basedir}/src/main/resources/conf/flyway.conf</configFiles>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.2.17.jre7</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<finalName>eventgo</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>7.0.2</version>
+				<configuration>
+					<configFiles>${pom.basedir}/src/main/resources/conf/flyway.conf</configFiles>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>42.2.17.jre7</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

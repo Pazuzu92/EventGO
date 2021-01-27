@@ -3,6 +3,7 @@ package com.innopolis.eventgo.service;
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
 import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 
 
@@ -12,10 +13,13 @@ import java.util.Optional;
 public interface PostService {
 
     PostDto getPost(long id) throws NotFoundException;
+    Post getPostEntity(long id) throws NotFoundException;
 
     ResponseMessageEntity createPost(PostDto post) throws NotFoundException;
 
     ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws NotFoundException;
+
+    byte[] getPhoto(Long id);
 
     Post deletePost(long id) throws NotFoundException;
 
@@ -25,4 +29,11 @@ public interface PostService {
                                    Optional<Integer> page,
                                    Optional<Integer> size,
                                    Optional<String> sort) throws NotFoundException;
+
+    List<PostDto> getPostsByAuthor(Optional<Long> authorId,
+                                   Optional<Integer> page,
+                                   Optional<Integer> size,
+                                   Optional<String> sort) throws NotFoundException;
+
+    List<Post> getGroupsPosts(Optional<Long> authorId) throws NotFoundException;
 }

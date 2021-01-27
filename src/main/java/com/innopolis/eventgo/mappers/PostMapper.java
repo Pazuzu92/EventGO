@@ -3,6 +3,7 @@ package com.innopolis.eventgo.mappers;
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.dto.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,6 +53,17 @@ public class PostMapper {
                 .shortName(post.getCity().getShortName())
                 .build();
 
+//        PhotoDto photoDto = new PhotoDto();
+//        photoDto.setId(post.getP);
+//        postDto.setPhoto();
+//        List<PhotoDto> photoDtos = new ArrayList<>();
+//        post.getPhotos().forEach(p -> {
+//            PhotoDto photoDto = new PhotoDto();
+//            photoDto.setId(p.getId());
+//            photoDto.setImage(p.getImage());
+//            photoDtos.add(photoDto);
+//        });
+
         PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .header(post.getHeader())
@@ -59,11 +71,12 @@ public class PostMapper {
                 .address(post.getAddress())
                 .likes(likesDto)
                 .dislikes(dislikesDto)
-                .dateFrom(post.getDateFrom().toString())
-                .dateTo(post.getDateTo().toString())
+                .dateFrom(post.getDateFrom())
+                .dateTo(post.getDateTo())
                 .author(userDto)
                 .groups(groupsDtos)
                 .comment(commentDtos)
+                .photo(post.getImage())
                 .category(categoryDto)
                 .city(cityDto)
                 .build();
@@ -74,31 +87,30 @@ public class PostMapper {
     public Post mapToPost(PostDto postDto) {
         Post post = new Post();
 
-        Role role = new Role();
-        role.setId(post.getUser().getRole().getId());
-        role.setRoleCode(post.getUser().getRole().getRoleCode());
-
         User user = new User();
-        user.setId(post.getUser().getId());
-        user.setEmail(post.getUser().getEmail());
-        user.setLogin(post.getUser().getLogin());
-        user.setName(post.getUser().getName());
-        user.setRole(role);
+        user.setId(postDto.getAuthor().getId());
+        user.setEmail(postDto.getAuthor().getEmail());
+        user.setLogin(postDto.getAuthor().getLogin());
+        user.setName(postDto.getAuthor().getName());
 
         Category category = new Category();
-        category.setId(post.getCategory().getId());
-        category.setNameCategory(post.getCategory().getNameCategory());
+        category.setId(postDto.getCategory().getId());
+        category.setNameCategory(postDto.getCategory().getCategoryName());
 
         City city = new City();
-        city.setId(post.getCity().getId());
-        city.setCityName(post.getCity().getCityName());
-        city.setShortName(post.getCity().getShortName());
+        city.setId(postDto.getCity().getId());
+        city.setCityName(postDto.getCity().getCityName());
+        city.setShortName(postDto.getCity().getShortName());
 
-        post.setId(post.getId());
+        post.setId(postDto.getId());
         post.setHeader(postDto.getHeader());
-        post.setDescription(post.getDescription());
-        post.setDateFrom(LocalDateTime.parse(postDto.getDateFrom(), dateTimeFormatter));
-        post.setDateTo(LocalDateTime.parse(postDto.getDateTo(), dateTimeFormatter));
+        post.setAddress(postDto.getAddress());
+        post.setImage(postDto.getPhoto());
+        post.setDescription(postDto.getDescription());
+        post.setDateFrom(postDto.getDateFrom());
+        post.setDateTo(postDto.getDateTo());
+        post.setDateFrom(postDto.getDateFrom());
+        post.setDateTo(postDto.getDateTo());
         post.setUser(user);
         post.setCategory(category);
         post.setCity(city);
