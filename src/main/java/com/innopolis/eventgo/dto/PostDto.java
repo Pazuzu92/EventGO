@@ -2,7 +2,10 @@ package com.innopolis.eventgo.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -11,7 +14,7 @@ public class PostDto {
     public PostDto() {
     }
 
-    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, String dateFrom, String dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, CategoryDto category, CityDto city, PostStatusDto postStatusDto) {
+    public PostDto(Long id, String header, String address, String description, LikesDto likes, DislikesDto dislikes, LocalDateTime dateFrom, LocalDateTime dateTo, UserDto author, List<GroupsDto> groups, List<CommentDto> comment, byte[] photo, CategoryDto category, CityDto city, PostStatusDto postStatusDto) {
         this.id = id;
         this.header = header;
         this.description = description;
@@ -23,6 +26,7 @@ public class PostDto {
         this.author = author;
         this.groups = groups;
         this.comment = comment;
+        this.photo = photo;
         this.category = category;
         this.city = city;
         this.status = postStatusDto;
@@ -34,11 +38,14 @@ public class PostDto {
     private String address;
     private LikesDto likes;
     private DislikesDto dislikes;
-    private String dateFrom;
-    private String dateTo;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime dateFrom;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime dateTo;
     private UserDto author;
     private List<GroupsDto> groups;
     private List<CommentDto> comment;
+    private byte[] photo;
     private CategoryDto category;
     private CityDto city;
     private PostStatusDto status;

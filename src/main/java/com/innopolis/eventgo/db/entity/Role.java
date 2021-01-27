@@ -13,9 +13,9 @@ import javax.persistence.*;
 @Setter
 public class Role {
 
-    public final static int USER = 1;
-    public final static int MODERATOR = 2;
-    public final static int ADMIN = 3;
+    public final static String USER = "USER";
+    public final static String MODERATOR = "MODERATOR";
+    public final static String ADMIN = "ADMIN";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,7 +23,7 @@ public class Role {
     private Long id;
 
     @Column(name = "role_code")
-    private int roleCode;
+    private String roleCode;
 
     @Column(name = "VERSION")
     @Version

@@ -13,10 +13,13 @@ import java.util.Optional;
 public interface PostService {
 
     PostDto getPost(long id) throws NotFoundException;
+    Post getPostEntity(long id) throws NotFoundException;
 
     ResponseMessageEntity createPost(PostDto post) throws NotFoundException;
 
     ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws NotFoundException;
+
+    byte[] getPhoto(Long id);
 
     Post deletePost(long id) throws NotFoundException;
 
