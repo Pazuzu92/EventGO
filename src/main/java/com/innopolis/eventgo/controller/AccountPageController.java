@@ -32,11 +32,6 @@ public class AccountPageController {
         this.postService = postService;
     }
 
-    @GetMapping("")
-    public String redirectLoad() {
-        return "redirect:/account/{4}";
-    }
-
     @SneakyThrows
     @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
