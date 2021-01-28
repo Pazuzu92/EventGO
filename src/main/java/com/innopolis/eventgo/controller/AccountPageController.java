@@ -2,11 +2,13 @@ package com.innopolis.eventgo.controller;
 
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.RoleDto;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
 import com.innopolis.eventgo.service.UserService;
 import lombok.SneakyThrows;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +37,16 @@ public class AccountPageController {
     @SneakyThrows
     @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
-                       Model model) {
+                       Model model,
+                       Authentication authentication) {
         UserDto userDto = userService.findUserDto(userId);
+        String login = authentication.getName();
+
+        if (!userDto.getLogin().equals(login)){
+            return "redirect:/";
+        }
+
+        int rating = 0;
 
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),
                 Optional.of(0),
@@ -44,11 +54,17 @@ public class AccountPageController {
                 Optional.of("dateFrom"));
 
         List<Post> groups = postService.getGroupsPosts(Optional.of(userId));
+        for (PostDto post : posts) {
+            rating += post.getLikes().getLikes();
+        }
+        RoleDto role = userDto.getRole();
 
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
         model.addAttribute("groups", groups);
         model.addAttribute("userId", userDto.getId());
+        model.addAttribute("rating", rating);
+        model.addAttribute("role", role);
 
         return "account";
     }

@@ -45,9 +45,8 @@ public class UserService {
 
     public UserDto findUserDto(Long id) throws NotFoundException {
         User user = userRepository.getUser(id);
-        UserDto result = modelMapper.map(user, UserDto.class);
         if (user == null) throw new NotFoundException("User not found");
-        return result;
+        return modelMapper.map(user, UserDto.class);
     }
 
     public User save(UserRegistrationDto userRegistrationDto) {

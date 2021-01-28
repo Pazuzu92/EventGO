@@ -25,7 +25,7 @@ public class Category {
 
     @Column(name = "VERSION")
     @Version
-    private int version;
+    private Integer version;
 
     @Override
     public String toString() {

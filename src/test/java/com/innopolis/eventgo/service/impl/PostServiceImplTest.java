@@ -1,8 +1,6 @@
 package com.innopolis.eventgo.service.impl;
 
-import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.repository.*;
-import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.mappers.PostMapper;
 import com.innopolis.eventgo.service.PostService;
