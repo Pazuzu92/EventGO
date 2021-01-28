@@ -8,11 +8,13 @@ import lombok.Data;
 public class PostStatusDto {
     public PostStatusDto() {}
 
-    public PostStatusDto(Long id, int status) {
+    public PostStatusDto(Long id, int status, String statusName) {
         this.id = id;
         this.status = status;
+        this.statusName = statusName;
     }
 
     private Long id;
     private int status;
+    private String statusName;
 }

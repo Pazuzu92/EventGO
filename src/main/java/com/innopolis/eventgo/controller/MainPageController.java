@@ -1,13 +1,18 @@
 package com.innopolis.eventgo.controller;
 
 import com.innopolis.eventgo.db.entity.PostStatus;
+import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.dto.CategoryDto;
 import com.innopolis.eventgo.dto.CityDto;
 import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.service.CategoryService;
 import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
+import com.innopolis.eventgo.service.UserService;
 import lombok.SneakyThrows;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,28 +27,39 @@ public class MainPageController {
     private final CategoryService categoryService;
     private final CityService cityService;
     private final PostService postService;
+    private final UserService userService;
 
     public MainPageController(CategoryService categoryService,
                               CityService cityService,
-                              PostService postService) {
+                              PostService postService,
+                              UserService userService) {
         this.categoryService = categoryService;
         this.cityService = cityService;
         this.postService = postService;
+        this.userService = userService;
     }
 
     @GetMapping("")
-    public String redirectLoad(){
+    public String redirectLoad() {
         return "redirect:/kzn";
     }
 
     @SneakyThrows
     @GetMapping("{cityShortName}")
-    public String load(@PathVariable() String cityShortName,
+    public String load(@PathVariable String cityShortName,
                        @RequestParam(required = false, defaultValue = "Спорт") Optional<String> category,
                        Model model) {
         List<CategoryDto> categories = categoryService.findAll();
         List<CityDto> cities = cityService.findAllExceptBy(cityShortName);
         CityDto city = cityService.findByShortName(cityShortName);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        Optional<User> user = userService.findByLogin(login);
+        Long userId = null;
+
+        if (user.isPresent()){
+            userId = user.get().getId();
+        }
 
         List<PostDto> posts = postService.getPostsByFilter(
                 Optional.of(cityShortName),
@@ -57,6 +73,8 @@ public class MainPageController {
         model.addAttribute("cities", cities);
         model.addAttribute("currentCity", city);
         model.addAttribute("posts", posts);
+        model.addAttribute("login", login);
+        model.addAttribute("userId", userId);
         return "main";
     }
 }

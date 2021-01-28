@@ -31,7 +31,7 @@ $(document).ready(function () {
             $('.spinner').toggleClass('hidden');
             $('.category').each((i, item) => $(item).removeClass('category-active'));
             $(e.target).addClass('category-active');
-            fetch('api/post?category=' + e.target.id + '&city=' + e.target.getAttribute('city-name'))
+            fetch('api/post?statusId=3&category=' + e.target.id + '&city=' + e.target.getAttribute('city-name'))
                 .then(response => response.json())
                 .then(data => {
                     const list = $('.js-posts').html('');

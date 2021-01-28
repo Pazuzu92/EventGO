@@ -9,13 +9,11 @@ import lombok.Data;
 public class GroupsDto {
     public GroupsDto() {}
 
-    public GroupsDto(Long id, PostDto post, UserDto user) {
+    public GroupsDto(Long id, UserDto user) {
         this.id = id;
-        this.post = post;
         this.user = user;
     }
 
     private Long id;
-    private PostDto post;
     private UserDto user;
 }

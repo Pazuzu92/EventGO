@@ -36,7 +36,7 @@ public class AccountPageController {
     @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
                        Model model) {
-        UserDto userDto = userService.findUser(userId);
+        UserDto userDto = userService.findUserDto(userId);
 
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),
                 Optional.of(0),
