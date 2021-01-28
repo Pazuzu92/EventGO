@@ -48,20 +48,36 @@
                 <div class="col-sm">
                     <h3 class="main-heading mb-4" th:text="${post.getHeader()}"></h3>
                     <img height="400" width="600" th:src="@{/photo/{id}(id=${post.getId()})}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm"><button type="button" class="btn btn-warning">Учавствовать</button></div>
+                            <div class="col-sm"></div>
+                            <form method="post" th:action="@{/post/{id}/like(id=${post.getId()})}" th:object="${post}">
+                                <div class="col-sm"><button type="submit" class="btn btn-success">
+                                    <img th:src="@{/images/like.svg}">
+                                    <span th:text="${post.getLikes().getLikes()}"></span>
+                                </button></div>
+                            </form>
+
+                            <div class="col-sm"><button type="button" class="btn btn-danger">
+                                <img th:src="@{/images/dislike.svg}"><span th:text="${post.getDislikes().getDislikes()}"></span>
+                            </button></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm">
-                    <div th:text="${post.getDateFrom()}"></div>
+                    <h3><span th:text="${#temporals.format(post.getDateFrom(), 'dd-MM-yyyy')}"></span></h3>
                     <div th:text="${post.getDescription()}"></div>
-                    <div th:text="${post.getAddress()}"></div>
+                    <h4>Место проведения: <div th:text="${post.getAddress()}"></div></h4>
                 </div>
             </div>
         </div>
 
-        <div th:text="${post.getLikes()}"></div>
-        <div th:text="${post.getDislikes()}"></div>
-        <div th:text="${post.getHeader()}"></div>
-
     </main>
+
+    <div th:text="${post.getLikes()}"></div>
+    <div th:text="${post.getLikes().getLikes()}"></div>
+    <div th:text="${post.getLikes().likes}"></div>
 
     <div th:replace="fragments/scripts.html :: scripts"></div>
 </body>

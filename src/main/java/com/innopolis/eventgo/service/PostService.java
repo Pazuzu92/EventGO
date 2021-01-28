@@ -40,4 +40,6 @@ public interface PostService {
     Optional<Post> findById(Long id);
 
     void updatePostByStatus(Post post, Long statusId);
+
+    void likePost(Long id);
 }

@@ -17,7 +17,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Post getPost(Long id) {
-        return em.find(Post.class, id);
+        Post post = em.find(Post.class, id);
+        return post;
     }
 
     @Override
@@ -25,7 +26,9 @@ public class PostRepositoryImpl implements PostRepository {
         User user = em.find(User.class, post.getUser().getId());
 
         Likes likes = new Likes();
+        likes.setLikes(0);
         Dislikes dislikes = new Dislikes();
+        dislikes.setDislikes(0);
         City city = em.find(City.class, post.getCity().getId());
         Category category = em.find(Category.class, post.getCategory().getId());
         PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
