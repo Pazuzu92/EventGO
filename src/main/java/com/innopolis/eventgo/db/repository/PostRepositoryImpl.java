@@ -64,6 +64,24 @@ public class PostRepositoryImpl implements PostRepository {
         return post;
     }
 
+    @Override
+    public void follow(Long idPost, Long idUser) {
+        List<Group> groups = em.createNamedQuery(Group.findFollowers).setParameter("id", idPost).getResultList();
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).getUser().getId() == idUser) return;
+        }
+        Group group = new Group();
+        group.setPost(em.find(Post.class, idPost));
+        group.setUser(em.find(User.class, idUser));
+        em.persist(group);
+    }
+
+    @Override
+    public int getFollowers(Long idPost) {
+        List<Group> groups = em.createNamedQuery(Group.findFollowers).setParameter("id", idPost).getResultList();
+        return groups.size();
+    }
+
     public City saveCity(City city) {
         em.persist(city);
         return em.find(City.class, city.getId());

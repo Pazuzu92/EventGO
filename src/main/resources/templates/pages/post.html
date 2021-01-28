@@ -16,7 +16,7 @@
     <header class="header">
         <div class="container d-flex align-items-center h-100">
             <a href="/" class="me-5">
-                <img th:src="@{/static/images/logo.svg}" alt="logo">
+<!--                <img th:src="@{/static/images/logo.svg}" alt="logo">-->
                 <img th:src="@{/images/logo.svg}" alt="logo">
             </a>
             <div class="dropdown flex-grow-1">
@@ -32,7 +32,7 @@
             </div>
 
             <th:block th:if="${isAuthorized}">
-                <a class="login-button" href="/api/account/" th:text="${user.getUsername()}"></a>
+                <a class="login-button" th:href="@{/account/{id}(id=${userId})}" th:text="${user.getUsername()}"></a>
                 <a class="login-button" href="/logout">Выход</a>
             </th:block>
             <th:block th:unless="${isAuthorized}">
@@ -51,15 +51,22 @@
                     <img height="400" width="600" th:src="@{/photo/{id}(id=${post.getId()})}">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm"><button type="button" class="btn btn-warning">Учавствовать</button></div>
+                            <div class="col-sm">
+                                <form method="post" th:action="@{/post/{id}/follow(id=${post.getId()})}">
+                                    <button type="submit" class="btn btn-warning">Учавствовать</button>
+                                    <img th:src="@{/images/follow.svg}">
+                                    <span th:text="${countFollowers}"></span>
+                                </form>
+                            </div>
                             <div class="col-sm"></div>
-                            <form method="post" th:action="@{/post/{id}/like(id=${post.getId()})}" th:object="${post}">
-                                <div class="col-sm"><button type="submit" class="btn btn-success">
-                                    <img th:src="@{/images/like.svg}">
-                                    <span th:text="${post.getLikes().getLikes()}"></span>
-                                </button></div>
-                            </form>
-
+                            <div class="col-sm">
+                                <form method="post" th:action="@{/post/{id}/like(id=${post.getId()})}">
+                                    <button type="submit" class="btn btn-success">
+                                        <img th:src="@{/images/like.svg}">
+                                        <span th:text="${post.getLikes().getLikes()}"></span>
+                                    </button>
+                                </form>
+                            </div>
                             <div class="col-sm"><button type="button" class="btn btn-danger">
                                 <img th:src="@{/images/dislike.svg}"><span th:text="${post.getDislikes().getDislikes()}"></span>
                             </button></div>
@@ -75,10 +82,6 @@
         </div>
 
     </main>
-
-    <div th:text="${post.getLikes()}"></div>
-    <div th:text="${post.getLikes().getLikes()}"></div>
-    <div th:text="${post.getLikes().likes}"></div>
 
     <div th:replace="fragments/scripts.html :: scripts"></div>
 </body>

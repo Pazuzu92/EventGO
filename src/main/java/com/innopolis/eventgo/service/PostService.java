@@ -42,4 +42,8 @@ public interface PostService {
     void updatePostByStatus(Post post, Long statusId);
 
     void likePost(Long id);
+
+    void follow(Long idPost, Long idUser);
+
+    int getFollowers(Long idPost);
 }

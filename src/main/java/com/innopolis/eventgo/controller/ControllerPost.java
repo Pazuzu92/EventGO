@@ -34,18 +34,27 @@ public class ControllerPost {
     private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/post/{id}")
-    public String getPost(@PathVariable Long id, Model model, Authentication authentication) throws NotFoundException {
+    public String getPost(@PathVariable(value = "id") Long id,
+                          Model model,
+                          Authentication authentication) throws NotFoundException {
         User principal = null;
         boolean isAuthorized = false;
+        com.innopolis.eventgo.db.entity.User user = new com.innopolis.eventgo.db.entity.User();
+        user.setId(-1L);
         if (authentication != null && authentication.isAuthenticated()) {
             principal = (User) authentication.getPrincipal();
+            user = userRepository.getUser(principal.getUsername());
             isAuthorized = true;
         }
 
+        int countFollowers = postService.getFollowers(id);
+
+        model.addAttribute("countFollowers", countFollowers);
         model.addAttribute("user", principal);
         model.addAttribute("isAuthorized", isAuthorized);
         model.addAttribute("post", postService.getPost(id));
         model.addAttribute("cityList", cityService.findAll());
+        model.addAttribute("userId", user.getId());
         return "pages/post";
     }
 
@@ -73,6 +82,7 @@ public class ControllerPost {
         model.addAttribute("user", principal);
         model.addAttribute("cityList", cityService.findAll());
         model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("userId", user.getId());
 
         return "pages/create_post";
     }
@@ -80,7 +90,8 @@ public class ControllerPost {
     @RequestMapping(method = RequestMethod.POST, value = "/post/create")
     public String createPost(@RequestParam("img") MultipartFile file,
                              @ModelAttribute PostDto postDto,
-                             Authentication authentication, Model model) throws IOException, NotFoundException {
+                             Authentication authentication,
+                             Model model) throws IOException, NotFoundException {
 
         postDto.setPhoto(file.getBytes());
         postService.createPost(postDto);
@@ -94,4 +105,11 @@ public class ControllerPost {
         return getPost(id, model, authentication);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/post/{id}/follow")
+    public String follow(@PathVariable("id") Long id, Model model, Authentication authentication) throws NotFoundException {
+        User principal = (User) authentication.getPrincipal();
+        com.innopolis.eventgo.db.entity.User user = userRepository.getUser(principal.getUsername());
+        postService.follow(id, user.getId());
+        return getPost(id, model, authentication);
+    }
 }

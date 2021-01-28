@@ -2,6 +2,7 @@ package com.innopolis.eventgo.db.repository;
 
 import com.innopolis.eventgo.db.entity.Category;
 import com.innopolis.eventgo.db.entity.City;
+import com.innopolis.eventgo.db.entity.Group;
 import com.innopolis.eventgo.db.entity.Post;
 
 public interface PostRepository {
@@ -16,4 +17,7 @@ public interface PostRepository {
 
     void saveCategory(Category category);
     Category getCategoryById(Long id);
+
+    void follow(Long idPost, Long idUser);
+    int getFollowers(Long idPost);
 }
