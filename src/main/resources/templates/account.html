@@ -58,7 +58,7 @@
                         <div class="groups-info d-flex justify-content-between">
                             <p class="groups-description" th:text="${group.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">
-                                <div th:text="${group.getDateTo()}"></div>
+                                <div th:text="${#temporals.format(group.dateFrom, 'dd-MM-yyyy')}"></div>
                             </div>
                         </div>
                     </li>
@@ -82,7 +82,7 @@
                         <div class="event-info d-flex justify-content-between">
                             <p class="event-description" th:text="${post.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">
-                                <div th:text="${post.getDateTo()}"></div>
+                                <div th:text="${#temporals.format(post.dateFrom, 'dd-MM-yyyy')}"></div>
                                 <div class="align-self-end accepted" th:switch="${post.getStatus().getStatus()}">
                                     <div class="moderated" th:case="1">На модерации</div>
                                     <div class="rejected" th:case="2">Отменен</div>
