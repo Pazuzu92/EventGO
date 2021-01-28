@@ -94,18 +94,23 @@ public class TestDataInit {
 
         PostStatus postStatus1 = new PostStatus();
         postStatus1.setStatus(PostStatus.ACTIVE);
+        postStatus1.setStatusName("Активный");
 
         PostStatus postStatus2 = new PostStatus();
         postStatus2.setStatus(PostStatus.ARCHIVED);
+        postStatus2.setStatusName("В архиве");
 
         PostStatus postStatus3 = new PostStatus();
         postStatus3.setStatus(PostStatus.DELETED);
+        postStatus3.setStatusName("Удален");
 
         PostStatus postStatus4 = new PostStatus();
         postStatus4.setStatus(PostStatus.MODERATED);
+        postStatus4.setStatusName("На модерации");
 
         PostStatus postStatus5 = new PostStatus();
         postStatus5.setStatus(PostStatus.REJECTED);
+        postStatus5.setStatusName("Отклонен");
 
         Likes likes1 = new Likes();
         likes1.setLikes(100);

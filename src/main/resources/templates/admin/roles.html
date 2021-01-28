@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Роли</title>
+</head>
+<body>
+<header class="header">
+    <div class="container d-flex align-items-center h-100">
+        <a href="/" class="me-5">
+            <img th:src="@{/images/logo.svg}" alt="logo">
+        </a>
+    </div>
+</header>
+
+<h1>Список ролей</h1>
+<div id="role_list">
+    <table>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.getRoleCode()}"></td>
+            <td>
+                <a th:if="${role.getRoleCode() != 'ADMIN' && role.getRoleCode() != 'USER' && role.getRoleCode() != 'MODERATOR'}"
+                   th:href="@{'/admin/roles/' + ${role.getId()}}">Удалить</a>
+            </td>
+        </tr>
+    </table>
+
+    <form th:action="@{/admin/roles}" modelAttribute="newRole" method="post">
+        <input type="text" id="roleCode" placeholder="Название роли" name="roleCode"/>
+        <button type="submit" >Добавить</button>
+    </form>
+
+    <a th:href="@{/admin}">Назад</a>
+</div>
+</body>
+</html>

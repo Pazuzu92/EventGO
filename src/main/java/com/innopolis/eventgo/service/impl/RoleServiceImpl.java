@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void save(Role role) {
-        String roleCode = role.getRoleCode();
+        String roleCode = role.getRoleCode().toUpperCase(Locale.ROOT);
         Role rl = roleDAO.getRoleByRoleCode(roleCode);
         if (rl == null) {
             role.setRoleCode(roleCode);

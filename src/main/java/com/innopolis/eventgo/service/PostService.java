@@ -36,4 +36,10 @@ public interface PostService {
                                    Optional<String> sort) throws NotFoundException;
 
     List<Post> getGroupsPosts(Optional<Long> authorId) throws NotFoundException;
+
+    List<Post> findAllOrderById();
+
+    Optional<Post> findById(Long id);
+
+    void updatePostByStatus(Post post, Long statusId);
 }

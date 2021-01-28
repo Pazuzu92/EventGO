@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <title>Админ</title>
+</head>
+<body>
+<header class="header">
+    <div class="container d-flex align-items-center h-100">
+        <a href="/" class="me-5">
+            <img th:src="@{/images/logo.svg}" alt="logo">
+        </a>
+    </div>
+</header>
+
+<div>
+    <table>
+        <tr>
+            <td>
+                <a th:href="@{admin/users}">Список пользователей</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a th:href="@{admin/roles}">Список ролей</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a th:href="@{admin/posts}">Список постов</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
