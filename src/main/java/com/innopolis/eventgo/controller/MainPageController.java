@@ -45,7 +45,7 @@ public class MainPageController {
     }
 
     @SneakyThrows
-    @GetMapping("{cityShortName}")
+    @GetMapping("{cityShortName:\\D{3}}")
     public String load(@PathVariable String cityShortName,
                        @RequestParam(required = false, defaultValue = "Спорт") Optional<String> category,
                        Model model) {
