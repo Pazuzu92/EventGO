@@ -47,7 +47,10 @@
                         <img th:src="@{/images/like_icon.svg}" alt="like icon">
                     </span>
                 </div>
-<!--                <div th:if="${role.getRoleCode() != 'ADMIN' && role.getRoleCode() != 'USER' && role.getRoleCode() != 'MODERATOR'}">Редактировать профиль</div>-->
+                <a th:href="@{'/admin'}">
+                    <div th:if="${role.getRoleCode() == 'ADMIN' }">Админка</div>
+                </a>
+
             </div>
             <div class="groups-header d-flex">
                 <h3>Подписки</h3>

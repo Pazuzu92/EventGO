@@ -57,6 +57,7 @@ public class AccountPageController {
         model.addAttribute("groups", groups);
         model.addAttribute("userId", userDto.getId());
         model.addAttribute("rating", rating);
+        model.addAttribute("role", role);
 
         return "account";
     }
