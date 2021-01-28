@@ -19,8 +19,11 @@ class PostServiceImplTest {
     @BeforeEach
     public void setUp() {
         postRepository = mock(PostRepository.class);
-        postService = new PostServiceImpl(postRepository,
-                mock(PostDAO.class), mock(CityDAO.class), new PostMapper(),
+        postService = new PostServiceImpl(
+                postRepository,
+                mock(PostDAO.class),
+                mock(CityDAO.class),
+                new PostMapper(),
                 mock(CategoryDAO.class),
                 mock(PostStatusDAO.class),
                 mock(UserDAO.class));
