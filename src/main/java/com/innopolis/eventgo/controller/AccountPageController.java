@@ -1,7 +1,9 @@
 package com.innopolis.eventgo.controller;
 
 import com.innopolis.eventgo.db.entity.Post;
+import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.RoleDto;
 import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
@@ -37,6 +39,7 @@ public class AccountPageController {
     public String load(@PathVariable() long userId,
                        Model model) {
         UserDto userDto = userService.findUserDto(userId);
+        int rating = 0;
 
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),
                 Optional.of(0),
@@ -44,11 +47,17 @@ public class AccountPageController {
                 Optional.of("dateFrom"));
 
         List<Post> groups = postService.getGroupsPosts(Optional.of(userId));
+        for (PostDto post : posts) {
+            rating += post.getLikes().getLikes();
+        }
+        RoleDto role = userDto.getRole();
 
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
         model.addAttribute("groups", groups);
         model.addAttribute("userId", userDto.getId());
+        model.addAttribute("rating", rating);
+        model.addAttribute("role", role);
 
         return "account";
     }
