@@ -36,6 +36,7 @@ public class AccountPageController {
     @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
                        Model model) {
+        int rating = 0;
         UserDto userDto = userService.findUser(userId);
 
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),
@@ -44,11 +45,15 @@ public class AccountPageController {
                 Optional.of("dateFrom"));
 
         List<Post> groups = postService.getGroupsPosts(Optional.of(userId));
+        for (int i = 0; i < posts.size(); i++) {
+            rating += posts.get(i).getLikes().getLikes();
+        }
 
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
         model.addAttribute("groups", groups);
         model.addAttribute("userId", userDto.getId());
+        model.addAttribute("rating", rating);
 
         return "account";
     }

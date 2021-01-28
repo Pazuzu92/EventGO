@@ -10,11 +10,11 @@
     <header class="header">
         <div class="container d-flex align-items-center h-100">
             <a href="/" class="me-5">
-                <img src="logo.svg" alt="logo">
+                <img th:src="@{/static/images/logo.svg}" alt="logo">
             </a>
             <div class="dropdown flex-grow-1">
                 <button class="btn btn-secondary dropdown-toggle geo-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="geo_icon.svg" alt="geo dropdown icon">
+                    <img th:src="@{/static/images/geo_icon.svg}" alt="geo dropdown icon">
                     Выбрать город
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -43,8 +43,8 @@
         <th:block th:each="p : ${photos}">
             <img th:src="@{~/photo/${p.getId()}}">
         </th:block>
-        <div th:text="${post.getLikes()}"></div>
-        <div th:text="${post.getDislikes()}"></div>
+        <div th:text="${post.getLikes().getLikes()}"></div>
+        <div th:text="${post.getDislikes().getDislikes()}"></div>
         <div th:text="${post.getHeader()}"></div>
 
     </main>
