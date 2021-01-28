@@ -1,11 +1,10 @@
 package com.innopolis.eventgo.controller;
 
-import com.innopolis.eventgo.db.entity.Photo;
-import com.innopolis.eventgo.db.entity.Post;
-import com.innopolis.eventgo.db.repository.CategoryDAO;
-import com.innopolis.eventgo.db.repository.CityDAO;
 import com.innopolis.eventgo.db.repository.UserRepository;
-import com.innopolis.eventgo.dto.*;
+import com.innopolis.eventgo.dto.CategoryDto;
+import com.innopolis.eventgo.dto.CityDto;
+import com.innopolis.eventgo.dto.PostDto;
+import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.service.CategoryService;
 import com.innopolis.eventgo.service.CityService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/")
@@ -47,13 +45,13 @@ public class ControllerPost {
         model.addAttribute("user", principal);
         model.addAttribute("isAuthorized", isAuthorized);
         model.addAttribute("post", postService.getPost(id));
-        model.addAttribute("city", cityService.findAll());
+        model.addAttribute("cityList", cityService.findAll());
         return "pages/post";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/photo/{id}", produces = "image/jpg")
-    public ResponseEntity getImage(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.ok().body(postService.getPhoto(id));
+    public ResponseEntity getImage(@PathVariable(value = "id") Long id) throws NotFoundException {
+        return ResponseEntity.ok().body(postService.getPost(id).getPhoto());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/post/create")
@@ -81,11 +79,13 @@ public class ControllerPost {
 
     @RequestMapping(method = RequestMethod.POST, value = "/post/create")
     public String createPost(@RequestParam("img") MultipartFile file,
-                             @ModelAttribute PostDto postDto) throws IOException, NotFoundException {
+                             @ModelAttribute PostDto postDto,
+                             Authentication authentication, Model model) throws IOException, NotFoundException {
 
         postDto.setPhoto(file.getBytes());
         postService.createPost(postDto);
-        return "redirect:pages/create_post";
+
+        return createPost(authentication, model);
     }
 
 }
