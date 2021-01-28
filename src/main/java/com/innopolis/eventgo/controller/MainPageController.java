@@ -46,7 +46,7 @@ public class MainPageController {
 
     @SneakyThrows
     @GetMapping("{cityShortName}")
-    public String load(@PathVariable() String cityShortName,
+    public String load(@PathVariable String cityShortName,
                        @RequestParam(required = false, defaultValue = "Спорт") Optional<String> category,
                        Model model) {
         List<CategoryDto> categories = categoryService.findAll();
@@ -54,11 +54,11 @@ public class MainPageController {
         CityDto city = cityService.findByShortName(cityShortName);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
-        Optional<UserDto> userDto = userService.findByLogin(login);
+        Optional<User> user = userService.findByLogin(login);
         Long userId = null;
 
-        if (userDto.isPresent()){
-            userId = userDto.get().getId();
+        if (user.isPresent()){
+            userId = user.get().getId();
         }
 
         List<PostDto> posts = postService.getPostsByFilter(

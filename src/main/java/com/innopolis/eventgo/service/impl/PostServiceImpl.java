@@ -172,4 +172,27 @@ public class PostServiceImpl implements PostService {
         return postDAO.findByGroups(authorId.get());
     }
 
+    @Override
+    public List<Post> findAllOrderById() {
+        return postDAO.findAllByOrderById();
+    }
+
+    @Override
+    public Optional<Post> findById(Long id) {
+        return postDAO.findById(id);
+    }
+
+    @Override
+    public void updatePostByStatus(Post post, Long statusId) {
+
+        if (!post.getStatus().getId().equals(statusId)){
+            Optional<PostStatus> postStatus = postStatusDAO.findById(statusId);
+
+            if (postStatus.isPresent()) {
+                post.setStatus(postStatus.get());
+                postDAO.save(post);
+            }
+        }
+    }
+
 }

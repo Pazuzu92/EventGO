@@ -30,6 +30,9 @@ public class PostStatus {
     @Column(name = "status")
     private int status;
 
+    @Column(name = "status_name")
+    private String statusName;
+
     @Version
     @Column(name = "version")
     private int version;
