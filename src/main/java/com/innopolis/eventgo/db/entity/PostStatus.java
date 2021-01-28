@@ -35,7 +35,7 @@ public class PostStatus {
 
     @Version
     @Column(name = "version")
-    private int version;
+    private Integer version;
 
     @Override
     public String toString() {
