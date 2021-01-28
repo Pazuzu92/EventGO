@@ -58,8 +58,7 @@
             <div th:each="group : ${groups}" class="groups-list d-flex flex-column">
                 <a th:href="@{'/post/' + ${group.getId()}}">
                     <li class="d-flex group p-2">
-                        <img th:src="@{account/photo/{id}(id=${group.getId()})}" class="event-image w-25" alt="event image">
-<!--                        <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
+                        <img th:src="@{/photo/{id}(id=${group.getId()})}" class="event-image w-25" alt="event image">
                         <div class="groups-info d-flex justify-content-between">
                             <p class="groups-description" th:text="${group.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">
@@ -83,8 +82,7 @@
             <div th:each="post : ${posts}" class="events-list d-flex flex-column">
                 <a th:href="@{'/post/' + ${post.getId()}}">
                     <li class="d-flex event">
-                        <img th:src="@{account/photo/{id}(id=${post.getId()})}" class="event-image w-25" alt="event image">
-<!--                        <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">-->
+                        <img th:src="@{/photo/{id}(id=${post.getId()})}" class="event-image w-25" alt="event image">
                         <div class="event-info d-flex justify-content-between">
                             <p class="event-description" th:text="${post.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">

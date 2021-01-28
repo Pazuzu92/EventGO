@@ -73,9 +73,4 @@ public class AccountPageController {
 
         return "account";
     }
-
-    @RequestMapping(method = RequestMethod.GET, value = "account/photo/{id}", produces = "image/jpg")
-    public ResponseEntity getImage(@PathVariable(value = "id") Long id) throws NotFoundException {
-        return ResponseEntity.ok().body(postService.getPost(id).getPhoto());
-    }
 }
