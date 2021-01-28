@@ -43,12 +43,11 @@ public class UserService {
         return getResponseMessage();
     }
 
-    public UserDto findUser(Long id) throws NotFoundException {
+    public UserDto findUserDto(Long id) throws NotFoundException {
         User user = userRepository.getUser(id);
         UserDto result = modelMapper.map(user, UserDto.class);
         if (user == null) throw new NotFoundException("User not found");
         return result;
-
     }
 
     public User save(UserRegistrationDto userRegistrationDto) {
@@ -95,9 +94,7 @@ public class UserService {
         }
     }
 
-    public void update(UserDto currentUserDto, User newUser) {
-
-        User currentUser = modelMapper.map(currentUserDto, User.class);
+    public void update(User currentUser, User newUser) {
 
         currentUser.setName(newUser.getName());
         currentUser.setLogin(newUser.getLogin());
@@ -114,12 +111,25 @@ public class UserService {
         userDAO.save(currentUser);
     }
 
-    public Optional<UserDto> findByLogin(String login) {
-        Optional<User> user = userDAO.findByLogin(login);
-        Optional<UserDto> userDto = Optional.empty();
-        if (user.isPresent()){
-            userDto = Optional.of(modelMapper.map(user, UserDto.class));
+    public Optional<User> findByLogin(String login) {
+        return userDAO.findByLogin(login);
+    }
+
+    public void updateByRole(User user, Long roleId) {
+        Optional<Role> role = roleDAO.findById(roleId);
+        if (role.isPresent() && !role.get().getId().equals(user.getRole().getId())){
+            user.setRole(role.get());
+            userDAO.save(user);
         }
-        return userDto;
+    }
+
+    public User findUser(Long id) throws NotFoundException {
+        User user = userRepository.getUser(id);
+        if (user == null) throw new NotFoundException("User not found");
+        return user;
+    }
+
+    public List<User> findAllOrderById(){
+        return userDAO.findAllByOrderById();
     }
 }
