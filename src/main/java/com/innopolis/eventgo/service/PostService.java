@@ -19,8 +19,6 @@ public interface PostService {
 
     ResponseMessageEntity updatePost(long id, PostDto postUpdate) throws NotFoundException;
 
-    byte[] getPhoto(Long id);
-
     Post deletePost(long id) throws NotFoundException;
 
     List<PostDto> getPostsByFilter(Optional<String> cityName,

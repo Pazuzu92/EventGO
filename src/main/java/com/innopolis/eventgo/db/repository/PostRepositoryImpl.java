@@ -61,12 +61,6 @@ public class PostRepositoryImpl implements PostRepository {
         return post;
     }
 
-    @Override
-    public byte[] getPhoto(Long id) {
-        Photo photo = em.find(Photo.class, id);
-        return photo.getImage();
-    }
-
     public City saveCity(City city) {
         em.persist(city);
         return em.find(City.class, city.getId());
