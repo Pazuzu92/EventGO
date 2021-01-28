@@ -1,7 +1,6 @@
 package com.innopolis.eventgo.controller;
 
 import com.innopolis.eventgo.db.entity.Post;
-import com.innopolis.eventgo.db.entity.Role;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.dto.RoleDto;
 import com.innopolis.eventgo.dto.UserDto;
@@ -9,6 +8,7 @@ import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
 import com.innopolis.eventgo.service.UserService;
 import lombok.SneakyThrows;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +37,15 @@ public class AccountPageController {
     @SneakyThrows
     @GetMapping("/{userId}")
     public String load(@PathVariable() long userId,
-                       Model model) {
+                       Model model,
+                       Authentication authentication) {
         UserDto userDto = userService.findUserDto(userId);
+        String login = authentication.getName();
+
+        if (!userDto.getLogin().equals(login)){
+            return "redirect:/";
+        }
+
         int rating = 0;
 
         List<PostDto> posts = postService.getPostsByAuthor(Optional.of(userId),

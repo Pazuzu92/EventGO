@@ -23,6 +23,6 @@ public class Dislikes {
 
     @Column(name = "VERSION")
     @Version
-    private int version;
+    private Integer version;
 
 }

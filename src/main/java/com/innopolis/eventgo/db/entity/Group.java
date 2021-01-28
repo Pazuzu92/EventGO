@@ -28,5 +28,5 @@ public class Group {
 
     @Column(name = "VERSION")
     @Version
-    private int version;
+    private Integer version;
 }
