@@ -42,10 +42,12 @@ public class ControllerPost {
             isAuthorized = true;
         }
 
+
         model.addAttribute("user", principal);
         model.addAttribute("isAuthorized", isAuthorized);
         model.addAttribute("post", postService.getPost(id));
         model.addAttribute("cityList", cityService.findAll());
+
         return "pages/post";
     }
 
@@ -69,10 +71,13 @@ public class ControllerPost {
         postDto.setCity(cityDto);
         postDto.setAuthor(userDto);
 
+        Long userId = user.getId();
+
         model.addAttribute("postDto", postDto);
         model.addAttribute("user", principal);
         model.addAttribute("cityList", cityService.findAll());
         model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("userId", userId);
 
         return "pages/create_post";
     }

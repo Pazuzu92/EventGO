@@ -32,7 +32,7 @@
             </div>
 
             <th:block th:if="${isAuthorized}">
-                <a class="login-button" href="/api/account/" th:text="${user.getUsername()}"></a>
+                <a class="login-button" th:href="@{'/account/' + ${userId}}" th:text="${user.getUsername()}"></a>
                 <a class="login-button" href="/logout">Выход</a>
             </th:block>
             <th:block th:unless="${isAuthorized}">

@@ -4,16 +4,19 @@ import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.dto.PostDto;
 import com.innopolis.eventgo.dto.RoleDto;
 import com.innopolis.eventgo.dto.UserDto;
+import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
 import com.innopolis.eventgo.service.UserService;
 import lombok.SneakyThrows;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +62,8 @@ public class AccountPageController {
         }
         RoleDto role = userDto.getRole();
 
+
+
         model.addAttribute("userName", userDto);
         model.addAttribute("posts", posts);
         model.addAttribute("groups", groups);
@@ -67,5 +72,10 @@ public class AccountPageController {
         model.addAttribute("role", role);
 
         return "account";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "account/photo/{id}", produces = "image/jpg")
+    public ResponseEntity getImage(@PathVariable(value = "id") Long id) throws NotFoundException {
+        return ResponseEntity.ok().body(postService.getPost(id).getPhoto());
     }
 }
