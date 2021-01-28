@@ -2,7 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta th:replace="fragments/head.html :: head"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/create_post.css}">
     <title>Title</title>
 </head>
 <body>
@@ -10,39 +16,47 @@
     <header class="header">
         <div class="container d-flex align-items-center h-100">
             <a href="/" class="me-5">
-                <img src="logo.svg" alt="logo">
+                <img th:src="@{/images/logo.svg}" alt="logo">
             </a>
             <div class="dropdown flex-grow-1">
                 <button class="btn btn-secondary dropdown-toggle geo-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="geo_icon.svg" alt="geo dropdown icon">
+                    <img th:src="@{/images/geo_icon.svg}" alt="geo dropdown icon">
                     Выбрать город
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <th:block th:each="c : ${city}">
+                    <th:block th:each="c : ${cityList}">
                         <a class="dropdown-item" href="#"><li th:text="${c.getCityName()}"></li></a>
                     </th:block>
                 </ul>
             </div>
 
-            <div th:if="${isAuthorized}">
-                <a href="/api/account/" th:text="${user.getUsername()}"></a>
-                <a href="/logout">Выход</a>
-            </div>
-            <div th:unless="${isAuthorized}">
-                <a href="/login">Войти</a>
-                <a href="/login">Регистрация</a>
-            </div>
+            <th:block th:if="${isAuthorized}">
+                <a class="login-button" href="/api/account/" th:text="${user.getUsername()}"></a>
+                <a class="login-button" href="/logout">Выход</a>
+            </th:block>
+            <th:block th:unless="${isAuthorized}">
+                <a th:href="@{/login}" class="login-button">Войти</a>
+                <a>/</a>
+                <a th:href="@{/register}" class="login-button register-button">Зарегистрироваться</a>
+            </th:block>
         </div>
     </header>
 
     <main class="container d-flex flex-column justify-content-center align-items-center">
-        <h3 class="main-heading mb-4" th:text="${post.getHeader()}"></h3>
-<!--        <img src="">-->
-        <div th:text="${post.getDescription()}"></div>
-        <div th:text="${post.getDateFrom()}"></div>
-        <th:block th:each="p : ${photos}">
-            <img th:src="@{~/photo/${p.getId()}}">
-        </th:block>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h3 class="main-heading mb-4" th:text="${post.getHeader()}"></h3>
+                    <img height="400" width="600" th:src="@{/photo/{id}(id=${post.getId()})}">
+                </div>
+                <div class="col-sm">
+                    <div th:text="${post.getDateFrom()}"></div>
+                    <div th:text="${post.getDescription()}"></div>
+                    <div th:text="${post.getAddress()}"></div>
+                </div>
+            </div>
+        </div>
+
         <div th:text="${post.getLikes()}"></div>
         <div th:text="${post.getDislikes()}"></div>
         <div th:text="${post.getHeader()}"></div>

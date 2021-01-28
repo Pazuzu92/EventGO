@@ -3,7 +3,6 @@ package com.innopolis.eventgo.service.impl;
 import com.innopolis.eventgo.db.entity.*;
 import com.innopolis.eventgo.db.repository.*;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.logic.EntityLogic;
 import com.innopolis.eventgo.mappers.PostMapper;
@@ -78,9 +77,7 @@ public class PostServiceImpl implements PostService {
 
         post.setHeader(postUpdate.getHeader());
         post.setDescription(postUpdate.getDescription());
-//        post.setDateTo(LocalDateTime.parse(postUpdate.getDateTo(), dateTimeFormatter));
         post.setDateTo(postUpdate.getDateTo());
-//        post.setDateFrom(LocalDateTime.parse(postUpdate.getDateFrom(), dateTimeFormatter));
         post.setDateFrom(postUpdate.getDateFrom());
         post.setCategory(category);
         city.ifPresent(post::setCity);
@@ -94,10 +91,6 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.deletePost(id);
         if (post == null) throw new NotFoundException("Post not found");
         return post;
-    }
-
-    public byte[] getPhoto(Long id) {
-        return postRepository.getPhoto(id);
     }
 
     private boolean isValidPost(PostDto post) {
@@ -171,5 +164,7 @@ public class PostServiceImpl implements PostService {
             if(!user.isPresent()) throw new NotFoundException("User nor Found");
         return postDAO.findByGroups(authorId.get());
     }
+
+
 
 }
