@@ -17,7 +17,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Post getPost(Long id) {
-        return em.find(Post.class, id);
+        Post post = em.find(Post.class, id);
+        return post;
     }
 
     @Override
@@ -25,7 +26,9 @@ public class PostRepositoryImpl implements PostRepository {
         User user = em.find(User.class, post.getUser().getId());
 
         Likes likes = new Likes();
+        likes.setLikes(0);
         Dislikes dislikes = new Dislikes();
+        dislikes.setDislikes(0);
         City city = em.find(City.class, post.getCity().getId());
         Category category = em.find(Category.class, post.getCategory().getId());
         PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
@@ -59,6 +62,24 @@ public class PostRepositoryImpl implements PostRepository {
         Post post = em.find(Post.class, id);
         if (post != null) em.remove(post);
         return post;
+    }
+
+    @Override
+    public void follow(Long idPost, Long idUser) {
+        List<Group> groups = em.createNamedQuery(Group.findFollowers).setParameter("id", idPost).getResultList();
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).getUser().getId() == idUser) return;
+        }
+        Group group = new Group();
+        group.setPost(em.find(Post.class, idPost));
+        group.setUser(em.find(User.class, idUser));
+        em.persist(group);
+    }
+
+    @Override
+    public int getFollowers(Long idPost) {
+        List<Group> groups = em.createNamedQuery(Group.findFollowers).setParameter("id", idPost).getResultList();
+        return groups.size();
     }
 
     public City saveCity(City city) {

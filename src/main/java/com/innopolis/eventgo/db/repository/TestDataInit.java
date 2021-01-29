@@ -37,15 +37,15 @@ public class TestDataInit {
 
         User user1 = new User();
         user1.setRole(roleUser);
-        user1.setName(RandomStringUtils.randomAlphabetic(20));
-        user1.setLogin(RandomStringUtils.randomAlphabetic(20));
-        user1.setEmail(RandomStringUtils.randomAlphabetic(20));
+        user1.setName("Mark");
+        user1.setLogin("test1");
+        user1.setEmail("test1@test.ru");
         user1.setPassword(p1);
 
         User user2 = new User();
         user2.setRole(roleModerator);
-        user2.setName(RandomStringUtils.randomAlphabetic(20));
-        user2.setLogin(RandomStringUtils.randomAlphabetic(20));
+        user2.setName("Kenny");
+        user2.setLogin("test2");
         user2.setEmail(RandomStringUtils.randomAlphabetic(20));
         user2.setPassword(p2);
 

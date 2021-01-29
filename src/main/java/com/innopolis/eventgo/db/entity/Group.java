@@ -11,8 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = Group.findFollowers, query = "select f from Group f where id_post = :id")
 public class Group {
 
+    public final static String findFollowers = "Group.findFollowers";
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
