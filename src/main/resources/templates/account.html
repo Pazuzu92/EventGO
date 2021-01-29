@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,18 +20,22 @@
         </a>
         <div class="dropdown flex-grow-1">
 
-            <button class="btn btn-secondary dropdown-toggle geo-dropdown" type="button" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                <img th:src="@{/images/geo_icon.svg}" alt="geo dropdown icon">
-                Выбрать город
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">Санкт-Петербург</a></li>
-                <li><a class="dropdown-item" href="#">Москва</a></li>
-                <li><a class="dropdown-item" href="#">Казань</a></li>
-            </ul>
+<!--            <button class="btn btn-secondary dropdown-toggle geo-dropdown" type="button" id="dropdownMenuButton"-->
+<!--                    data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                <img th:src="@{/images/geo_icon.svg}" alt="geo dropdown icon">-->
+<!--                Выбрать город-->
+<!--            </button>-->
+<!--            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                <li><a class="dropdown-item" href="#">Санкт-Петербург</a></li>-->
+<!--                <li><a class="dropdown-item" href="#">Москва</a></li>-->
+<!--                <li><a class="dropdown-item" href="#">Казань</a></li>-->
+<!--            </ul>-->
         </div>
-        <a class="login-button" th:text="${userName.getLogin()}"></a>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{'/account/' + ${userId}}" class="login-button" th:text="${userName.getLogin()} + ' '"></a>
+            <a th:href="@{/logout}" class="login-button">Выйти</a>
+        </div>
+<!--        <a class="login-button" th:text="${userName.getLogin()}" margin-right></a>-->
     </div>
 </header>
 <main class="container d-flex flex-column justify-content-center align-items-center">
@@ -58,7 +62,7 @@
             <div th:each="group : ${groups}" class="groups-list d-flex flex-column">
                 <a th:href="@{'/post/' + ${group.getId()}}">
                     <li class="d-flex group p-2">
-                        <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
+                        <img th:src="@{/photo/{id}(id=${group.getId()})}" class="event-image w-25" alt="event image">
                         <div class="groups-info d-flex justify-content-between">
                             <p class="groups-description" th:text="${group.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">
@@ -82,7 +86,7 @@
             <div th:each="post : ${posts}" class="events-list d-flex flex-column">
                 <a th:href="@{'/post/' + ${post.getId()}}">
                     <li class="d-flex event">
-                        <img th:src="@{/images/cat.png}" class="event-image w-25" alt="event image">
+                        <img th:src="@{/photo/{id}(id=${post.getId()})}" class="event-image w-25" alt="event image">
                         <div class="event-info d-flex justify-content-between">
                             <p class="event-description" th:text="${post.getHeader()}"></p>
                             <div class="d-flex flex-column justify-content-between">
