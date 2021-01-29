@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/css/account-style.css}" rel="stylesheet"/>
     <title>EventGo</title>
 </head>
 <body>
@@ -54,15 +54,18 @@
     </form>
     <main class="container align-items-center">
         <div th:each="post : ${posts}" class="events-list d-flex flex-column">
-            <img th:src="@{/photo/{id}(id=${post.getId()})}" class="event-image w-25" alt="event image">
             <a th:href="@{'/post/' + ${post.getId()}}">
-                <div class="event-info d-flex justify-content-between">
-                    <p class="event-description" th:text="${post.getHeader()}"></p>
-                    <p class="event-description" th:text="${post.getDescription()}"></p>
-                    <div class="d-flex flex-column justify-content-between">
-                        <div th:text="${#temporals.format(post.dateFrom, 'dd-MM-yyyy')}"></div>
+                <li class="d-flex group p-2">
+                    <img th:src="@{/photo/{id}(id=${post.getId()})}" class="event-image w-25" alt="event image">
+                    <div class="groups-info d-flex justify-content-between">
+                        <div class="d-flex flex-column justify-content-between">
+                            <p class="groups-description" th:text="${post.getHeader()}"></p>
+                            <div th:text="${#temporals.format(post.dateFrom, 'dd-MM-yyyy')}"></div>
+
+                        </div>
+                        <p class="event-description" th:text="${post.getDescription()}"></p>
                     </div>
-                </div>
+                </li>
             </a>
         </div>
     </main>
