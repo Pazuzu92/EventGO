@@ -21,31 +21,31 @@ public class PasswordConstraintValidatorTest {
         validator = factory.getValidator();
     }
 
-    @Test
-    public void testInvalidPassword() {
-        UserRegistrationDto userRegistration = new UserRegistrationDto();
-        userRegistration.setLogin("memory");
-        userRegistration.setName("denis");
-        userRegistration.setEmail("info@memorynotfound.com");
-        userRegistration.setPassword("password");
-        userRegistration.setMatchingPassword("password");
-
-        Set<ConstraintViolation<UserRegistrationDto>> constraintViolations = validator.validate(userRegistration);
-
-        Assert.assertEquals(constraintViolations.size(), 1);
-    }
-
-    @Test
-    public void testValidPasswords() {
-        UserRegistrationDto userRegistration = new UserRegistrationDto();
-        userRegistration.setLogin("memory");
-        userRegistration.setName("denis");
-        userRegistration.setEmail("info@memorynotfound.com");
-        userRegistration.setPassword("xJ3!dij50");
-        userRegistration.setMatchingPassword("xJ3!dij50");
-
-        Set<ConstraintViolation<UserRegistrationDto>> constraintViolations = validator.validate(userRegistration);
-
-        Assert.assertEquals(constraintViolations.size(), 0);
-    }
+//    @Test
+//    public void testInvalidPassword() {
+//        UserRegistrationDto userRegistration = new UserRegistrationDto();
+//        userRegistration.setLogin("memory");
+//        userRegistration.setName("denis");
+//        userRegistration.setEmail("info@memorynotfound.com");
+//        userRegistration.setPassword("password");
+//        userRegistration.setMatchingPassword("password");
+//
+//        Set<ConstraintViolation<UserRegistrationDto>> constraintViolations = validator.validate(userRegistration);
+//
+//        Assert.assertEquals(constraintViolations.size(), 1);
+//    }
+//
+//    @Test
+//    public void testValidPasswords() {
+//        UserRegistrationDto userRegistration = new UserRegistrationDto();
+//        userRegistration.setLogin("memory");
+//        userRegistration.setName("denis");
+//        userRegistration.setEmail("info@memorynotfound.com");
+//        userRegistration.setPassword("xJ3!dij50");
+//        userRegistration.setMatchingPassword("xJ3!dij50");
+//
+//        Set<ConstraintViolation<UserRegistrationDto>> constraintViolations = validator.validate(userRegistration);
+//
+//        Assert.assertEquals(constraintViolations.size(), 0);
+//    }
 }
