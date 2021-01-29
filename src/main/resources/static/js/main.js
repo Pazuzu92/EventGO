@@ -45,7 +45,7 @@ $(document).ready(function () {
 								<span>${item.header}</span>
 								<span>${item.dateFrom}</span>
 							</div>
-							<div class="text-center">
+							<div class="text-center" style="white-space: nowrap; overflow: hidden; padding: 5px; text-overflow: ellipsis">
                                  ${item.description}
                             </div>
 							<div class="align-self-end">
