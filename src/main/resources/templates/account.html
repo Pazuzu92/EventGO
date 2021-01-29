@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@
         <a href="/" class="me-5">
             <img th:src="@{/images/logo.svg}" alt="logo">
         </a>
-<!--        <div class="dropdown flex-grow-1">-->
+        <div class="dropdown flex-grow-1">
 
 <!--            <button class="btn btn-secondary dropdown-toggle geo-dropdown" type="button" id="dropdownMenuButton"-->
 <!--                    data-bs-toggle="dropdown" aria-expanded="false">-->
@@ -30,8 +30,12 @@
 <!--                <li><a class="dropdown-item" href="#">Москва</a></li>-->
 <!--                <li><a class="dropdown-item" href="#">Казань</a></li>-->
 <!--            </ul>-->
-<!--        </div>-->
-        <a class="login-button" th:text="${userName.getLogin()}" margin-right></a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{'/account/' + ${userId}}" class="login-button" th:text="${userName.getLogin()} + ' '"></a>
+            <a th:href="@{/logout}" class="login-button">Выйти</a>
+        </div>
+<!--        <a class="login-button" th:text="${userName.getLogin()}" margin-right></a>-->
     </div>
 </header>
 <main class="container d-flex flex-column justify-content-center align-items-center">
