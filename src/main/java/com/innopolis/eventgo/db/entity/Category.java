@@ -23,9 +23,9 @@ public class Category {
     @Column(name = "name_category", unique = true)
     private String nameCategory;
 
-    @Column(name = "VERSION")
-    @Version
-    private Integer version;
+//    @Column(name = "VERSION")
+//    @Version
+//    private Integer version;
 
     @Override
     public String toString() {

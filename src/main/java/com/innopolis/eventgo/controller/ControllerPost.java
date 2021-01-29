@@ -101,7 +101,7 @@ public class ControllerPost {
 
     @RequestMapping(method = RequestMethod.POST, value = "/post/{id}/like")
     public String likePost(@PathVariable("id") Long id, Model model, Authentication authentication) throws NotFoundException {
-        postService.likePost(id);
+        if (authentication != null && authentication.isAuthenticated()) postService.likePost(id);
         return getPost(id, model, authentication);
     }
 
