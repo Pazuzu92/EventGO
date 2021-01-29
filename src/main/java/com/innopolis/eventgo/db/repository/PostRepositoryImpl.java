@@ -27,8 +27,6 @@ public class PostRepositoryImpl implements PostRepository {
 
         Likes likes = new Likes();
         likes.setLikes(0);
-        Dislikes dislikes = new Dislikes();
-        dislikes.setDislikes(0);
         City city = em.find(City.class, post.getCity().getId());
         Category category = em.find(Category.class, post.getCategory().getId());
         PostStatus postStatus = (PostStatus) em.createNamedQuery(PostStatus.getStatusById).setParameter("id", 1).getSingleResult();
@@ -38,7 +36,6 @@ public class PostRepositoryImpl implements PostRepository {
         post.setCategory(category);
         post.setStatus(postStatus);
         post.setLikes(likes);
-        post.setDislikes(dislikes);
 
         em.persist(post);
     }

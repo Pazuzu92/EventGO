@@ -34,10 +34,6 @@ public class Post {
     @JoinColumn(name = "id_likes", referencedColumnName = "id")
     private Likes likes;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_dislikes", referencedColumnName = "id")
-    private Dislikes dislikes;
-
     @Column(name = "date_create")
     private LocalDateTime dateCreate;
 
