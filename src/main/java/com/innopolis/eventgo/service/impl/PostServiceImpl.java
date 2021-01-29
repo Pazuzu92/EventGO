@@ -8,12 +8,14 @@ import com.innopolis.eventgo.logic.EntityLogic;
 import com.innopolis.eventgo.mappers.PostMapper;
 import com.innopolis.eventgo.service.PostService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -147,9 +149,9 @@ public class PostServiceImpl implements PostService {
                                           Optional<Integer> size,
                                           Optional<String> sort) throws NotFoundException {
         Optional<User> user = Optional.empty();
-        if(authorId.isPresent())
+        if (authorId.isPresent())
             user = userDAO.findById(authorId.get());
-            if(!user.isPresent()) throw new NotFoundException("User nor Found");
+        if (!user.isPresent()) throw new NotFoundException("User nor Found");
         return EntityLogic.list(Post.class, PostDto.class, postDAO, modelMapper)
                 .withPagination(page, size, sort)
                 .withFiltering()
@@ -159,9 +161,9 @@ public class PostServiceImpl implements PostService {
 
     public List<Post> getGroupsPosts(Optional<Long> authorId) throws NotFoundException {
         Optional<User> user = Optional.empty();
-        if(authorId.isPresent())
+        if (authorId.isPresent())
             user = userDAO.findById(authorId.get());
-            if(!user.isPresent()) throw new NotFoundException("User nor Found");
+        if (!user.isPresent()) throw new NotFoundException("User nor Found");
         return postDAO.findByGroups(authorId.get());
     }
 
@@ -178,7 +180,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void updatePostByStatus(Post post, Long statusId) {
 
-        if (!post.getStatus().getId().equals(statusId)){
+        if (!post.getStatus().getId().equals(statusId)) {
             Optional<PostStatus> postStatus = postStatusDAO.findById(statusId);
 
             if (postStatus.isPresent()) {
@@ -188,4 +190,44 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public List<Post> findAllLikeBy(String text, City city, Category category) {
+        List<Post> posts;
+
+        if (text.isEmpty()) {
+            posts = postDAO.findAll();
+        } else {
+            posts = postDAO.findAll(containsTextInName(text));
+        }
+
+        if (city != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCity().equals(city))
+                    .collect(Collectors.toList());
+        }
+
+        if (category != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCategory().equals(category))
+                    .collect(Collectors.toList());
+        }
+
+        PostStatus byStatus = postStatusDAO.findByStatus(PostStatus.ACTIVE).orElse(null);
+
+        return posts.stream().filter(post -> post.getStatus().equals(byStatus)).collect(Collectors.toList());
+    }
+
+
+    private Specification<Post> containsTextInName(String text) {
+        if (!text.contains("%")) {
+            text = "%" + text + "%";
+        }
+
+        String finalText = text;
+        return (root, query, builder) -> builder.or(
+                builder.like(root.get("address"), finalText),
+                builder.like(root.get("header"), finalText),
+                builder.like(root.get("description"), finalText)
+        );
+    }
 }

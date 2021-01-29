@@ -37,9 +37,9 @@ $(document).ready(function () {
                     const list = $('.js-posts').html('');
                     data.forEach(item => {
                         list.append(`
-                    <a href="${item.city.shortName}/post/${item.id}">
+                    <a href="post/${item.id}">
 					<li class="post-card">
-						<img src="/images/hockey.svg" class="post-image w-100" alt="post image">
+						<img src="photo/${item.id}" class="post-image w-100" alt="post image">
 						<div class="post-info w-100 d-flex flex-column justify-content-between p-1">
 							<div class="d-flex justify-content-between align-items-satrt">
 								<span>${item.header}</span>

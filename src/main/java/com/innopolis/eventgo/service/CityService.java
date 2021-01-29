@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.service;
 
+import com.innopolis.eventgo.db.entity.City;
 import com.innopolis.eventgo.dto.CityDto;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface CityService {
 
     List<CityDto> findAllExceptBy(String name);
 
-    CityDto findByShortName(String shortName);
+    City findByShortName(String shortName);
 }

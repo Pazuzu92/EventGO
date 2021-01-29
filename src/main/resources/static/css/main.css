@@ -40,6 +40,14 @@ main {
 	color: #AC5F96;
 }
 
+.event-info {
+	background-color: #E8DAE4;
+	border-radius: 20px;
+	flex: auto;
+	font-size: 18px;
+	padding: 10px;
+}
+
 .main-heading {
 	margin-top: 100px;
 }
