@@ -21,10 +21,6 @@ public class PostMapper {
                 .id(post.getLikes().getId())
                 .likes(post.getLikes().getLikes())
                 .build();
-        DislikesDto dislikesDto = DislikesDto.builder()
-                .id(post.getDislikes().getId())
-                .dislikes(post.getDislikes().getDislikes())
-                .build();
         UserDto userDto = mapUserToDto(post.getUser());
         List<GroupsDto> groupsDtos = new ArrayList<>();
         post.getGroups().forEach(g -> {
@@ -60,7 +56,6 @@ public class PostMapper {
                 .description(post.getDescription())
                 .address(post.getAddress())
                 .likes(likesDto)
-                .dislikes(dislikesDto)
                 .dateFrom(post.getDateFrom())
                 .dateTo(post.getDateTo())
                 .author(userDto)

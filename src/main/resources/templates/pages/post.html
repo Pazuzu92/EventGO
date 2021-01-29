@@ -46,6 +46,9 @@
     <main class="container d-flex flex-column justify-content-center align-items-center">
         <div class="container">
             <div class="row">
+<!--                <div class="col-sm">-->
+<!--                    <h3 class="main-heading mb-4" th:text="${post.getAuthor().name}"></h3>-->
+<!--                </div>-->
                 <div class="col-sm">
                     <h3 class="main-heading mb-4" th:text="${post.getHeader()}"></h3>
                     <img height="400" width="600" th:src="@{/photo/{id}(id=${post.getId()})}">
@@ -67,13 +70,11 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="col-sm"><button type="button" class="btn btn-danger">
-                                <img th:src="@{/images/dislike.svg}"><span th:text="${post.getDislikes().getDislikes()}"></span>
-                            </button></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
+                    <h3 class="main-heading mb-4" th:text="'Автор: ' + '' + ${post.getAuthor().name}"></h3>
                     <h3><span th:text="${#temporals.format(post.getDateFrom(), 'dd-MM-yyyy')}"></span></h3>
                     <div th:text="${post.getDescription()}"></div>
                     <h4>Место проведения: <div th:text="${post.getAddress()}"></div></h4>

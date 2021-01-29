@@ -124,18 +124,6 @@ public class TestDataInit {
         Likes likes4 = new Likes();
         likes4.setLikes(400);
 
-        Dislikes dislikes1 = new Dislikes();
-        dislikes1.setDislikes(20);
-
-        Dislikes dislikes2 = new Dislikes();
-        dislikes2.setDislikes(30);
-
-        Dislikes dislikes3 = new Dislikes();
-        dislikes3.setDislikes(40);
-
-        Dislikes dislikes4 = new Dislikes();
-        dislikes4.setDislikes(50);
-
         Group group1 = new Group();
         Group group2 = new Group();
         Group group3 = new Group();
@@ -163,7 +151,6 @@ public class TestDataInit {
         post1.setDescription("Test post");
         post1.setAddress("Невский 54, 5");
         post1.setLikes(likes1);
-        post1.setDislikes(dislikes1);
         post1.getGroups().add(group1);
         post1.setCity(city1);
         post1.setStatus(postStatus1);
@@ -177,7 +164,6 @@ public class TestDataInit {
         post2.setDescription("Test post");
         post2.setAddress("Яшлек 43, д. 6");
         post2.setLikes(likes2);
-        post2.setDislikes(dislikes2);
         post2.getGroups().add(group2);
         post2.setCity(city2);
         post2.setStatus(postStatus1);
@@ -191,7 +177,6 @@ public class TestDataInit {
         post3.setDescription("Test post");
         post3.setAddress("Смоленская улица 89, дом 7");
         post3.setLikes(likes3);
-        post3.setDislikes(dislikes3);
         post3.getGroups().add(group3);
         post3.setCity(city3);
         post3.setStatus(postStatus1);
@@ -205,7 +190,6 @@ public class TestDataInit {
         post4.setDescription("Test post");
         post4.setAddress("Центральня 65");
         post4.setLikes(likes4);
-        post4.setDislikes(dislikes4);
         post4.getGroups().add(group4);
         post4.setCity(city1);
         post4.setStatus(postStatus1);

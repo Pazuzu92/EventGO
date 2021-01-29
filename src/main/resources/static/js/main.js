@@ -38,7 +38,7 @@ $(document).ready(function () {
                     data.forEach(item => {
                         list.append(`
                     <a href="post/${item.id}">
-					<li class="post-card">
+					<li class="post-card" style="width: 356px; height: 224px">
 						<img src="photo/${item.id}" class="post-image w-100" alt="post image">
 						<div class="post-info w-100 d-flex flex-column justify-content-between p-1">
 							<div class="d-flex justify-content-between align-items-satrt">
