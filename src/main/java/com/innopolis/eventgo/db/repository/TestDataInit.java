@@ -1,0 +1,246 @@
+package com.innopolis.eventgo.db.repository;
+
+import com.innopolis.eventgo.db.entity.*;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Transactional
+@Repository
+public class TestDataInit {
+
+    @Autowired
+    private EntityManager entityManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public void init() {
+        Role roleUser = new Role();
+        roleUser.setRoleCode(Role.USER);
+
+        Role roleModerator = new Role();
+        roleModerator.setRoleCode(Role.MODERATOR);
+
+        Role roleAdmin = new Role();
+        roleAdmin.setRoleCode(Role.ADMIN);
+
+        String p1 = passwordEncoder.encode("12345");
+        String p2 = passwordEncoder.encode("12345");
+        String p3 = passwordEncoder.encode("12345");
+
+        User user1 = new User();
+        user1.setRole(roleUser);
+        user1.setName("Mark");
+        user1.setLogin("test1");
+        user1.setEmail("test1@test.ru");
+        user1.setPassword(p1);
+
+        User user2 = new User();
+        user2.setRole(roleModerator);
+        user2.setName("Kenny");
+        user2.setLogin("test2");
+        user2.setEmail(RandomStringUtils.randomAlphabetic(20));
+        user2.setPassword(p2);
+
+        User user3 = new User();
+        user3.setRole(roleAdmin);
+        user3.setName(RandomStringUtils.randomAlphabetic(20));
+        user3.setLogin(RandomStringUtils.randomAlphabetic(20));
+        user3.setEmail(RandomStringUtils.randomAlphabetic(20));
+        user3.setPassword(p3);
+
+        Category category1 = new Category();
+        category1.setNameCategory("Спорт");
+
+        Category category2 = new Category();
+        category2.setNameCategory("Театр");
+
+        Category category3 = new Category();
+        category3.setNameCategory("Музыка");
+
+        Category category4 = new Category();
+        category4.setNameCategory("Кино");
+
+        Category category5 = new Category();
+        category5.setNameCategory("Детям");
+
+        Category category6 = new Category();
+        category6.setNameCategory("Кафе");
+
+        Category category7 = new Category();
+        category7.setNameCategory("Обучение");
+
+        Category category8 = new Category();
+        category8.setNameCategory("Выставки");
+
+        City city1 = new City();
+        city1.setCityName("Москва");
+        city1.setShortName("msk");
+
+        City city2 = new City();
+        city2.setCityName("Санкт-Петербург");
+        city2.setShortName("spb");
+
+        City city3 = new City();
+        city3.setCityName("Казань");
+        city3.setShortName("kzn");
+
+        PostStatus postStatus1 = new PostStatus();
+        postStatus1.setStatus(PostStatus.ACTIVE);
+        postStatus1.setStatusName("Активный");
+
+        PostStatus postStatus2 = new PostStatus();
+        postStatus2.setStatus(PostStatus.ARCHIVED);
+        postStatus2.setStatusName("В архиве");
+
+        PostStatus postStatus3 = new PostStatus();
+        postStatus3.setStatus(PostStatus.DELETED);
+        postStatus3.setStatusName("Удален");
+
+        PostStatus postStatus4 = new PostStatus();
+        postStatus4.setStatus(PostStatus.MODERATED);
+        postStatus4.setStatusName("На модерации");
+
+        PostStatus postStatus5 = new PostStatus();
+        postStatus5.setStatus(PostStatus.REJECTED);
+        postStatus5.setStatusName("Отклонен");
+
+        Likes likes1 = new Likes();
+        likes1.setLikes(100);
+
+        Likes likes2 = new Likes();
+        likes2.setLikes(200);
+
+        Likes likes3 = new Likes();
+        likes3.setLikes(300);
+
+        Likes likes4 = new Likes();
+        likes4.setLikes(400);
+
+        Group group1 = new Group();
+        Group group2 = new Group();
+        Group group3 = new Group();
+        Group group4 = new Group();
+
+        Post post1 = new Post();
+        Post post2 = new Post();
+        Post post3 = new Post();
+        Post post4 = new Post();
+
+        group1.setUser(user1);
+        group1.setPost(post1);
+
+        group2.setUser(user2);
+        group2.setPost(post2);
+
+        group3.setUser(user3);
+        group3.setPost(post3);
+
+        group4.setUser(user1);
+        group4.setPost(post4);
+
+        post1.setCategory(category1);
+        post1.setHeader("Fun");
+        post1.setDescription("Test post");
+        post1.setAddress("Невский 54, 5");
+        post1.setLikes(likes1);
+        post1.getGroups().add(group1);
+        post1.setCity(city1);
+        post1.setStatus(postStatus1);
+        post1.setUser(user1);
+        post1.setDateCreate(LocalDateTime.now());
+        post1.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
+        post1.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
+
+        post2.setCategory(category2);
+        post2.setHeader("Drive");
+        post2.setDescription("Test post");
+        post2.setAddress("Яшлек 43, д. 6");
+        post2.setLikes(likes2);
+        post2.getGroups().add(group2);
+        post2.setCity(city2);
+        post2.setStatus(postStatus1);
+        post2.setUser(user1);
+        post2.setDateCreate(LocalDateTime.now());
+        post2.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
+        post2.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
+
+        post3.setCategory(category3);
+        post3.setHeader("Dance");
+        post3.setDescription("Test post");
+        post3.setAddress("Смоленская улица 89, дом 7");
+        post3.setLikes(likes3);
+        post3.getGroups().add(group3);
+        post3.setCity(city3);
+        post3.setStatus(postStatus1);
+        post3.setUser(user1);
+        post3.setDateCreate(LocalDateTime.now());
+        post3.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
+        post3.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
+
+        post4.setCategory(category1);
+        post4.setHeader("Car");
+        post4.setDescription("Test post");
+        post4.setAddress("Центральня 65");
+        post4.setLikes(likes4);
+        post4.getGroups().add(group4);
+        post4.setCity(city1);
+        post4.setStatus(postStatus1);
+        post4.setUser(user1);
+        post4.setDateCreate(LocalDateTime.now());
+        post4.setDateFrom(LocalDateTime.of(2021, 5, 15, 15, 0));
+        post4.setDateTo(LocalDateTime.of(2022, 2, 1, 10, 0));
+
+        Comment comment1 = new Comment();
+        comment1.setText("this is comment");
+        comment1.setPost(post1);
+        comment1.setUser(user1);
+
+        Comment comment2 = new Comment();
+        comment2.setText("this is comment 2");
+        comment2.setPost(post1);
+        comment2.setUser(user2);
+
+        entityManager.persist(roleUser);
+        entityManager.persist(roleModerator);
+        entityManager.persist(roleAdmin);
+
+        entityManager.persist(user1);
+        entityManager.persist(user2);
+        entityManager.persist(user3);
+
+        entityManager.persist(category1);
+        entityManager.persist(category2);
+        entityManager.persist(category3);
+        entityManager.persist(category4);
+        entityManager.persist(category5);
+        entityManager.persist(category6);
+        entityManager.persist(category7);
+        entityManager.persist(category8);
+
+        entityManager.persist(city1);
+        entityManager.persist(city2);
+        entityManager.persist(city3);
+
+        entityManager.persist(postStatus1);
+        entityManager.persist(postStatus2);
+        entityManager.persist(postStatus3);
+        entityManager.persist(postStatus4);
+        entityManager.persist(postStatus5);
+
+        entityManager.persist(post1);
+        entityManager.persist(post2);
+        entityManager.persist(post3);
+        entityManager.persist(post4);
+
+        entityManager.persist(comment1);
+        entityManager.persist(comment2);
+    }
+}
