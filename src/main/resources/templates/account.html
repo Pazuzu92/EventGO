@@ -31,8 +31,8 @@
 <!--                <li><a class="dropdown-item" href="#">Казань</a></li>-->
 <!--            </ul>-->
         </div>
-        <div class="d-flex justify-content-end" sec:authorize="isAuthenticated()">
-            <a th:href="@{'/account/' + ${userId}}" class="login-button" th:text="${userName.getLogin()}"></a>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{'/account/' + ${userId}}" class="login-button" th:text="${userName.getLogin()} + ' '"></a>
             <a th:href="@{/logout}" class="login-button">Выйти</a>
         </div>
 <!--        <a class="login-button" th:text="${userName.getLogin()}" margin-right></a>-->
