@@ -24,19 +24,10 @@
             <img th:src="@{/images/geo_icon.svg}" alt="geo dropdown icon">
             <button
                     th:text="${currentCity.getCityName()}"
-                    class="btn btn-secondary dropdown-toggle geo-dropdown"
+                    class="geo-dropdown"
                     type="button"
-                    id="dropdownMenuButton"
-                    data-bs-toggle="dropdown"
                     aria-expanded="false">
             </button>
-
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <div th:each="city : ${cities}">
-                    <li><a class="dropdown-item" th:text="${city.getCityName()}" th:href="${city.getShortName()}"></a>
-                    </li>
-                </div>
-            </ul>
         </div>
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{'/account/' + ${userId}}" class="login-button" th:text="${login}"></a>
