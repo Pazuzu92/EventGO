@@ -107,9 +107,11 @@ public class ControllerPost {
 
     @RequestMapping(method = RequestMethod.POST, value = "/post/{id}/follow")
     public String follow(@PathVariable("id") Long id, Model model, Authentication authentication) throws NotFoundException {
-        User principal = (User) authentication.getPrincipal();
-        com.innopolis.eventgo.db.entity.User user = userRepository.getUser(principal.getUsername());
-        postService.follow(id, user.getId());
+        if (authentication != null && authentication.isAuthenticated()) {
+            User principal = (User) authentication.getPrincipal();
+            com.innopolis.eventgo.db.entity.User user = userRepository.getUser(principal.getUsername());
+            postService.follow(id, user.getId());
+        }
         return getPost(id, model, authentication);
     }
 }
