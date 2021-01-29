@@ -1,5 +1,6 @@
 package com.innopolis.eventgo.service;
 
+import com.innopolis.eventgo.db.entity.Category;
 import com.innopolis.eventgo.dto.CategoryDto;
 
 import java.util.List;
@@ -9,5 +10,5 @@ public interface CategoryService {
 
     List<CategoryDto> findAll ();
 
-    Optional<CategoryDto> findById(Optional<Long> categoryId);
+    Category findById(Optional<Long> categoryId);
 }

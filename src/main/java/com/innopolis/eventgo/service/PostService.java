@@ -1,9 +1,10 @@
 package com.innopolis.eventgo.service;
 
+import com.innopolis.eventgo.db.entity.Category;
+import com.innopolis.eventgo.db.entity.City;
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 
 
@@ -40,6 +41,8 @@ public interface PostService {
     Optional<Post> findById(Long id);
 
     void updatePostByStatus(Post post, Long statusId);
+
+    List<Post> findAllLikeBy(String text, City city, Category category);
 
     void likePost(Long id);
 

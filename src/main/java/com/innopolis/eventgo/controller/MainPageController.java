@@ -1,11 +1,11 @@
 package com.innopolis.eventgo.controller;
 
+import com.innopolis.eventgo.db.entity.City;
 import com.innopolis.eventgo.db.entity.PostStatus;
 import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.dto.CategoryDto;
 import com.innopolis.eventgo.dto.CityDto;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.service.CategoryService;
 import com.innopolis.eventgo.service.CityService;
 import com.innopolis.eventgo.service.PostService;
@@ -51,7 +51,7 @@ public class MainPageController {
                        Model model) {
         List<CategoryDto> categories = categoryService.findAll();
         List<CityDto> cities = cityService.findAllExceptBy(cityShortName);
-        CityDto city = cityService.findByShortName(cityShortName);
+        City city = cityService.findByShortName(cityShortName);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         Optional<User> user = userService.findByLogin(login);

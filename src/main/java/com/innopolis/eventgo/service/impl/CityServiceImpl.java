@@ -36,12 +36,7 @@ public class CityServiceImpl implements CityService {
                 .collect(Collectors.toList());
     }
 
-    public CityDto findByShortName(String shortName) {
-        Optional<City> city = cityDAO.findByShortName(shortName);
-        CityDto cityDto = null;
-        if (city.isPresent()) {
-            cityDto = modelMapper.map(city.get(), CityDto.class);
-        }
-        return cityDto;
+    public City findByShortName(String shortName) {
+        return cityDAO.findByShortName(shortName).orElse(null);
     }
 }

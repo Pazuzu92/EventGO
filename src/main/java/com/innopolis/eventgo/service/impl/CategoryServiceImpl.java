@@ -29,17 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryDto> findById(Optional<Long> categoryId) {
-        Optional<CategoryDto> categoryDto = Optional.empty();
+    public Category findById(Optional<Long> categoryId) {
+        return categoryId.flatMap(categoryDAO::findById).orElse(null);
 
-        if(categoryId.isPresent()){
-           Optional<Category> category = categoryDAO.findById(categoryId.get());
-
-           if (category.isPresent()){
-               categoryDto = Optional.of(modelMapper.map(category, CategoryDto.class));
-           }
-        }
-        return categoryDto;
     }
 
 
