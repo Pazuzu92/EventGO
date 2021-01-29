@@ -5,7 +5,6 @@ import com.innopolis.eventgo.db.entity.City;
 import com.innopolis.eventgo.db.entity.Post;
 import com.innopolis.eventgo.db.entity.ResponseMessageEntity;
 import com.innopolis.eventgo.dto.PostDto;
-import com.innopolis.eventgo.dto.UserDto;
 import com.innopolis.eventgo.exceptions.NotFoundException;
 
 
@@ -44,4 +43,10 @@ public interface PostService {
     void updatePostByStatus(Post post, Long statusId);
 
     List<Post> findAllLikeBy(String text, City city, Category category);
+
+    void likePost(Long id);
+
+    void follow(Long idPost, Long idUser);
+
+    int getFollowers(Long idPost);
 }
