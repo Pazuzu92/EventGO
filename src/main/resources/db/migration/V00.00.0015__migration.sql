@@ -25,7 +25,7 @@ CREATE TABLE users
 CREATE TABLE post_status
 (
     id BIGINT NOT NULL PRIMARY KEY,
-    post_status INTEGER,
+    status INTEGER,
     status_name TEXT,
     version INTEGER DEFAULT 0
 );
@@ -68,7 +68,6 @@ CREATE TABLE post
     description VARCHAR(10485760),
     address TEXT,
     likes INTEGER,
-    dislikes INTEGER,
     date_create TIMESTAMP,
     date_from TIMESTAMP,
     date_to TIMESTAMP,

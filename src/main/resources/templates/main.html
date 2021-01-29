@@ -85,8 +85,8 @@
         </div>
         <div th:each="post : ${posts}">
             <a th:href="@{'/post/' + ${post.getId()}}">
-                <li class="post-card">
-                    <img th:src="@{/photo/{id}(id=${post.getId()})}" class="post-image w-100" alt="post image">
+                <li class="post-card" style="width: 356px; height: 224px">
+                    <img width="356" height="224" th:src="@{/photo/{id}(id=${post.getId()})}" class="post-image w-100" alt="post image">
                     <div class="post-info w-100 d-flex flex-column justify-content-between p-1">
                         <div class="d-flex justify-content-between align-items-start">
                             <span th:text="${post.getHeader()}"></span>
