@@ -188,4 +188,22 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public void likePost(Long id) {
+        Post post = postRepository.getPost(id);
+        Integer likes = post.getLikes().getLikes();
+        likes += 1;
+        post.getLikes().setLikes(likes);
+        postRepository.updatePost(post.getId(), post);
+    }
+
+    @Override
+    public void follow(Long idPost, Long idUser) {
+        postRepository.follow(idPost, idUser);
+    }
+
+    @Override
+    public int getFollowers(Long idPost) {
+        return postRepository.getFollowers(idPost);
+    }
 }

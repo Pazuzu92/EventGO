@@ -24,7 +24,7 @@ public class Post {
     @Column(name = "header")
     private String header;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 10485760)
     private String description;
 
     @Column(name = "address")
@@ -49,8 +49,6 @@ public class Post {
 
     @Column(name = "photo")
     private byte[] image;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-//    private List<Photo> photos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)

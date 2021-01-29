@@ -32,7 +32,7 @@
             </ul>
         </div>
 
-            <a class="login-button" href="/api/account/" th:text="${user.getUsername()}"></a>
+            <a class="login-button" th:href="@{/account/{id}(id=${userId})}" th:text="${user.getUsername()}"></a>
             <a class="login-button" href="/logout">Выход</a>
     </div>
 </header>

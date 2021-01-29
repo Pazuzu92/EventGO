@@ -1,11 +1,12 @@
 package com.innopolis.eventgo.mappers;
 
-import com.innopolis.eventgo.db.entity.*;
+import com.innopolis.eventgo.db.entity.Category;
+import com.innopolis.eventgo.db.entity.City;
+import com.innopolis.eventgo.db.entity.Post;
+import com.innopolis.eventgo.db.entity.User;
 import com.innopolis.eventgo.dto.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,17 +54,6 @@ public class PostMapper {
                 .shortName(post.getCity().getShortName())
                 .build();
 
-//        PhotoDto photoDto = new PhotoDto();
-//        photoDto.setId(post.getP);
-//        postDto.setPhoto();
-//        List<PhotoDto> photoDtos = new ArrayList<>();
-//        post.getPhotos().forEach(p -> {
-//            PhotoDto photoDto = new PhotoDto();
-//            photoDto.setId(p.getId());
-//            photoDto.setImage(p.getImage());
-//            photoDtos.add(photoDto);
-//        });
-
         PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .header(post.getHeader())
@@ -80,6 +70,9 @@ public class PostMapper {
                 .category(categoryDto)
                 .city(cityDto)
                 .build();
+
+        postDto.setAddress(post.getAddress());
+        postDto.setDescription(post.getDescription());
 
         return postDto;
     }
