@@ -7,6 +7,7 @@ import com.innopolis.eventgo.exceptions.NotFoundException;
 import com.innopolis.eventgo.logic.EntityLogic;
 import com.innopolis.eventgo.mappers.PostMapper;
 import com.innopolis.eventgo.service.PostService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j(topic = "PostServiceImpl")
 @Service
 public class PostServiceImpl implements PostService {
 
